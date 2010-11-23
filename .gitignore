@@ -1,0 +1,12 @@
+### Eclipse project management files
+.buildpath
+.project
+.settings/*
+
+### Mac OS temporary files
+.DS_Store
+._*
+
+### Windows temporary files
+Thumbs.db
+
