@@ -5,13 +5,14 @@ This allow you to change owner, group and permissions on files and, for example,
 
 ### Configure your VM
 
-In your VagrantFile, you can use `config.bindfs.bind_folder` to configure folders that will be binded on VM startup. Its basic syntax is `config.bindfs.bind_folder "source/dir" "mount/point"`.
+In your VagrantFile, you can use `config.bindfs.bind_folder` to configure folders that will be binded on VM startup.  
+Its basic syntax is `config.bindfs.bind_folder "source/dir", "mount/point"`.
 
 Additionnaly, you can provide one of the following arguments :
 
-- `:user`
-- `:group`
-- `:perms`
+- `:user` (defaults to 'vagrant')
+- `:group` (defaults to 'vagrant')
+- `:perms` (defaults to 'u=rwD:g=rD:o=rD')
 - `:mirror`
 - `:mirror_only`
 - `:no_allow_other`
@@ -19,9 +20,9 @@ Additionnaly, you can provide one of the following arguments :
 - `:create_for_group`
 - `:create_with_perms`
 
-See bindfs man page for details.
+Ex: `config.bindfs.bind_folder "source/dir", "mount/point", :perms => "u=rw:g=r:o=r"`.
 
-More options to come in further releases.
+See [bindfs man page](http://www.cs.helsinki.fi/u/partel/bindfs_docs/bindfs.1.html) for details.
 
 ### TODO
 

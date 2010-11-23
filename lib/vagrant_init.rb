@@ -1,4 +1,2 @@
-# This file is automatically loaded by Vagrant to load any
-# plugins. This file kicks off this plugin.
-
+# This file is automatically loaded by Vagrant to load any plugins.
 require 'vagrant-bindfs'
