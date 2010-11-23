@@ -1,21 +1,29 @@
-# vagrant-bindfs
+## vagrant-bindfs
 
 A Vagrant plugin to automate [bindfs](http://code.google.com/p/bindfs/) mount in the VM.
 This allow you to change owner, group and permissions on files and, for example, work around NFS share permissions issues.
 
-## Configure your VM
+### Configure your VM
 
 In your VagrantFile, you can use `config.bindfs.bind_folder` to configure folders that will be binded on VM startup. Its basic syntax is `config.bindfs.bind_folder "source/dir" "mount/point"`.
 
 Additionnaly, you can provide one of the following arguments :
 
-- `:user  => "name"` : Name of the owner of binded files
-- `:group => "name"` : Name of the owner group of binded files
-- `:perm  => "permissions-string"` : Permissions string as defined in the bindfs documentation
+- `:user`
+- `:group`
+- `:perms`
+- `:mirror`
+- `:mirror_only`
+- `:no_allow_other`
+- `:create_for_user`
+- `:create_for_group`
+- `:create_with_perms`
+
+See bindfs man page for details.
 
 More options to come in further releases.
 
-## TODO
+### TODO
 
 -   bindfs installation check
 -   Support all bindfs options   
@@ -37,8 +45,4 @@ More options to come in further releases.
     * :xattr-rw
     * :ctime-from-mtime
 -   Write unit tests
-
-== Copyright
-
-Copyright (c) 2010 Folken Laëneck. See LICENSE.txt for further details.
 
