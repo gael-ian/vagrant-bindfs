@@ -8,7 +8,7 @@ This allow you to change owner, group and permissions on files and, for example,
 In your VagrantFile, you can use `config.bindfs.bind_folder` to configure folders that will be binded on VM startup.  
 Its basic syntax is `config.bindfs.bind_folder "source/dir", "mount/point"`.
 
-Additionnaly, you can provide one of the following arguments :
+bind_folder support following arguments...
 
 - `:user` (defaults to 'vagrant')
 - `:group` (defaults to 'vagrant')
@@ -20,30 +20,35 @@ Additionnaly, you can provide one of the following arguments :
 - `:create_for_group`
 - `:create_with_perms`
 
-Ex: `config.bindfs.bind_folder "source/dir", "mount/point", :perms => "u=rw:g=r:o=r"`.
+... and following flags (all disabled by default, vagrant-bindfs rely on bindfs own defaults) :
+
+- `:create_as_user`
+- `:create_as_mounter`
+- `:chown_normal`
+- `:chown_ignore`
+- `:chown_deny`
+- `:chgrp_normal`
+- `:chgrp_ignore`
+- `:chgrp_deny`
+- `:chmod_normal`
+- `:chmod_ignore`
+- `:chmod_deny`
+- `:chmod_allow_x`
+- `:xattr_none`
+- `:xattr_ro`
+- `:xattr_rw`
+- `:ctime_from_mtime`
+    
+Ex: `config.bindfs.bind_folder "source/dir", "mount/point", :perms => "u=rw:g=r:o=r", :create_as_user => true`.
+
+You can overwrite default options _via_ `config.bindfs.default_options`.
 
 See [bindfs man page](http://www.cs.helsinki.fi/u/partel/bindfs_docs/bindfs.1.html) for details.
+
+vagrant-bindfs does not check compatibility between given arguments!  
+You can set both of `:chown_ignore` and `:chown_deny` to true without errors, until the mount command will be executed by Vagrant.
 
 ### TODO
 
 -   bindfs installation check
--   Support all bindfs options   
-    Unsupported options:
-    * :create-as-user
-    * :create-as-mounter
-    * :chown-normal
-    * :chown-ignore
-    * :chown-deny
-    * :chgrp-normal
-    * :chgrp-ignore
-    * :chgrp-deny
-    * :chmod-normal
-    * :chmod-ignore
-    * :chmod-deny
-    * :chmod-allow-x
-    * :xattr-none
-    * :xattr-ro
-    * :xattr-rw
-    * :ctime-from-mtime
 -   Write unit tests
-
