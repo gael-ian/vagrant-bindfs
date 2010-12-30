@@ -51,5 +51,4 @@ You can overwrite default options _via_ `config.bindfs.default_options`.
 
 See [bindfs man page](http://www.cs.helsinki.fi/u/partel/bindfs_docs/bindfs.1.html) for details.
 
-vagrant-bindfs does not check compatibility between given arguments!  
-You can set both of `:chown_ignore` and `:chown_deny` to true without errors, until the mount command will be executed by Vagrant.
+vagrant-bindfs does not check compatibility between given arguments but warn you when a binding command fail or when bindfs is not installed on your virtual machine.
