@@ -44,7 +44,7 @@ module VagrantBindfs
     def call(env)
       @env = env
       @app.call(env)
-      bind_folders if !binded_folders.empty?
+      bind_folders unless binded_folders.empty?
     end
 
     def binded_folders
@@ -56,8 +56,18 @@ module VagrantBindfs
     end
 
     def bind_folders
-      @env.ui.info I18n.t("vagrant.actions.vm.bind_folders.binding")
       @env["vm"].ssh.execute do |ssh|
+        
+        # Check if bindfs is installed on VM
+        begin
+          ssh.exec!("sudo bindfs --help")
+        rescue Vagrant::Errors::VagrantError => e
+          @env.ui.error e
+          @env.ui.error I18n.t("vagrant.actions.vm.bind_folders.bindfs_not_installed")
+          return
+        end
+        
+        @env.ui.info I18n.t("vagrant.actions.vm.bind_folders.binding")
         binded_folders.each do |opts|
 
           path     = opts.delete(:path)
@@ -73,13 +83,19 @@ module VagrantBindfs
             end
           end
           args = " #{args.join(" ")}"
-
-          @env.ui.info I18n.t("vagrant.actions.vm.bind_folders.binding_entry",
-            :path     => path,
-            :bindpath => bindpath
-            )
-          ssh.exec!("sudo mkdir -p #{bindpath}")
-          ssh.exec!("sudo bindfs#{args} #{path} #{bindpath}")
+          
+          begin
+            ssh.exec!("sudo mkdir -p #{bindpath}")
+            ssh.exec!("sudo bindfs#{args} #{path} #{bindpath}")
+            @env.ui.info I18n.t("vagrant.actions.vm.bind_folders.binding_entry",
+              :path     => path,
+              :bindpath => bindpath
+              )
+          rescue Vagrant::Errors::VagrantError => e
+            @env.ui.error e
+            @env.ui.error I18n.t("vagrant.actions.vm.bind_folders.bindfs_command_fail")
+          end
+          
         end
       end
     end
