@@ -5,35 +5,35 @@ module VagrantBindfs
     
     # Options
     @@options = {
-      :owner              => 'vagrant',
-      :group              => 'vagrant',
-      :perms              => 'u=rwD:g=rD:o=rD',
-      :mirror             => nil,
-      :mirror_only        => nil,
-      :no_allow_other     => nil,
-      :create_for_user    => nil,
-      :create_for_group   => nil,
-      :create_with_perms  => nil,
+      :owner                => 'vagrant',
+      :group                => 'vagrant',
+      :perms                => 'u=rwD:g=rD:o=rD',
+      :mirror               => nil,
+      :'mirror-only'        => nil,
+      :'no-allow-other'     => nil,
+      :'create-for-user'    => nil,
+      :'create-for-group'   => nil,
+      :'create-with-perms'  => nil,
     }
       
     # Flags
     @@flags = {
-      :create_as_user     => false,
-      :create_as_mounter  => false,
-      :chown_normal       => false,
-      :chown_ignore       => false,
-      :chown_deny         => false,
-      :chgrp_normal       => false,
-      :chgrp_ignore       => false,
-      :chgrp_deny         => false,
-      :chmod_normal       => false,
-      :chmod_ignore       => false,
-      :chmod_deny         => false,
-      :chmod_allow_x      => false,
-      :xattr_none         => false,
-      :xattr_ro           => false,
-      :xattr_rw           => false,
-      :ctime_from_mtime   => false,
+      :'create-as-user'     => false,
+      :'create-as-mounter'  => false,
+      :'chown-normal'       => false,
+      :'chown-ignore'       => false,
+      :'chown-deny'         => false,
+      :'chgrp-normal'       => false,
+      :'chgrp-ignore'       => false,
+      :'chgrp-deny'         => false,
+      :'chmod-normal'       => false,
+      :'chmod-ignore'       => false,
+      :'chmod-deny'         => false,
+      :'chmod-allow-x'      => false,
+      :'xattr-none'         => false,
+      :'xattr-ro'           => false,
+      :'xattr-rw'           => false,
+      :'ctime-from-mtime'   => false,
     }
     
     def initialize(app, env)
@@ -66,13 +66,10 @@ module VagrantBindfs
 
           args = []
           opts.each do |key, value|
-            opt = key.to_s
-            opt.sub!(/_/, '-')
-            
             if @@flags.key?(key)
-              args << "--#{opt}" if !!value 
+              args << "--#{key.to_s}" if !!value 
             else
-              args << "--#{opt}=#{value}" if !value.nil?
+              args << "--#{key.to_s}=#{value}" if !value.nil?
             end
           end
           args = " #{args.join(" ")}"
