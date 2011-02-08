@@ -91,7 +91,6 @@ module VagrantBindfs
               :path     => path,
               :bindpath => bindpath
               )
-            @env.ui.info "sudo bindfs#{args} #{path} #{bindpath}"
           rescue Vagrant::Errors::VagrantError => e
             @env.ui.error e
             @env.ui.error I18n.t("vagrant.actions.vm.bind_folders.bindfs_command_fail")
