@@ -18,16 +18,16 @@ bind_folder support following arguments...
 
 - `:user` (defaults to 'vagrant')
 - `:group` (defaults to 'vagrant')
-- `:perms` (defaults to 'u=rwD:g=rD:o=rD')
+- `:perms` (defaults to 'u=rwX:g=rD:o=rD')
 - `:mirror`
 - `:'mirror-only'`
-- `:'no-allow-other'`
 - `:'create-for-user'`
 - `:'create-for-group'`
 - `:'create-with-perms'`
 
 ... and following flags (all disabled by default, vagrant-bindfs rely on bindfs own defaults) :
 
+- `:'no-allow-other'`
 - `:'create-as-user'`
 - `:'create-as-mounter'`
 - `:'chown-normal'`

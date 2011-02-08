@@ -7,10 +7,9 @@ module VagrantBindfs
     @@options = {
       :owner                => 'vagrant',
       :group                => 'vagrant',
-      :perms                => 'u=rwD:g=rD:o=rD',
+      :perms                => 'u=rwX:g=rD:o=rD',
       :mirror               => nil,
       :'mirror-only'        => nil,
-      :'no-allow-other'     => nil,
       :'create-for-user'    => nil,
       :'create-for-group'   => nil,
       :'create-with-perms'  => nil,
@@ -18,6 +17,7 @@ module VagrantBindfs
       
     # Flags
     @@flags = {
+      :'no-allow-other'     => false,
       :'create-as-user'     => false,
       :'create-as-mounter'  => false,
       :'chown-normal'       => false,
@@ -91,6 +91,7 @@ module VagrantBindfs
               :path     => path,
               :bindpath => bindpath
               )
+            @env.ui.info "sudo bindfs#{args} #{path} #{bindpath}"
           rescue Vagrant::Errors::VagrantError => e
             @env.ui.error e
             @env.ui.error I18n.t("vagrant.actions.vm.bind_folders.bindfs_command_fail")
