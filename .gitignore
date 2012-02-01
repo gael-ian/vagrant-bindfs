@@ -1,6 +1,7 @@
 *.gem
 
 ### Eclipse project management files
+.loadpath
 .buildpath
 .project
 .settings/*
