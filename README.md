@@ -11,8 +11,25 @@ Vagrant-bindfs is distributed as a Ruby gem. You can install it as any other gem
 
 ## Configure your VM
 
-In your VagrantFile, you can use `config.bindfs.bind_folder` to configure folders that will be binded on VM startup.  
-Its basic syntax is `config.bindfs.bind_folder "source/dir", "mount/point"`.
+In your VagrantFile, you can use `config.bindfs.bind_folder` to configure folders that will be binded on VM startup.
+
+    # In your Vagrantfile
+    Vagrant::Config.run do |config|
+    
+        [...] # Your VM configuration
+    
+        # Basic usage
+        config.bindfs.bind_folder "source/dir", "mount/point"
+        
+        # Advanced options
+        config.bindfs.bind_folder "source/dir", "mount/point", :perms => "u=rw:g=r:o=r", :create_as_user => true
+        
+        # Complete example for a NFS shared folder
+        config.vm.network :hostonly, "33.33.33.10" # (required to use NFS shared folder)
+        config.vm.share_folder "nfs-share", "/vagrant-nfs", "host/source/dir", :nfs => true 
+        config.bindfs.bind_folder "/vagrant-nfs", "guest/mount/point"
+        
+    end
 
 bind_folder support following arguments...
 
@@ -45,7 +62,7 @@ bind_folder support following arguments...
 - `:'xattr-rw'`
 - `:'ctime-from-mtime'`
     
-Ex: `config.bindfs.bind_folder "source/dir", "mount/point", :perms => "u=rw:g=r:o=r", :create_as_user => true`.
+Ex: ``.
 
 You can overwrite default options _via_ `config.bindfs.default_options`.
 
