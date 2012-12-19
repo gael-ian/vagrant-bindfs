@@ -78,8 +78,6 @@ module VagrantBindfs
     def bind_folders
       @env[:ui].info I18n.t("vagrant.guest.linux.bindfs.status.binding")
       binded_folders.each do |opts|
-          
-        next unless opts.include?(:path) and opts.include?(:bindpath)
         path, bindpath, args = normalize_options opts
         
         @env[:vm].channel.sudo("mkdir -p #{bindpath}")

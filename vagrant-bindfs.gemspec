@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
   s.summary     = "A Vagrant plugin to automate bindfs mount in the VM"
   s.description = "A Vagrant plugin to automate bindfs mount in the VM. This allow you to change owner, group and permissions on files and, for example, work around NFS share permissions issues."
 
-  s.add_dependency "vagrant", ">= 0.9.4"
-
   s.files = Dir['lib/**/*.rb'] + Dir['locales/*.yml'] + ['README.md', 'LICENSE.txt']
+  
+  s.add_dependency "vagrant", "~> 1.0.5"
   
 end
