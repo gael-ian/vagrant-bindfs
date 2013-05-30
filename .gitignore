@@ -13,3 +13,5 @@
 ### Windows temporary files
 Thumbs.db
 
+# vim swap files
+.*sw?
