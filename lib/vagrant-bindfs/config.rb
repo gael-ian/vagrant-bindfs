@@ -45,9 +45,6 @@ module VagrantPlugins
       def validate(machine)
         errors = []
 
-        errors << I18n.t('vagrant.config.bindfs.not_supported') unless \
-          machine.communicate.test('bindfs --help')
-
         @__bind_folders.each do |id, options|
           next if options[:disabled]
 
@@ -58,9 +55,6 @@ module VagrantPlugins
 
           if Pathname.new(options[:source_path]).relative?
             errors << I18n.t('vagrant.config.bindfs.source_path_relative',
-              :path => options[:source_path])
-          elsif ! machine.communicate.test("test -d #{options[:source_path]}")
-            errors << I18n.t('vagrant.config.bindfs.source_path_notexist',
               :path => options[:source_path])
           end
         end
