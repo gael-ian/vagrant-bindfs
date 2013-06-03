@@ -80,7 +80,12 @@ module VagrantPlugins
             bind_command = "sudo bindfs#{args} #{source} #{dest}"
           
             unless @machine.communicate.test("test -d #{source}")
-              @env[:ui].error(I18n.t('vagrant.config.bindfs.source_path_not_exist', :path => source))
+              @env[:ui].error(I18n.t('vagrant.config.bindfs.errors.source_path_not_exist', :path => source))
+              next
+            end
+
+            if @machine.communicate.test("mount | grep bindfs | grep ' #{dest} '")
+              @env[:ui].info(I18n.t('vagrant.config.bindfs.already_mounted', :dest => dest))
               next
             end
 
