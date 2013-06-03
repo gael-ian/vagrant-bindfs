@@ -45,12 +45,9 @@ module VagrantPlugins
           @env = env
           
           @machine = env[:machine]
-          unless @machine.communicate.test('bindfs --help')
-            @machine.env.ui.error(I18n.t('vagrant.config.bindfs.not_supported'))
-          else
-            @machine.env.ui.info(I18n.t('vagrant.config.bindfs.status.binding_all'))
-            bind_folders if !binded_folders.empty?
-          end
+
+          handle_bindfs_installation
+          bind_folders if !binded_folders.empty?
         end
 
         def binded_folders
@@ -77,18 +74,28 @@ module VagrantPlugins
 
         def bind_folders
           @env[:ui].info I18n.t("vagrant.guest.linux.bindfs.status.binding")
-          binded_folders.each do |opts|
+          binded_folders.each do |id, opts|
             source, dest, args = normalize_options opts
           
-            unless machine.communicate.test("test -d #{source}")
+            unless @machine.communicate.test("test -d #{source}")
               @env.ui.error(I18n.t('vagrant.config.bindfs.source_path_notexist', :path => source))
               next
             end
 
-            @env[:vm].communicate.sudo("mkdir -p #{dest}")
-            @env[:vm].communicate.sudo("sudo bindfs#{args} #{source} #{dest}", :error_class => Error, :error_key => :bindfs_command_fail)
+            @machine.communicate.sudo("mkdir -p #{dest}")
+            @machine.communicate.sudo("sudo bindfs#{args} #{source} #{dest}", :error_class => Error, :error_key => :bindfs_command_fail)
             @env[:ui].info I18n.t("vagrant.guest.linux.bindfs.status.binding_entry", :source => source, :dest => dest)
             
+          end
+        end
+
+        def handle_bindfs_installation
+          if !@machine.guest.capability(:bindfs_installed)
+            @machine.ui.warn(I18n.t('vagrant.config.bindfs.not_installed'))
+
+            if !@machine.guest.capability(:bindfs_install)
+              raise Vagrant::Bindfs::Error, :cannot_install
+            end
           end
         end
         

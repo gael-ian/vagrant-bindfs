@@ -12,6 +12,16 @@ module VagrantPlugins
         Config
       end
 
+      guest_capability("debian", "bindfs_install") do
+        require 'vagrant-bindfs/cap/debian/bindfs_install'
+        Cap::Debian::BindfsInstall
+      end
+
+      guest_capability("linux", "bindfs_installed") do
+        require 'vagrant-bindfs/cap/linux/bindfs_installed'
+        Cap::Linux::BindfsInstalled
+      end
+
       action_hook(:bindfs, :machine_action_up) do |hook|
         require 'vagrant-bindfs/bind'
         hook.prepend(Action::Bind)

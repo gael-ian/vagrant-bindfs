@@ -2,7 +2,7 @@ en:
   vagrant:
     config:
       bindfs:
-        not_supported: bindfs seems to not be installed on the virtual machine
+        not_installed: bindfs seems to not be installed on the virtual machine
         source_path_not_exist: "cannot bind path %{path} because it doesn't exist"
         destination_path_relative: "desitnation path is relative for bind whatever"
         source_path_relative: "source path is relative for bind whatever"
