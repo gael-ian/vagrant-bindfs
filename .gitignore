@@ -15,3 +15,6 @@ Thumbs.db
 
 # vim swap files
 .*sw?
+
+# vagrant
+.vagrant/*
