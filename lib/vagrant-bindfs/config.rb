@@ -49,12 +49,12 @@ module VagrantPlugins
           next if options[:disabled]
 
           if Pathname.new(options[:dest_path]).relative?
-            errors << I18n.t('vagrant.config.bindfs.destination_path_relative',
+            errors << I18n.t('vagrant.config.bindfs.errors.destination_path_relative',
               :path => options[:dest_path])
           end
 
           if Pathname.new(options[:source_path]).relative?
-            errors << I18n.t('vagrant.config.bindfs.source_path_relative',
+            errors << I18n.t('vagrant.config.bindfs.errors.source_path_relative',
               :path => options[:source_path])
           end
         end
