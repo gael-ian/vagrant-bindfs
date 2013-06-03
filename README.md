@@ -16,18 +16,18 @@ In your VagrantFile, you can use `config.bindfs.bind_folder` to configure folder
     # In your Vagrantfile
     Vagrant::Config.run do |config|
     
-        [...] # Your VM configuration
-    
-        # Basic usage
-        config.bindfs.bind_folder "source/dir", "mount/point"
+      [...] # Your VM configuration
+
+      # Basic usage
+      config.bindfs.bind_folder "source/dir", "mount/point"
+      
+      # Advanced options
+      config.bindfs.bind_folder "source/dir", "mount/point", :perms => "u=rw:g=r:o=r", :create_as_user => true
         
-        # Advanced options
-        config.bindfs.bind_folder "source/dir", "mount/point", :perms => "u=rw:g=r:o=r", :create_as_user => true
-        
-        # Complete example for a NFS shared folder
-        config.vm.network :hostonly, "33.33.33.10" # (required to use NFS shared folder)
-        config.vm.share_folder "nfs-share", "/vagrant-nfs", "host/source/dir", :nfs => true 
-        config.bindfs.bind_folder "/vagrant-nfs", "guest/mount/point"
+      # Complete example for a NFS shared folder
+      config.vm.network :hostonly, "33.33.33.10" # (required to use NFS shared folder)
+      config.vm.share_folder "nfs-share", "/vagrant-nfs", "host/source/dir", :nfs => true 
+      config.bindfs.bind_folder "/vagrant-nfs", "guest/mount/point"
         
     end
 
@@ -68,4 +68,5 @@ You can overwrite default options _via_ `config.bindfs.default_options`.
 
 See [bindfs man page](http://www.cs.helsinki.fi/u/partel/bindfs_docs/bindfs.1.html) for details.
 
-vagrant-bindfs does not check compatibility between given arguments but warn you when a binding command fail or when bindfs is not installed on your virtual machine.
+vagrant-bindfs does not check compatibility between given arguments but warn you when a binding command fail or if bindfs is not installed on your virtual machine.
+On Debian systems, it will try to install bindfs automatically.
