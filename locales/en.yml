@@ -1,13 +1,19 @@
 en:
   vagrant:
-    guest:
-      linux:
-        bindfs:
-          errors:
-            not_installed: bindfs seems to not being installed on the virtual machine
-            bindfs_command_fail: |-
-              Please check options values and compatibility.
-              For a complete documentation, run `sudo bindfs --help` on the VM or see bindfs man page at http://www.cs.helsinki.fi/u/partel/bindfs_docs/bindfs.1.html
-          status:
-            binding: Binding folders...
-            binding_entry: "-- %{path} bind to %{bindpath}"
+    config:
+      bindfs:
+        not_installed: bindfs seems to not be installed on the virtual machine
+        already_mounted: "there's already a bindfs mount to destination %{dest}"
+        status:
+          binding_all: creating bind mounts for selected devices
+          binding_entry: creating bind mount from %{source} to %{dest}
+        errors:
+          destination_path_relative: "destination path is relative for bind whatever"
+          source_path_relative: "source path is relative for bind whatever"
+          source_path_not_exist: "cannot bind source path %{path} because it doesn't exist"
+          binding_failed: |-
+            bind command %{command} failed to run!
+
+            Please check options values and compatibility.
+            For a complete documentation, run `sudo bindfs --help` on the VM or see bindfs man page at http://www.cs.helsinki.fi/u/partel/bindfs_docs/bindfs.1.html
+
