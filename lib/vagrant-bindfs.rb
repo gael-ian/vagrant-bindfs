@@ -1,13 +1,23 @@
-require 'vagrant'
-require 'vagrant-bindfs/error'
-require 'vagrant-bindfs/config'
-require 'vagrant-bindfs/middleware'
+begin
+  require "vagrant"
+rescue LoadError
+  raise "The Vagrant bindfs plugin must be run within Vagrant"
+end
 
-# Register Bindfs config
-Vagrant.config_keys.register(:bindfs) { VagrantBindfs::Config }
+require 'vagrant-bindfs/plugin'
+require 'vagrant-bindfs/version'
+require 'vagrant-bindfs/errors'
 
-# Insert Bindfs before the Provisions middleware in the ":start" and ":up" Action stack
-Vagrant.actions[:start].insert Vagrant::Action::VM::Provision, VagrantBindfs::Middleware
+require "pathname"
 
-# Add custom translations to the load path
-I18n.load_path << File.expand_path("../../locales/en.yml", __FILE__)
+module VagrantPlugins
+  module Bindfs
+    # Returns the path to the source of this plugin
+    def self.source_root
+      @source_root ||= Pathname.new(File.expand_path('../../', __FILE__))
+    end
+
+    I18n.load_path << File.expand_path('locales/en.yml', source_root)
+    I18n.reload!
+  end
+end
