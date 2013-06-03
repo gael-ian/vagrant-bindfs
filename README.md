@@ -6,7 +6,8 @@ This allow you to change owner, group and permissions on files and, for example,
 
 ## Installation
 
-Vagrant-bindfs is distributed as a Ruby gem. You can install it as any other gem with `gem install vagrant-bindfs`
+Vagrant-bindfs is distributed as a Ruby gem.
+You can install it as any other Vagrant plugin with `vagrant plugin install vagrant-bindfs`.
 
 
 ## Configure your VM
