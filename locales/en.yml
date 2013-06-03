@@ -8,16 +8,11 @@ en:
         source_path_relative: "source path is relative for bind whatever"
         status:
           binding_all: creating bind mounts for selected devices
-          binding: gonna go bind something or other
-    guest:
-      linux:
-        bindfs:
-          errors:
-            not_installed: bindfs seems to not being installed on the virtual machine
-            bindfs_command_fail: |-
-              Please check options values and compatibility.
-              For a complete documentation, run `sudo bindfs --help` on the VM or see bindfs man page at http://www.cs.helsinki.fi/u/partel/bindfs_docs/bindfs.1.html
-          status:
-            binding: Binding folders...
-            binding_entry: "-- %{path} bind to %{bindpath}"
+          binding_entry: creating bind mount from %{source} to %{dest}
+        errors:
+          binding_failed: |-
+            bind command %{command} failed to run!
+
+            Please check options values and compatibility.
+            For a complete documentation, run `sudo bindfs --help` on the VM or see bindfs man page at http://www.cs.helsinki.fi/u/partel/bindfs_docs/bindfs.1.html
 
