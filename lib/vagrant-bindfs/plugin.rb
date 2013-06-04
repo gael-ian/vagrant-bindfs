@@ -22,9 +22,11 @@ module VagrantPlugins
         Cap::Linux::BindfsInstalled
       end
 
-      action_hook(:bindfs, :machine_action_up) do |hook|
-        require 'vagrant-bindfs/bind'
-        hook.prepend(Action::Bind)
+      require 'vagrant-bindfs/bind'
+      %w{up reload}.each do |action|
+        action_hook(:bindfs, "machine_action_#{action}".to_sym) do |hook|
+          hook.before(Vagrant::Action::Builtin::NFS, Action::Bind)
+        end
       end
     end
   end

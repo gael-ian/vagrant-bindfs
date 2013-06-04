@@ -46,8 +46,10 @@ module VagrantPlugins
           
           @machine = env[:machine]
 
-          handle_bindfs_installation
-          bind_folders if !binded_folders.empty?
+          unless binded_folders.empty?
+            handle_bindfs_installation
+            bind_folders
+          end
         end
 
         def binded_folders
