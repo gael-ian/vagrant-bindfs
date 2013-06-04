@@ -23,7 +23,7 @@ module VagrantPlugins
       end
 
       require 'vagrant-bindfs/bind'
-      %w{up start}.each do |action|
+      %w{up reload}.each do |action|
         action_hook(:bindfs, "machine_action_#{action}".to_sym) do |hook|
           hook.before(Vagrant::Action::Builtin::NFS, Action::Bind)
         end
