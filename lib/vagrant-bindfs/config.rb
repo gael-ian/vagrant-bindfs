@@ -15,7 +15,7 @@ module VagrantPlugins
         @__default_options.merge! new_options
       end
 
-      def bind_folder(source_path, dest_path, opts = nil)
+      def bind_folder(source_path, dest_path, options = nil)
         options ||= {}
         options[:source_path] = source_path
         options[:dest_path] = dest_path

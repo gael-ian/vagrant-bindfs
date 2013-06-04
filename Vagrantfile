@@ -9,7 +9,7 @@ Vagrant.configure("2") do |master_config|
     config.vm.box_url = "https://s3.amazonaws.com/gsc-vagrant-boxes/ubuntu-12.04-omnibus-chef.box"
 
     config.bindfs.bind_folder '/etc3', '/etc-nonexit'
-    config.bindfs.bind_folder '/etc', '/etc-binded'
+    config.bindfs.bind_folder '/etc', '/etc-binded', :'chown-ignore' => true
 
     config.vm.provider "virtualbox" do |v|
       v.customize ['modifyvm', :id,
