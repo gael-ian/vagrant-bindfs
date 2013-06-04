@@ -25,7 +25,7 @@ module VagrantPlugins
       require 'vagrant-bindfs/bind'
       %w{up start}.each do |action|
         action_hook(:bindfs, "machine_action_#{action}".to_sym) do |hook|
-          hook.after(VagrantPlugins::ProviderVirtualBox::Action::Boot, Action::Bind)
+          hook.after(Vagrant::Action::Builtin::NFS, Action::Bind)
         end
       end
     end
