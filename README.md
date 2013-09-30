@@ -60,7 +60,7 @@ The format is:
 
 `bind_folder` supports the following arguments:
 
-- `:user` (defaults to 'vagrant')
+- `:owner` (defaults to 'vagrant')
 - `:group` (defaults to 'vagrant')
 - `:perms` (defaults to 'u=rwX:g=rD:o=rD')
 - `:mirror`
