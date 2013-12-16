@@ -1,20 +1,63 @@
 *.gem
 
-### Eclipse project management files
-.loadpath
+
+# vagrant
+.vagrant/*
+
+
+# Ruby environment managers
+.rvmrc
+.ruby-version
+.ruby-gemset
+.rbenv-version
+
+
+### Mess files
+
+.~lock.*
+.tmp*
+**.orig
+
+
+### Editors meta-data
+
+## IntelliJ IDEA / RubyMine
+*.iml
+*.ipr
+*.iws
+.idea/
+
+## Eclipse project management files
 .buildpath
+.loadpath
 .project
 .settings/*
+.externalToolBuilders/*
 
-### Mac OS temporary files
-.DS_Store
-._*
+## Textmate
+*.tmproj
+*.tmproject
+tmtags
 
-### Windows temporary files
-Thumbs.db
+# SublimeText project files
+/*.sublime-project
+*.sublime-workspace
 
 # vim swap files
 .*sw?
 
-# vagrant
-.vagrant/*
+
+### OS temporary files
+
+## Mac OS X
+.DS_Store
+._*
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+## Windows
+Thumbs.db
+
+## Linux
+*~
