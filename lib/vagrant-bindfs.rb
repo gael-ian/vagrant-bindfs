@@ -5,7 +5,6 @@ rescue LoadError
 end
 
 require 'vagrant-bindfs/plugin'
-require 'vagrant-bindfs/version'
 require 'vagrant-bindfs/errors'
 
 require "pathname"

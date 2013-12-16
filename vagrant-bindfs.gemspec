@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path("../lib/vagrant-bindfs/version", __FILE__)
+$:.unshift File.expand_path("../lib", __FILE__)
+require "vagrant-bindfs/version"
 
 Gem::Specification.new do |s|
   s.name        = "vagrant-bindfs"
-  s.version     = VagrantBindfs::VERSION
+  s.version     = VagrantPlugins::Bindfs::VERSION
   s.license     = "MIT"
   s.authors     = ["Gaël-Ian Havard", "Igor Serebryany"]
   s.email       = ["gaelian.havard@gmail.com", "igor.serebryany@airbnb.com"]
