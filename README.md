@@ -44,15 +44,20 @@ The format is:
     
       [...] # Your VM configuration
 
-      # Basic usage
+      ## Basic usage
       config.bindfs.bind_folder "source/dir", "mount/point"
       
-      # Advanced options
-      config.bindfs.bind_folder "source/dir", "mount/point", :perms => "u=rw:g=r:o=r", :create_as_user => true
+      ## Advanced options
+      config.bindfs.bind_folder "source/dir", "mount/point",
+      	:perms           => "u=rw:g=r:o=r",
+      	:create_as_user  => true
         
-      # Complete example for a NFS shared folder
-      config.vm.network :hostonly, "33.33.33.10" # (required to use NFS shared folder)
-      config.vm.share_folder "nfs-share", "/vagrant-nfs", "host/source/dir", :nfs => true 
+      ## Complete example for a NFS shared folder
+      # Static IP is required to use NFS shared folder
+      config.vm.network "private_network", ip: "192.168.50.4"
+      # Declare shared folder with Vagrant syntax
+      config.vm.synced_folder "host/source/dir", "/vagrant-nfs", :type => :nfs
+      # Use vagrant-bindfs to re-mount folder
       config.bindfs.bind_folder "/vagrant-nfs", "guest/mount/point"
         
     end
