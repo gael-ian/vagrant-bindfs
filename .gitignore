@@ -1,5 +1,5 @@
 *.gem
-
+Gemfile.lock
 
 # vagrant
 .vagrant/*
