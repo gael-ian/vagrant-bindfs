@@ -25,7 +25,11 @@ module VagrantPlugins
       require 'vagrant-bindfs/bind'
       %w{up reload}.each do |action|
         action_hook(:bindfs, "machine_action_#{action}".to_sym) do |hook|
-          hook.before(Vagrant::Action::Builtin::NFS, Action::Bind)
+          target = (Vagrant::Action::Builtin.const_defined?(:NFS) ?
+            Vagrant::Action::Builtin::NFS :
+            Vagrant::Action::Builtin::SyncedFolders)
+
+          hook.before(target, Action::Bind)
         end
       end
     end
