@@ -1,6 +1,6 @@
 # vagrant-bindfs
 
-A Vagrant plugin to automate [bindfs](http://code.google.com/p/bindfs/) mount in the VM.
+A Vagrant plugin to automate [bindfs](http://bindfs.org/) mount in the VM.
 This allow you to change owner, group and permissions on files and, for example, work around NFS share permissions issues.
 
 
@@ -77,6 +77,7 @@ The format is:
 - `:group` (defaults to 'vagrant')
 - `:perms` (defaults to 'u=rwX:g=rD:o=rD')
 - `:mirror`
+- `:o`
 - `:'mirror-only'`
 - `:'create-for-user'`
 - `:'create-for-group'`
@@ -104,7 +105,7 @@ The format is:
     
 You can overwrite default options _via_ `config.bindfs.default_options`.
 
-See [bindfs man page](http://www.cs.helsinki.fi/u/partel/bindfs_docs/bindfs.1.html) for details.
+See [bindfs man page](http://bindfs.org/docs/bindfs.1.html) for details.
 
 vagrant-bindfs does not check compatibility between given arguments but warn you when a binding command fail or if bindfs is not installed on your virtual machine.
 On Debian systems, it will try to install bindfs automatically.
