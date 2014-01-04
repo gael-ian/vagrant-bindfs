@@ -2,6 +2,7 @@ module VagrantPlugins
   module Bindfs
     module Action
       class Bind
+        
         # Options
         @@options = {
           :owner                => 'vagrant',
@@ -12,9 +13,13 @@ module VagrantPlugins
           :'create-for-user'    => nil,
           :'create-for-group'   => nil,
           :'create-with-perms'  => nil,
+        }
+        
+        # Shorthands
+        @@shorthands = {
           :o                    => nil,
         }
-          
+        
         # Flags
         @@flags = {
           :'no-allow-other'     => false,
@@ -58,7 +63,7 @@ module VagrantPlugins
         end
 
         def default_options
-          @@options.merge(@@flags).merge(@machine.config.bindfs.default_options)
+          @@options.merge(@@shorthands).merge(@@flags).merge(@machine.config.bindfs.default_options)
         end
         
         def normalize_options opts
@@ -68,8 +73,9 @@ module VagrantPlugins
 
           args = []
           opts.each do |key, value|
-            args << "--#{key.to_s}" if @@flags.key?(key) and !!value 
+            args << "--#{key.to_s}"          if @@flags.key?(key) and !!value 
             args << "--#{key.to_s}=#{value}" if @@options.key?(key) and !value.nil?
+            args << "-#{key.to_s} #{value}"  if @@shorthands.key?(key) and !value.nil?
           end
           
           [ source, dest, " #{args.join(" ")}" ]
