@@ -12,6 +12,7 @@ module VagrantPlugins
           :'create-for-user'    => nil,
           :'create-for-group'   => nil,
           :'create-with-perms'  => nil,
+          :o                    => nil,
         }
           
         # Flags
