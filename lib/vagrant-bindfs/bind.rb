@@ -2,7 +2,7 @@ module VagrantPlugins
   module Bindfs
     module Action
       class Bind
-        
+
         # Options
         @@options = {
           :owner                => "vagrant",
@@ -14,12 +14,12 @@ module VagrantPlugins
           :"create-for-group"   => nil,
           :"create-with-perms"  => nil,
         }
-        
+
         # Shorthands
         @@shorthands = {
           :o                    => nil,
         }
-        
+
         # Flags
         @@flags = {
           :"no-allow-other"     => false,
@@ -40,7 +40,7 @@ module VagrantPlugins
           :"xattr-rw"           => false,
           :"ctime-from-mtime"   => false,
         }
-        
+
         def initialize(app, env)
           @app = app
           @env = env
@@ -49,7 +49,7 @@ module VagrantPlugins
         def call(env)
           @app.call(env)
           @env = env
-          
+
           @machine = env[:machine]
 
           unless binded_folders.empty?
@@ -65,7 +65,7 @@ module VagrantPlugins
         def default_options
           @@options.merge(@@shorthands).merge(@@flags).merge(@machine.config.bindfs.default_options)
         end
-        
+
         def normalize_options opts
           source  = opts.delete(:source_path)
           dest    = opts.delete(:dest_path)
@@ -87,7 +87,7 @@ module VagrantPlugins
           binded_folders.each do |id, opts|
             source, dest, args = normalize_options opts
             bind_command = "sudo bindfs#{args} #{source} #{dest}"
-          
+
             unless @machine.communicate.test("test -d #{source}")
               @env[:ui].error(I18n.t("vagrant.config.bindfs.errors.source_path_not_exist", :path => source))
               next
