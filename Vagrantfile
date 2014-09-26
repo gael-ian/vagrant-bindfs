@@ -1,22 +1,27 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.require_plugin "vagrant-bindfs"
+Vagrant.configure("2") do |config|
+  config.vm.box = "hashicorp/precise32"
 
-Vagrant.configure("2") do |master_config|
-  master_config.vm.define "bindfstest" do |config|
-    config.vm.box = "airbase"
-    config.vm.box_url = "https://s3.amazonaws.com/gsc-vagrant-boxes/ubuntu-12.04-omnibus-chef.box"
+  config.vm.define "bindfstest" do |machine|
+    machine.bindfs.bind_folder "/etc3", "/etc-nonexist"
 
-    config.bindfs.bind_folder "/etc3", "/etc-nonexit"
-    config.bindfs.bind_folder "/etc", "/etc-binded", :"chown-ignore" => true
+    machine.bindfs.bind_folder "/etc", "/etc-binded-symbol", :chown_ignore => true
+    machine.bindfs.bind_folder "/etc", "/etc-binded-string", "chown-ignore" => true
+  end
 
-    config.vm.provider "virtualbox" do |v|
-      v.customize ["modifyvm", :id,
-        "--memory", "512",
-        "--cpus",   "2",
-      ]
-    end
+  config.vm.provider :virtualbox do |provider, override|
+    provider.memory = 512
+    provider.cpus = 2
 
+    #override.vm.box = ""
+  end
+
+  config.vm.provider :libvirt do |provider, override|
+    provider.memory = 512
+    provider.cpus = 2
+
+    #override.vm.box = ""
   end
 end

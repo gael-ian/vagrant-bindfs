@@ -1,7 +1,7 @@
 # vagrant-bindfs
 
-A Vagrant plugin to automate [bindfs](http://bindfs.org/) mount in the VM.
-This allow you to change owner, group and permissions on files and, for example, work around NFS share permissions issues.
+A Vagrant plugin to automate [bindfs](http://bindfs.org/) mount in the VM. This allow you to change
+owner, group and permissions on files and, for example, work around NFS share permissions issues.
 
 
 ## Some Background: Why `vagrant-bindfs`
@@ -28,44 +28,47 @@ _Note that `map_uid` and `map_gid` NFS options can be used to set the identity u
 
 ## Installation
 
-Vagrant-bindfs is distributed as a Ruby gem.
-You can install it as any other Vagrant plugin with `vagrant plugin install vagrant-bindfs`.
+Vagrant-bindfs is distributed as a Ruby gem. You can install it as any other Vagrant plugin
+with `vagrant plugin install vagrant-bindfs`.
 
 
 ## Usage
 
-In your `Vagrantfile`, use `config.bindfs.bind_folder` to configure folders that will be binded on VM startup.
-The format is:
+In your `Vagrantfile`, use `config.bindfs.bind_folder` to configure folders that will be binded on VM
+startup. The format is:
 
 ```ruby
-     config.bindfs.bind_folder "/path/to/source", "/path/to/destination", options
+config.bindfs.bind_folder "/path/to/source", "/path/to/destination", options
 ```
 
 
 ### Example
 
 ```ruby
-    Vagrant::Config.run do |config|
-    
-      [...] # Your VM configuration
+Vagrant::Config.run do |config|
 
-      ## Basic usage
-      config.bindfs.bind_folder "source/dir", "mount/point"
-      
-      ## Advanced options
-      config.bindfs.bind_folder "source/dir", "mount/point",
-      	:perms           => "u=rw:g=r:o=r",
-      	:create_as_user  => true
-        
-      ## Complete example for a NFS shared folder
-      # Static IP is required to use NFS shared folder
-      config.vm.network "private_network", ip: "192.168.50.4"
-      # Declare shared folder with Vagrant syntax
-      config.vm.synced_folder "host/source/dir", "/vagrant-nfs", :type => :nfs
-      # Use vagrant-bindfs to re-mount folder
-      config.bindfs.bind_folder "/vagrant-nfs", "guest/mount/point"
-        
-    end
+  [...] # Your VM configuration
+
+  ## Basic usage
+  config.bindfs.bind_folder "source/dir", "mount/point"
+
+  ## Advanced options
+  config.bindfs.bind_folder "source/dir", "mount/point",
+  	perms: "u=rw:g=r:o=r",
+  	create_as_user: true
+
+  ## Complete example for a NFS shared folder
+
+  # Static IP is required to use NFS shared folder
+  config.vm.network "private_network", ip: "192.168.50.4"
+
+  # Declare shared folder with Vagrant syntax
+  config.vm.synced_folder "host/source/dir", "/vagrant-nfs", type: :nfs
+
+  # Use vagrant-bindfs to re-mount folder
+  config.bindfs.bind_folder "/vagrant-nfs", "guest/mount/point"
+
+end
 ```
 
 
@@ -78,53 +81,54 @@ The format is:
 - `:perms` (defaults to 'u=rwX:g=rD:o=rD')
 - `:mirror`
 - `:o`
-- `:'mirror-only'`
-- `:'create-for-user'`
-- `:'create-for-group'`
-- `:'create-with-perms'`
+- `:mirror_only'`
+- `:create_for_user`
+- `:create_for_group`
+- `:create_with_perms`
 
-… and following flags (all disabled by default, vagrant-bindfs rely on bindfs own defaults) :
+… and following flags (all disabled by default, vagrant-bindfs rely on bindfs own defaults):
 
-- `:'no-allow-other'`
-- `:'create-as-user'`
-- `:'create-as-mounter'`
-- `:'chown-normal'`
-- `:'chown-ignore'`
-- `:'chown-deny'`
-- `:'chgrp-normal'`
-- `:'chgrp-ignore'`
-- `:'chgrp-deny'`
-- `:'chmod-normal'`
-- `:'chmod-ignore'`
-- `:'chmod-deny'`
-- `:'chmod-allow-x'`
-- `:'xattr-none'`
-- `:'xattr-ro'`
-- `:'xattr-rw'`
-- `:'ctime-from-mtime'`
+_ `:no_allow_other`
+_ `:create_as_user`
+_ `:create_as_mounter`
+_ `:chown_normal`
+_ `:chown_ignore`
+_ `:chown_deny`
+_ `:chgrp_normal`
+_ `:chgrp_ignore`
+_ `:chgrp_deny`
+_ `:chmod_normal`
+_ `:chmod_ignore`
+_ `:chmod_deny`
+_ `:chmod_allow_x`
+_ `:xattr_none`
+_ `:xattr_ro`
+_ `:xattr_rw`
+_ `:ctime_from_mtime`
     
-You can overwrite default options _via_ `config.bindfs.default_options`.
+You can overwrite default options _via_ `config.bindfs.default_options`. See 
+[bindfs man page](http://bindfs.org/docs/bindfs.1.html) for details.
 
-See [bindfs man page](http://bindfs.org/docs/bindfs.1.html) for details.
-
-vagrant-bindfs does not check compatibility between given arguments but warn you when a binding command fail or if bindfs is not installed on your virtual machine.
-On Debian systems, it will try to install bindfs automatically.
+vagrant-bindfs does not check compatibility between given arguments but warn you when a binding 
+command fail or if bindfs is not installed on your virtual machine. On Debian and SUSE systems, it
+will try to install bindfs automatically.
 
 
 ## Contributing
 
-If you find this plugin useful, we could use a few enhancements!
-In particular, capabilities files for installing vagrant-bindfs on systems other than Debian would be useful. We could also use some specs…
+If you find this plugin useful, we could use a few enhancements! In particular, capabilities files
+for installing vagrant-bindfs on systems other than Debian or SUSE would be useful. We could also
+use some specs…
 
 
 ### How to Test Changes
 
-If you've made changes to this plugin, you can easily test it locally in vagrant.
-From the root of the repo, do:
+If you've made changes to this plugin, you can easily test it locally in vagrant. From the root of
+the repo, do:
 
 - `bundle install`
 - `rake build`
 - `bundle exec vagrant up`
 
-This will spin up a default Debian VM and try to bindfs-mount some shares in it.
-Feel free to modify the included `Vagrantfile` to add additional test cases.
+This will spin up a default Debian VM and try to bindfs-mount some shares in it. Feel free to modify
+the included `Vagrantfile` to add additional test cases.

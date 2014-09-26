@@ -34,7 +34,7 @@ module VagrantPlugins
           target = if Vagrant::Action::Builtin.const_defined? :NFS
             Vagrant::Action::Builtin::NFS
           else
-            Vagrant::Action::Builtin::SyncedFolders)
+            Vagrant::Action::Builtin::SyncedFolders
           end
 
           hook.before(target, Action::Bind)
