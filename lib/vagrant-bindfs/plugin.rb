@@ -17,17 +17,25 @@ module VagrantPlugins
         Cap::Debian::BindfsInstall
       end
 
+      guest_capability("suse", "bindfs_install") do
+        require 'vagrant-bindfs/cap/suse/bindfs_install'
+        Cap::SUSE::BindfsInstall
+      end
+
       guest_capability("linux", "bindfs_installed") do
         require 'vagrant-bindfs/cap/linux/bindfs_installed'
         Cap::Linux::BindfsInstalled
       end
 
       require 'vagrant-bindfs/bind'
+
       %w{up reload}.each do |action|
         action_hook(:bindfs, "machine_action_#{action}".to_sym) do |hook|
-          target = (Vagrant::Action::Builtin.const_defined?(:NFS) ?
-            Vagrant::Action::Builtin::NFS :
+          target = if Vagrant::Action::Builtin.const_defined? :NFS
+            Vagrant::Action::Builtin::NFS
+          else
             Vagrant::Action::Builtin::SyncedFolders)
+          end
 
           hook.before(target, Action::Bind)
         end

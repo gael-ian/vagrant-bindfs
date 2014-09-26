@@ -16,4 +16,3 @@ en:
 
             Please check options values and compatibility.
             For a complete documentation, run `sudo bindfs --help` on the VM or see bindfs man page at http://www.cs.helsinki.fi/u/partel/bindfs_docs/bindfs.1.html
-
