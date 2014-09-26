@@ -115,7 +115,7 @@ module VagrantPlugins
           end
         end
         
-      end #Bind
-    end #Action
-  end #Bindfs
-end #VagrantPlugins
+      end
+    end
+  end
+end

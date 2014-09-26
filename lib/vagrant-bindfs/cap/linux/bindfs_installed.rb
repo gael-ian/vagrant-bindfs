@@ -8,8 +8,8 @@ module VagrantPlugins
             machine.communicate.test("bindfs --help")
           end
 
-        end # BindfsInstalled
-      end # Linux
-    end # Cap
-  end # Bindfs
-end # module VagrantPlugins
+        end
+      end
+    end
+  end
+end

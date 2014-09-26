@@ -10,8 +10,8 @@ module VagrantPlugins
             end
           end
 
-        end # BindfsInstall
-      end # Debian
-    end # Cap
-  end # Bindfs
-end # VagrantPlugins
+        end
+      end
+    end
+  end
+end
