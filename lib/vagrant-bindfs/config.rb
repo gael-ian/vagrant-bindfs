@@ -1,6 +1,6 @@
 module VagrantPlugins
   module Bindfs
-    class Config < Vagrant.plugin('2', :config)
+    class Config < Vagrant.plugin("2", :config)
 
       def initialize
         @__default_options = {}
@@ -49,17 +49,17 @@ module VagrantPlugins
           next if options[:disabled]
 
           if Pathname.new(options[:dest_path]).relative?
-            errors << I18n.t('vagrant.config.bindfs.errors.destination_path_relative',
+            errors << I18n.t("vagrant.config.bindfs.errors.destination_path_relative",
               :path => options[:dest_path])
           end
 
           if Pathname.new(options[:source_path]).relative?
-            errors << I18n.t('vagrant.config.bindfs.errors.source_path_relative',
+            errors << I18n.t("vagrant.config.bindfs.errors.source_path_relative",
               :path => options[:source_path])
           end
         end
 
-        errors.empty? && {} || { 'bindfs' => errors }
+        errors.empty? && {} || { "bindfs" => errors }
       end
     end
   end

@@ -6,8 +6,8 @@ module VagrantPlugins
 
           def self.bindfs_install(machine)
             machine.communicate.tap do |comm|
-              comm.sudo('apt-get update')
-              comm.sudo('apt-get install -y bindfs')
+              comm.sudo("apt-get update")
+              comm.sudo("apt-get install -y bindfs")
             end
           end
 
