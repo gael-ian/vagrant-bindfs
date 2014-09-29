@@ -88,23 +88,23 @@ end
 
 … and following flags (all disabled by default, vagrant-bindfs rely on bindfs own defaults):
 
-_ `:no_allow_other`
-_ `:create_as_user`
-_ `:create_as_mounter`
-_ `:chown_normal`
-_ `:chown_ignore`
-_ `:chown_deny`
-_ `:chgrp_normal`
-_ `:chgrp_ignore`
-_ `:chgrp_deny`
-_ `:chmod_normal`
-_ `:chmod_ignore`
-_ `:chmod_deny`
-_ `:chmod_allow_x`
-_ `:xattr_none`
-_ `:xattr_ro`
-_ `:xattr_rw`
-_ `:ctime_from_mtime`
+- `:no_allow_other`
+- `:create_as_user`
+- `:create_as_mounter`
+- `:chown_normal`
+- `:chown_ignore`
+- `:chown_deny`
+- `:chgrp_normal`
+- `:chgrp_ignore`
+- `:chgrp_deny`
+- `:chmod_normal`
+- `:chmod_ignore`
+- `:chmod_deny`
+- `:chmod_allow_x`
+- `:xattr_none`
+- `:xattr_ro`
+- `:xattr_rw`
+- `:ctime_from_mtime`
     
 You can overwrite default options _via_ `config.bindfs.default_options`. See 
 [bindfs man page](http://bindfs.org/docs/bindfs.1.html) for details.
