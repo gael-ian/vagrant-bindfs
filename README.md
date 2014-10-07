@@ -59,14 +59,11 @@ Vagrant::Config.run do |config|
 
   ## Complete example for a NFS shared folder
 
-  # Static IP is required to use NFS shared folder
-  config.vm.network "private_network", ip: "192.168.50.4"
-
   # Declare shared folder with Vagrant syntax
-  config.vm.synced_folder "host/source/dir", "/vagrant-nfs", type: :nfs
+  config.vm.synced_folder ".", "/vagrant-nfs", type: :nfs
 
   # Use vagrant-bindfs to re-mount folder
-  config.bindfs.bind_folder "/vagrant-nfs", "guest/mount/point"
+  config.bindfs.bind_folder "/vagrant-nfs", "/vagrant"
 
 end
 ```
@@ -74,21 +71,39 @@ end
 
 ### Supported options
 
-`bind_folder` supports the following arguments:
+The `bind_folder` config supports the following long arguments, some of them are overwritable
+with short options:
 
-- `:owner` (defaults to 'vagrant')
-- `:group` (defaults to 'vagrant')
+- `:force_user` (defaults to 'vagrant')
+- `:force_group` (defaults to 'vagrant')
 - `:perms` (defaults to 'u=rwX:g=rD:o=rD')
 - `:mirror`
-- `:o`
-- `:mirror_only'`
+- `:mirror_only`
+- `:map`
 - `:create_for_user`
 - `:create_for_group`
 - `:create_with_perms`
+- `:chmod_filter`
+- `:read_rate`
+- `:write_rate`
 
-… and following flags (all disabled by default, vagrant-bindfs rely on bindfs own defaults):
+There are also options available for backward compatibility, if one of these options is defined
+the newer counterpart will be unset:
 
-- `:no_allow_other`
+- `:owner`
+- `:group`
+
+The following shortcuts are also available:
+
+- `:o`
+- `:u` (Overwrites the value of force_user)
+- `:g` (Overwrites the value of force_group)
+- `:m` (Overwrites the value of mirror)
+- `:M` (Overwrites the value of mirror_only)
+- `:p` (Overwrites the value of perms)
+
+… and the following flags (all disabled by default, vagrant-bindfs rely on bindfs own defaults):
+
 - `:create_as_user`
 - `:create_as_mounter`
 - `:chown_normal`
@@ -104,12 +119,16 @@ end
 - `:xattr_none`
 - `:xattr_ro`
 - `:xattr_rw`
+- `:no_allow_other`
+- `:realistic_permissions`
 - `:ctime_from_mtime`
-    
-You can overwrite default options _via_ `config.bindfs.default_options`. See 
+- `:hide_hard_links`
+- `:multithreaded`
+
+You can overwrite default options _via_ `config.bindfs.default_options`. See
 [bindfs man page](http://bindfs.org/docs/bindfs.1.html) for details.
 
-vagrant-bindfs does not check compatibility between given arguments but warn you when a binding 
+vagrant-bindfs does not check compatibility between given arguments but warn you when a binding
 command fail or if bindfs is not installed on your virtual machine. On Debian and SUSE systems, it
 will try to install bindfs automatically.
 
