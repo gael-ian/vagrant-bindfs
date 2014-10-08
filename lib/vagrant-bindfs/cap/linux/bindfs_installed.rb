@@ -5,11 +5,11 @@ module VagrantPlugins
         module BindfsInstalled
 
           def self.bindfs_installed(machine)
-            machine.communicate.test('bindfs --help')
+            machine.communicate.test("bindfs --help")
           end
 
-        end # BindfsInstalled
-      end # Linux
-    end # Cap
-  end # Bindfs
-end # module VagrantPlugins
+        end
+      end
+    end
+  end
+end

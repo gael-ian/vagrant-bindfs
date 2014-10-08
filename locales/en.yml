@@ -2,18 +2,19 @@ en:
   vagrant:
     config:
       bindfs:
-        not_installed: bindfs seems to not be installed on the virtual machine
-        already_mounted: "there's already a bindfs mount to destination %{dest}"
+        not_installed: "Bindfs seems to not be installed on the virtual machine"
+        already_mounted: "There's already a bindfs mount to destination %{dest}"
         status:
-          binding_all: creating bind mounts for selected devices
-          binding_entry: creating bind mount from %{source} to %{dest}
+          binding_all: "Creating bind mounts for selected devices"
+          binding_entry: "Creating bind mount from %{source} to %{dest}"
         errors:
-          destination_path_relative: "destination path is relative for bind whatever"
-          source_path_relative: "source path is relative for bind whatever"
-          source_path_not_exist: "cannot bind source path %{path} because it doesn't exist"
+          destination_path_relative: "Destination path is relative for bind whatever"
+          source_path_relative: "Source path is relative for bind whatever"
+          source_path_not_exist: "Cannot bind source path %{path} because it doesn't exist"
           binding_failed: |-
-            bind command %{command} failed to run!
+            The bind command `%{command}` failed to run!
 
-            Please check options values and compatibility.
-            For a complete documentation, run `sudo bindfs --help` on the VM or see bindfs man page at http://www.cs.helsinki.fi/u/partel/bindfs_docs/bindfs.1.html
-
+            Please check options values and compatibility. For a complete documentation,
+            run `sudo bindfs --help` on the VM.
+            
+            You can see it online at http://www.cs.helsinki.fi/u/partel/bindfs_docs/bindfs.1.html.

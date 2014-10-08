@@ -1,5 +1,3 @@
-require "vagrant"
-
 module VagrantPlugins
   module Bindfs
     class Error < Vagrant::Errors::VagrantError
