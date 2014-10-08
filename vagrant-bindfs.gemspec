@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name = "vagrant-bindfs"
   s.version = VagrantPlugins::Bindfs::VERSION
   s.license = "MIT"
-  s.authors = ["Gaël-Ian Havard", "Igor Serebryany"]
+  s.authors = ["Gaël-Ian Havard", "Igor Serebryany", "Thomas Boerger"]
   s.email = ["gaelian.havard@gmail.com", "igor.serebryany@airbnb.com"]
   s.homepage = "https://github.com/gael-ian/vagrant-bindfs"
   
