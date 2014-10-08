@@ -24,56 +24,59 @@ module VagrantPlugins
         end
 
         def default_options
-          defaults = available_options.merge(
+          current_defaults = @machine.config.bindfs.default_options
+
+          new_defaults = {}.tap do |new_default|
+            current_defaults.each do |key, value|
+              new_default[key.to_s.gsub("_", "-")] = value
+            end
+          end
+
+          available_options.merge(
             available_shortcuts
           ).merge(
             available_flags
           ).merge(
-            @machine.config.bindfs.default_options
+            new_defaults
           )
-
-          defaults.delete "owner"
-          defaults.delete "group"
-
-          defaults
         end
 
         def normalize_options(current_options)
-          source = current_options.delete(:source_path)
-          dest = current_options.delete(:dest_path)
-          options = default_options.merge(current_options)
+          new_options = {}.tap do |new_option|
+            current_options.each do |key, value|
+              new_option[key.to_s.gsub("_", "-")] = value
+            end
+          end
+
+          source = new_options.delete("source-path")
+          dest = new_options.delete("dest-path")
+          options = default_options.merge(new_options)
 
           args = [].tap do |arg|
-            configured_keys = options.keys.map do |key|
-              key.to_s.gsub "_", "-"
-            end
-
             options.each do |key, value|
-              key = key.to_s.gsub "_", "-"
+              next if key == "force-user" and options.keys.include? "owner"
+              next if key == "force-user" and options.keys.include? "u"
 
-              next if key == "force-user" and configured_keys.include? "owner"
-              next if key == "force-user" and configured_keys.include? "u"
+              next if key == "force-group" and options.keys.include? "group"
+              next if key == "force-group" and options.keys.include? "g"
 
-              next if key == "force-group" and configured_keys.include? "group"
-              next if key == "force-group" and configured_keys.include? "g"
+              next if key == "mirror" and options.keys.include? "m"
+              next if key == "mirror-only" and options.keys.include? "M"
+              next if key == "perms" and options.keys.include? "p"
 
-              next if key == "mirror" and configured_keys.include? "m"
-              next if key == "mirror-only" and configured_keys.include? "M"
-              next if key == "perms" and configured_keys.include? "p"
-
-              if available_flags.include? key
+              if available_flags.keys.include? key
                 arg.push "--#{key}" if value
                 next
               end
 
               next if value.nil?
 
-              if available_shortcuts.include? key
-                arg.push "-#{key} #{value}"
+              if available_shortcuts.keys.include?(key) or additional_shortcuts.keys.include?(key)
+                arg.push "-#{key} '#{value}'"
                 next
               end
 
-              if available_options.include? key
+              if available_options.keys.include?(key) or additional_options.keys.include?(key)
                 arg.push "--#{key}='#{value}'"
                 next
               end
@@ -159,8 +162,12 @@ module VagrantPlugins
             "create-with-perms" => nil,
             "chmod-filter" => nil,
             "read-rate" => nil,
-            "write-rate" => nil,
+            "write-rate" => nil
+          }.freeze
+        end
 
+        def additional_options
+          @additional_options ||= {
             # only for old versions, this will result in an error
             # if you try that within current bindfs versions!
             "owner" => "vagrant",
@@ -170,12 +177,17 @@ module VagrantPlugins
 
         def available_shortcuts
           @available_shortcuts ||= {
+            "o" => nil
+          }.freeze
+        end
+
+        def additional_shortcuts
+          @additional_shortcuts ||= {
             "u" => nil, # overwrites the value of force-user
             "g" => nil, # overwrites the value of force-group
             "m" => nil, # overwrites the value of mirror
             "M" => nil, # overwrites the value of mirror-only
-            "p" => nil, # overwrites the value of perms
-            "o" => nil
+            "p" => nil  # overwrites the value of perms
           }.freeze
         end
 
