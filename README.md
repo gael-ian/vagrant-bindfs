@@ -45,25 +45,35 @@ config.bindfs.bind_folder "/path/to/source", "/path/to/destination", options
 ### Example
 
 ```ruby
-Vagrant::Config.run do |config|
-
+Vagrant.configure("2") do |config|
+  
   [...] # Your VM configuration
-
+  
   ## Basic usage
   config.bindfs.bind_folder "source/dir", "mount/point"
-
+  
+  
   ## Advanced options
   config.bindfs.bind_folder "source/dir", "mount/point",
-  	perms: "u=rw:g=r:o=r",
-  	create_as_user: true
-
+    perms: "u=rw:g=r:o=r",
+    create_as_user: true
+  
+  
   ## Complete example for a NFS shared folder
-
+  
+  # Static IP is required to use NFS shared folder
+  config.vm.network "private_network", ip: "192.168.50.4"
+  
   # Declare shared folder with Vagrant syntax
-  config.vm.synced_folder ".", "/vagrant-nfs", type: :nfs
-
+  config.vm.synced_folder "host/source/dir", "/vagrant-nfs", :type => :nfs
+  
   # Use vagrant-bindfs to re-mount folder
-  config.bindfs.bind_folder "/vagrant-nfs", "/vagrant"
+  config.bindfs.bind_folder "/vagrant-nfs", "guest/mount/point"
+  
+  
+  ## Share the default `vagrant` folder via NFS with your own options
+  config.vm.synced_folder ".", "/vagrant", type: :nfs
+  config.bindfs.bind_folder "/vagrant", "/vagrant"
 
 end
 ```
