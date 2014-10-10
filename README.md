@@ -71,7 +71,7 @@ end
 
 ### Supported options
 
-The `bind_folder` config accept any option you can pass to bindfs [bindfs-compatibility].
+The `bind_folder` config accept any option you can pass to bindfs [^bindfs-compatibility].
 Check [lib/vagrant-bindfs/command.rb](https://github.com/gael-ian/vagrant-bindfs/blob/master/lib/vagrant-bindfs/command.rb#L66) for a complete list of supported options and default values.
 
 Both long arguments and shorthand are supported.
@@ -108,4 +108,5 @@ This will spin up a default Debian VM and try to bindfs-mount some shares in it.
 Feel free to modify the included `Vagrantfile` to add additional test cases.
 
 ---
-[bindfs-compatibility]: vagrant-bindfs is compatible with bindfs from version 1.9 to 1.12.6
+
+[^bindfs-compatibility]: vagrant-bindfs is compatible with bindfs from version 1.9 to 1.12.6
