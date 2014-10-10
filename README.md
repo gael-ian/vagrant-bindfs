@@ -28,14 +28,14 @@ _Note that `map_uid` and `map_gid` NFS options can be used to set the identity u
 
 ## Installation
 
-Vagrant-bindfs is distributed as a Ruby gem. You can install it as any other Vagrant plugin
-with `vagrant plugin install vagrant-bindfs`.
+Vagrant-bindfs is distributed as a Ruby gem.
+You can install it as any other Vagrant plugin with `vagrant plugin install vagrant-bindfs`.
 
 
 ## Usage
 
-In your `Vagrantfile`, use `config.bindfs.bind_folder` to configure folders that will be binded on VM
-startup. The format is:
+In your `Vagrantfile`, use `config.bindfs.bind_folder` to configure folders that will be binded on VM startup.
+The format is:
 
 ```ruby
 config.bindfs.bind_folder "/path/to/source", "/path/to/destination", options
@@ -71,83 +71,41 @@ end
 
 ### Supported options
 
-The `bind_folder` config supports the following long arguments, some of them are overwritable
-with short options:
+The `bind_folder` config accept any option you can pass to bindfs [bindfs-compatibility].
+Check [lib/vagrant-bindfs/command.rb](https://github.com/gael-ian/vagrant-bindfs/blob/master/lib/vagrant-bindfs/command.rb#L66) for a complete list of supported options and default values.
 
-- `:force_user` (defaults to 'vagrant')
-- `:force_group` (defaults to 'vagrant')
-- `:perms` (defaults to 'u=rwX:g=rD:o=rD')
-- `:mirror`
-- `:mirror_only`
-- `:map`
-- `:create_for_user`
-- `:create_for_group`
-- `:create_with_perms`
-- `:chmod_filter`
-- `:read_rate`
-- `:write_rate`
+Both long arguments and shorthand are supported.
+If you set both, shorthand will prevail.
+Long arguments can be written indifferently with underscore ('force_user') or dash ('force-user') and as strings (:'force-user') or symbols (:force_user).
 
-There are also options available for backward compatibility, if one of these options is defined
-the newer counterpart will be unset:
+You can overwrite default options _via_ `config.bindfs.default_options`.
+See [bindfs man page](http://bindfs.org/docs/bindfs.1.html) for details.
 
-- `:owner`
-- `:group`
+vagrant-bindfs detects installed version of bindfs, translate option names when needed and ignore an option if it is not supported.
+As we may have missed something, it will warn you when a binding command fail.
 
-The following shortcuts are also available:
-
-- `:o`
-- `:u` (Overwrites the value of force_user)
-- `:g` (Overwrites the value of force_group)
-- `:m` (Overwrites the value of mirror)
-- `:M` (Overwrites the value of mirror_only)
-- `:p` (Overwrites the value of perms)
-
-… and the following flags (all disabled by default, vagrant-bindfs rely on bindfs own defaults):
-
-- `:create_as_user`
-- `:create_as_mounter`
-- `:chown_normal`
-- `:chown_ignore`
-- `:chown_deny`
-- `:chgrp_normal`
-- `:chgrp_ignore`
-- `:chgrp_deny`
-- `:chmod_normal`
-- `:chmod_ignore`
-- `:chmod_deny`
-- `:chmod_allow_x`
-- `:xattr_none`
-- `:xattr_ro`
-- `:xattr_rw`
-- `:no_allow_other`
-- `:realistic_permissions`
-- `:ctime_from_mtime`
-- `:hide_hard_links`
-- `:multithreaded`
-
-You can overwrite default options _via_ `config.bindfs.default_options`. See
-[bindfs man page](http://bindfs.org/docs/bindfs.1.html) for details.
-
-vagrant-bindfs does not check compatibility between given arguments but warn you when a binding
-command fail or if bindfs is not installed on your virtual machine. On Debian and SUSE systems, it
-will try to install bindfs automatically.
+On Debian and SUSE guest systems, vagrant-bindfs will try to install bindfs automatically if it is not installed.
+On other system, you'll get warned.
 
 
 ## Contributing
 
-If you find this plugin useful, we could use a few enhancements! In particular, capabilities files
-for installing vagrant-bindfs on systems other than Debian or SUSE would be useful. We could also
-use some specs…
+If you find this plugin useful, we could use a few enhancements!
+In particular, capabilities files for installing vagrant-bindfs on systems other than Debian or SUSE would be useful.
+We could also use some specs…
 
 
 ### How to Test Changes
 
-If you've made changes to this plugin, you can easily test it locally in vagrant. From the root of
-the repo, do:
+If you've made changes to this plugin, you can easily test it locally in vagrant.
+From the root of the repo, do:
 
 - `bundle install`
 - `rake build`
 - `bundle exec vagrant up`
 
-This will spin up a default Debian VM and try to bindfs-mount some shares in it. Feel free to modify
-the included `Vagrantfile` to add additional test cases.
+This will spin up a default Debian VM and try to bindfs-mount some shares in it.
+Feel free to modify the included `Vagrantfile` to add additional test cases.
+
+---
+[bindfs-compatibility]: vagrant-bindfs is compatible with bindfs from version 1.9 to 1.12.6
