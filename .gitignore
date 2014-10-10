@@ -1,17 +1,25 @@
-*.gem
+
 Gemfile.lock
 
-# vagrant
+### vagrant
 .vagrant/*
 
+### gem build
 
-# Ruby environment managers
-.rvmrc
-.ruby-version
-.ruby-gemset
-.rbenv-version
+*.gem
+pkg/
 
-.bundle
+### Ruby versions managers
+
+/.rvmrc
+/.ruby-version
+/.ruby-gemset
+/.rbenv-version
+
+### bundler
+
+/.bundle
+/vendor/bundle
 
 ### Mess files
 
@@ -43,9 +51,6 @@ tmtags
 # SublimeText project files
 /*.sublime-project
 *.sublime-workspace
-
-# vim swap files
-.*sw?
 
 
 ### OS temporary files
