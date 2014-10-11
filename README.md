@@ -11,7 +11,7 @@ It's free, and it works well, but it has some [performance problems](http://snip
 
 People often recommend switching to [vagrant's VMWare-fusion provider](http://www.vagrantup.com/vmware).
 This reportedly has better performance, but shares with symlinks [won't work](http://communities.vmware.com/thread/428199?start=0&tstart=0).
-You also have to buy both the plugin and VMWare-fusion.
+You also have to buy both the plugin and VMware Fusion.
 
 The final recommendation, at least on Linux/OSX hosts, is to [use nfs](http://docs.vagrantup.com/v2/synced-folders/nfs.html).
 However, an NFS mount has the same numeric permissions in the guest as in the host.
@@ -25,6 +25,7 @@ Simply:
 - re-mount the share to the actual destination with `vagrant-bindfs`, setting the correct permissions
 
 _Note that `map_uid` and `map_gid` NFS options can be used to set the identity used to read/write files on the host side._
+
 
 ## Installation
 
@@ -46,31 +47,32 @@ config.bindfs.bind_folder "/path/to/source", "/path/to/destination", options
 
 ```ruby
 Vagrant.configure("2") do |config|
-  
+
   [...] # Your VM configuration
-  
+
   ## Basic usage
   config.bindfs.bind_folder "source/dir", "mount/point"
-  
-  
+
+
   ## Advanced options
   config.bindfs.bind_folder "source/dir", "mount/point",
     perms: "u=rw:g=r:o=r",
     create_as_user: true
-  
-  
+
+
   ## Complete example for a NFS shared folder
-  
-  # Static IP is required to use NFS shared folder
+
+  # Static IP is required to use NFS shared folder,
+  # this is only required for Virtualbox provider
   config.vm.network "private_network", ip: "192.168.50.4"
-  
+
   # Declare shared folder with Vagrant syntax
-  config.vm.synced_folder "host/source/dir", "/vagrant-nfs", :type => :nfs
-  
+  config.vm.synced_folder "host/source/dir", "/vagrant-nfs", type: :nfs
+
   # Use vagrant-bindfs to re-mount folder
   config.bindfs.bind_folder "/vagrant-nfs", "guest/mount/point"
-  
-  
+
+
   ## Share the default `vagrant` folder via NFS with your own options
   config.vm.synced_folder ".", "/vagrant", type: :nfs
   config.bindfs.bind_folder "/vagrant", "/vagrant"

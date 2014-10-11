@@ -12,6 +12,7 @@ bind_folders = Proc.new do |machine|
 
   # This should fail
   machine.bindfs.bind_folder "/etc3", "/etc-nonexit"
+
 end
 
 Vagrant.configure("2") do |config|
@@ -50,7 +51,13 @@ Vagrant.configure("2") do |config|
   # Ubuntu 12.04 with bindfs 1.12.3
   config.vm.define "bindfs-test-ubuntu-14.04" do |machine|
     machine.vm.box = "ubuntu/trusty64"
+
     machine.bindfs.debug = true
+
+    machine.vm.provider :virtualbox do |provider, _|
+      provider.memory = 512
+      provider.cpus = 2
+    end
 
     bind_folders.call(machine)
   end
