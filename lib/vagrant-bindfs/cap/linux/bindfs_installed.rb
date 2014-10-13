@@ -13,7 +13,7 @@ module VagrantPlugins
           end
 
           def self.modprobe_fuse(machine)
-            machine.communicate.sudo("modprobe fuse")
+            machine.communicate.sudo("/sbin/modprobe fuse")
           end
 
         end

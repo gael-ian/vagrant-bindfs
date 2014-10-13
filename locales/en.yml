@@ -3,6 +3,7 @@ en:
     config:
       bindfs:
         not_installed: "Bindfs seems to not be installed on the virtual machine"
+        not_loaded: "Fuse kernel module seems to be not loaded, trying to load it"
         already_mounted: "There's already a bindfs mount to destination %{dest}"
         status:
           binding_all: "Creating bind mounts for selected devices"
@@ -11,10 +12,11 @@ en:
           destination_path_relative: "Destination path is relative for bind whatever"
           source_path_relative: "Source path is relative for bind whatever"
           source_path_not_exist: "Cannot bind source path %{path} because it doesn't exist"
+          cannot_modprobe: "The fuse kernel module seems to not be loadable on the virtual machine"
           binding_failed: |-
             The bind command `%{command}` failed to run!
 
             Please check options values and compatibility. For a complete documentation,
             run `sudo bindfs --help` on the VM.
-            
+
             You can see it online at http://www.cs.helsinki.fi/u/partel/bindfs_docs/bindfs.1.html.
