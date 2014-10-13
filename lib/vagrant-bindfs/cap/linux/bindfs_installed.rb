@@ -8,6 +8,14 @@ module VagrantPlugins
             machine.communicate.test("bindfs --help")
           end
 
+          def self.loaded_fuse?(machine)
+            machine.communicate.test("lsmod | grep -q fuse")
+          end
+
+          def self.modprobe_fuse(machine)
+            machine.communicate.sudo("modprobe fuse")
+          end
+
         end
       end
     end

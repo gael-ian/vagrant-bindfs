@@ -3,7 +3,7 @@ module VagrantPlugins
     class Plugin < Vagrant.plugin("2")
       name "Bindfs"
       description <<-DESC
-      This plugin allows you to mount -o bind filesystems inside the guest. This is 
+      This plugin allows you to mount -o bind filesystems inside the guest. This is
       useful to change their ownership and permissions.
       DESC
 
@@ -23,6 +23,16 @@ module VagrantPlugins
       end
 
       guest_capability("linux", "bindfs_installed") do
+        require "vagrant-bindfs/cap/linux/bindfs_installed"
+        Cap::Linux::BindfsInstalled
+      end
+
+      guest_capability("linux", "loaded_fuse?") do
+        require "vagrant-bindfs/cap/linux/bindfs_installed"
+        Cap::Linux::BindfsInstalled
+      end
+
+      guest_capability("linux", "modprobe_fuse") do
         require "vagrant-bindfs/cap/linux/bindfs_installed"
         Cap::Linux::BindfsInstalled
       end
