@@ -34,23 +34,51 @@ Vagrant.configure("2") do |config|
   # end
 
   # Ubuntu 12.04 with bindfs 1.9
-  config.vm.define "bindfs-test-ubuntu-12.04" do |machine|
-    machine.vm.box = "ubuntu/precise64"
+  # config.vm.define "bindfs-test-ubuntu-12.04" do |machine|
+  #   machine.vm.box = "ubuntu/precise64"
+  #
+  #   machine.bindfs.default_options perms: "u=rwX:g=rwD:o=rwD"
+  #   machine.bindfs.debug = true
+  #
+  #   machine.vm.provider :virtualbox do |provider, _|
+  #     provider.memory = 512
+  #     provider.cpus = 2
+  #   end
+  #
+  #   bind_folders.call(machine)
+  # end
 
-    machine.bindfs.default_options perms: "u=rwX:g=rwD:o=rwD"
-    machine.bindfs.debug = true
+  # Ubuntu 14.04 with bindfs 1.12.3
+  # config.vm.define "bindfs-test-ubuntu-14.04" do |machine|
+  #   machine.vm.box = "ubuntu/trusty64"
+  #
+  #   machine.bindfs.debug = true
+  #
+  #   machine.vm.provider :virtualbox do |provider, _|
+  #     provider.memory = 512
+  #     provider.cpus = 2
+  #   end
+  #
+  #   bind_folders.call(machine)
+  # end
 
-    machine.vm.provider :virtualbox do |provider, _|
-      provider.memory = 512
-      provider.cpus = 2
-    end
+  # Suse machine
+  # config.vm.define "bindfs-test-suse" do |machine|
+  #   machine.vm.box = "ubuntu/trusty64"
+  #
+  #   machine.bindfs.debug = true
+  #
+  #   machine.vm.provider :virtualbox do |provider, _|
+  #     provider.memory = 512
+  #     provider.cpus = 2
+  #   end
+  #
+  #   bind_folders.call(machine)
+  # end
 
-    bind_folders.call(machine)
-  end
-
-  # Ubuntu 12.04 with bindfs 1.12.3
-  config.vm.define "bindfs-test-ubuntu-14.04" do |machine|
-    machine.vm.box = "ubuntu/trusty64"
+  # Fedora machine
+  config.vm.define "bindfs-test-fedora" do |machine|
+    machine.vm.box = "chef/fedora-20"
 
     machine.bindfs.debug = true
 

@@ -22,6 +22,11 @@ module VagrantPlugins
         Cap::SUSE::BindfsInstall
       end
 
+      guest_capability("fedora", "bindfs_install") do
+        require 'vagrant-bindfs/cap/fedora/bindfs_install'
+        Cap::Fedora::BindfsInstall
+      end
+
       guest_capability("linux", "bindfs_installed") do
         require "vagrant-bindfs/cap/linux/bindfs_installed"
         Cap::Linux::BindfsInstalled
