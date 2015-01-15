@@ -10,8 +10,8 @@ module VagrantPlugins
                 comm.sudo('yum -y install fuse fuse-devel')
                 comm.sudo('wget http://bindfs.org/downloads/bindfs-1.12.6.tar.gz')
                 comm.sudo('tar -zxvf bindfs-1.12.6.tar.gz')
-                comm.sudo('cd bindfs-1.12.6')
-                comm.sudo('./configure && make && make install')
+                comm.sudo('cd bindfs-1.12.6 && ./configure && make && make install')
+                comm.sudo('ln -s /usr/local/bin/bindfs /usr/bin')
               else
                 comm.sudo('yum -y install bindfs')
               end
