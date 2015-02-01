@@ -152,8 +152,9 @@ module VagrantPlugins
       end
 
       def bindfs_version_lower_than(version)
-        test_command = %{test "$(echo "%{v} $(sudo bindfs --version | cut -d" " -f2)" | tr " " "\n" | sort -V | tail -n 1)" == "%{v}"}
-        @machine.communicate.test(test_command % { v: version})
+        bindfs_version_command = %{sudo bindfs --version | cut -d" " -f2}
+        bindfs_version = @machine.communicate.execute(bindfs_version_command);
+        Gem::Version.new(bindfs_version) < Gem::Version.new(version)
       end
 
     end
