@@ -66,16 +66,16 @@ module VagrantPlugins
           unless @machine.guest.capability(:bindfs_installed)
             @env[:ui].warn(I18n.t("vagrant.config.bindfs.not_installed"))
 
-            unless @machine.guest.capability(:bindfs_install)
+            unless @machine.guest.capability(:install_bindfs)
               raise Vagrant::Bindfs::Error, :cannot_install
             end
           end
 
-          unless @machine.guest.capability(:loaded_fuse?)
+          unless @machine.guest.capability(:fuse_loaded)
             @env[:ui].warn(I18n.t("vagrant.config.bindfs.not_loaded"))
 
-            unless @machine.guest.capability(:modprobe_fuse)
-              raise Vagrant::Bindfs::Error, :cannot_modprobe
+            unless @machine.guest.capability(:enable_fuse)
+              raise Vagrant::Bindfs::Error, :cannot_enable_fuse
             end
           end
         end

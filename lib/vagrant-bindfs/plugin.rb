@@ -1,51 +1,63 @@
 module VagrantPlugins
   module Bindfs
     class Plugin < Vagrant.plugin("2")
+      
       name "Bindfs"
       description <<-DESC
       This plugin allows you to mount -o bind filesystems inside the guest. This is
       useful to change their ownership and permissions.
       DESC
 
+      
       config(:bindfs) do
         require "vagrant-bindfs/config"
         Config
       end
-
-      guest_capability("debian", "bindfs_install") do
-        require "vagrant-bindfs/cap/debian/bindfs_install"
-        Cap::Debian::BindfsInstall
-      end
-
-      guest_capability("suse", "bindfs_install") do
-        require "vagrant-bindfs/cap/suse/bindfs_install"
-        Cap::SUSE::BindfsInstall
-      end
-
-      guest_capability("fedora", "bindfs_install") do
-        require 'vagrant-bindfs/cap/fedora/bindfs_install'
-        Cap::Fedora::BindfsInstall
-      end
-
-      guest_capability("redhat", "bindfs_install") do
-        require 'vagrant-bindfs/cap/redhat/bindfs_install'
-        Cap::RedHat::BindfsInstall
-      end
+      
 
       guest_capability("linux", "bindfs_installed") do
         require "vagrant-bindfs/cap/linux/bindfs_installed"
         Cap::Linux::BindfsInstalled
       end
 
-      guest_capability("linux", "loaded_fuse?") do
-        require "vagrant-bindfs/cap/linux/bindfs_installed"
-        Cap::Linux::BindfsInstalled
+      
+      guest_capability("linux", "fuse_loaded") do
+        require "vagrant-bindfs/cap/linux/fuse_loaded"
+        Cap::Linux::FuseLoaded
+      end
+      
+      guest_capability("ubuntu", "fuse_loaded") do
+        require "vagrant-bindfs/cap/ubuntu/fuse_loaded"
+        Cap::Ubuntu::FuseLoaded
       end
 
-      guest_capability("linux", "modprobe_fuse") do
-        require "vagrant-bindfs/cap/linux/bindfs_installed"
-        Cap::Linux::BindfsInstalled
+      
+      guest_capability("linux", "enable_fuse") do
+        require "vagrant-bindfs/cap/linux/enable_fuse"
+        Cap::Linux::EnableFuse
       end
+      
+
+      guest_capability("debian", "install_bindfs") do
+        require "vagrant-bindfs/cap/debian/install_bindfs"
+        Cap::Debian::InstallBindfs
+      end
+
+      guest_capability("suse", "install_bindfs") do
+        require "vagrant-bindfs/cap/suse/install_bindfs"
+        Cap::Suse::InstallBindfs
+      end
+
+      guest_capability("fedora", "install_bindfs") do
+        require 'vagrant-bindfs/cap/fedora/install_bindfs'
+        Cap::Fedora::InstallBindfs
+      end
+
+      guest_capability("redhat", "install_bindfs") do
+        require 'vagrant-bindfs/cap/redhat/install_bindfs'
+        Cap::RedHat::InstallBindfs
+      end
+      
 
       require "vagrant-bindfs/bind"
 
@@ -60,6 +72,7 @@ module VagrantPlugins
           hook.before(target, Action::Bind)
         end
       end
+      
     end
   end
 end

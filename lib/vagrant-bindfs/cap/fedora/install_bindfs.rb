@@ -1,12 +1,12 @@
 module VagrantPlugins
   module Bindfs
     module Cap
-      module SUSE
-        module BindfsInstall
+      module Fedora
+        module InstallBindfs
 
-          def self.bindfs_install(machine)
+          def self.install_bindfs(machine)
             machine.communicate.tap do |comm|
-              comm.sudo("zypper -n install bindfs")
+              comm.sudo('yum -y install bindfs')
             end
           end
 

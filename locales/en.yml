@@ -12,7 +12,7 @@ en:
           destination_path_relative: "Destination path is relative for bind whatever"
           source_path_relative: "Source path is relative for bind whatever"
           source_path_not_exist: "Cannot bind source path %{path} because it doesn't exist"
-          cannot_modprobe: "The fuse kernel module seems to not be loadable on the virtual machine"
+          cannot_enable_fuse: "The fuse kernel module seems to not be loadable on the virtual machine"
           binding_failed: |-
             The bind command `%{command}` failed to run!
 
