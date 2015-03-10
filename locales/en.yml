@@ -19,4 +19,4 @@ en:
             Please check options values and compatibility. For a complete documentation,
             run `sudo bindfs --help` on the VM.
 
-            You can see it online at http://www.cs.helsinki.fi/u/partel/bindfs_docs/bindfs.1.html.
+            You can see it online at http://bindfs.org/docs/bindfs.1.html
