@@ -48,7 +48,7 @@ module VagrantPlugins
               next
             end
 
-            unless @machine.communicate.test("getent passwd #{command.group.shellescape}")
+            unless @machine.communicate.test("getent group #{command.group.shellescape}")
               @env[:ui].error I18n.t(
                 "vagrant.config.bindfs.errors.group_not_exist",
                 group: command.group
