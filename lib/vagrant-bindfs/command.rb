@@ -19,6 +19,14 @@ module VagrantPlugins
         [ "bindfs", arguments.join(" "), source, destination ].compact.join(" ")
       end
 
+      def user
+        @arguments.join(' ')[/--(?:force-)?user=([^\s]+)/, 1]
+      end
+
+      def group
+        @arguments.join(' ')[/--(?:force-)?group=([^\s]+)/, 1]
+      end
+
       protected
 
       def arguments_for(options)

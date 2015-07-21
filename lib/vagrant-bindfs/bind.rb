@@ -40,6 +40,22 @@ module VagrantPlugins
               next
             end
 
+            unless @machine.communicate.test("getent passwd #{command.user.shellescape}")
+              @env[:ui].error I18n.t(
+                "vagrant.config.bindfs.errors.user_not_exist",
+                user: command.user
+              )
+              next
+            end
+
+            unless @machine.communicate.test("getent group #{command.group.shellescape}")
+              @env[:ui].error I18n.t(
+                "vagrant.config.bindfs.errors.group_not_exist",
+                group: command.group
+              )
+              next
+            end
+
             if @machine.communicate.test("mount | grep bindfs | grep #{command.destination}")
               @env[:ui].info I18n.t(
                 "vagrant.config.bindfs.already_mounted",

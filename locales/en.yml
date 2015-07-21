@@ -12,6 +12,8 @@ en:
           destination_path_relative: "Destination path is relative for bind whatever"
           source_path_relative: "Source path is relative for bind whatever"
           source_path_not_exist: "Cannot bind source path %{path} because it doesn't exist"
+          user_not_exist: "Cannot bind to user '%{user}' because they don't exist"
+          group_not_exist: "Cannot bind to group '%{group}' because it doesn't exist"
           cannot_enable_fuse: "The fuse kernel module seems to not be loadable on the virtual machine"
           binding_failed: |-
             The bind command `%{command}` failed to run!

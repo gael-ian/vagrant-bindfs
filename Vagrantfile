@@ -13,6 +13,10 @@ bind_folders = Proc.new do |machine|
   # This should fail
   machine.bindfs.bind_folder "/etc3", "/etc-nonexit"
 
+  # These should also fail
+  machine.bindfs.bind_folder "/etc",  "/etc-binded-with-nonexistent-user", user: "nonuser"
+  machine.bindfs.bind_folder "/etc",  "/etc-binded-with-nonexistent-group", group: "nongroup"
+
 end
 
 Vagrant.configure("2") do |config|
