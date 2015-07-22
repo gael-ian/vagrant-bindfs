@@ -14,8 +14,8 @@ bind_folders = Proc.new do |machine|
   machine.bindfs.bind_folder "/etc3", "/etc-nonexit"
 
   # These should also fail
-  machine.bindfs.bind_folder "/etc",  "/etc-binded-with-nonexistent-user", user: "nonuser"
-  machine.bindfs.bind_folder "/etc",  "/etc-binded-with-nonexistent-group", group: "nongroup"
+  machine.bindfs.bind_folder "/etc",  "/etc-binded-with-nonexistent-user", user: "nonuser", after: :provision
+  machine.bindfs.bind_folder "/etc",  "/etc-binded-with-nonexistent-group", group: "nongroup", after: :provision
 
 end
 

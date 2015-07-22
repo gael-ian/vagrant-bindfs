@@ -22,6 +22,7 @@ module VagrantPlugins
       def bind_folder(source_path, dest_path, options = {})
         options[:source_path] = source_path
         options[:dest_path] = dest_path
+        options[:hook] ||= options.delete(:after) || VagrantPlugins::Bindfs::Plugin.hook_names.first
 
         @bind_folders[options[:dest_path]] = options
       end
@@ -53,6 +54,13 @@ module VagrantPlugins
 
         bind_folders.each do |id, options|
           next if options[:disabled]
+
+          unless VagrantPlugins::Bindfs::Plugin.hook_names.include?(options[:hook].to_sym)
+            errors << I18n.t(
+                "vagrant.config.bindfs.errors.invalid_hook",
+                hooks: VagrantPlugins::Bindfs::Plugin.hook_names
+            )
+          end
 
           if options[:dest_path].nil? or options[:source_path].nil?
             errors << I18n.t(

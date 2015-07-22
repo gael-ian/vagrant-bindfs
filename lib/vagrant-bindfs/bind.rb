@@ -4,9 +4,10 @@ module VagrantPlugins
   module Bindfs
     module Action
       class Bind
-        def initialize(app, env)
-          @app = app
-          @env = env
+        def initialize(app, env, hook)
+          @app  = app
+          @env  = env
+          @hook = hook
         end
 
         def call(env)
@@ -22,7 +23,12 @@ module VagrantPlugins
         end
 
         def binded_folders
-          @machine.config.bindfs.bind_folders
+          @binded_folders ||= begin
+            @machine.config.bindfs.bind_folders.reduce({}) do |binded, (name, options)|
+              binded[name] = options if options[:hook] == @hook
+              binded
+            end
+          end
         end
 
         def bind_folders
