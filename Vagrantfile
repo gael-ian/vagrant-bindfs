@@ -21,22 +21,6 @@ end
 
 Vagrant.configure("2") do |config|
 
-  # Ubuntu 12.04 with bindfs 1.9
-  # config.vm.define "bindfs-test-airbase" do |machine|
-  # 
-  #   machine.vm.box      = "airbase"
-  #   machine.vm.box_url  = "https://s3.amazonaws.com/gsc-vagrant-boxes/ubuntu-12.04-omnibus-chef.box"
-  # 
-  #   machine.vm.provider :virtualbox do |v|
-  #     v.customize ["modifyvm", :id,
-  #       "--memory", "512",
-  #       "--cpus", "2",
-  #     ]
-  #   end
-  # 
-  #   bind_folders.call(machine)
-  # end
-
   # Debian machine
   # config.vm.define "bindfs-test-debian" do |machine|
   #   machine.vm.box = "chef/debian-7.6"
