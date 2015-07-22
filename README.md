@@ -42,6 +42,12 @@ The format is:
 config.bindfs.bind_folder "/path/to/source", "/path/to/destination", options
 ```
 
+By default, all folders are binded after folders syncing between host and guest machines.
+You can pass a special `:after` (or `:hook`) option to the bind_folder method to choose when a folder should be binded.
+Supported values are :
+
+* `:synced_folders` (default)
+* `:provision`, to bind a folder after provisioning occured.
 
 ### Example
 
@@ -77,11 +83,13 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/vagrant", type: :nfs
   config.bindfs.bind_folder "/vagrant", "/vagrant"
 
+  # Bind a folder after provisioning
+  config.bindfs.bind_folder "/vagrant-after-provision", "another/guest/mount/point", after: :provision
+
 end
 ```
 
-
-### Supported options
+### bindfs support
 
 The `bind_folder` config accept any option you can pass to bindfs.
 vagrant-bindfs is compatible with bindfs from version 1.9 to 1.12.6.
