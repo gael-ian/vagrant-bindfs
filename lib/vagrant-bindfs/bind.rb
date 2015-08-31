@@ -62,7 +62,7 @@ module VagrantPlugins
               next
             end
 
-            if @machine.communicate.test("mount | grep bindfs | grep #{command.destination}")
+            if @machine.communicate.test("mount | grep '^bindfs' | grep #{command.destination}")
               @env[:ui].info I18n.t(
                 "vagrant.config.bindfs.already_mounted",
                 dest: command.destination
