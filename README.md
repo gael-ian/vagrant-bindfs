@@ -105,7 +105,7 @@ See [bindfs man page](http://bindfs.org/docs/bindfs.1.html) for details.
 vagrant-bindfs detects installed version of bindfs, translate option names when needed and ignore an option if it is not supported.
 As we may have missed something, it will warn you when a binding command fail.
 
-On Debian, SUSE and CentOS (5-6) guest systems, vagrant-bindfs will try to install bindfs automatically if it is not installed.
+On Debian (this includes Ubuntu), SUSE and CentOS (5-6) guest systems, vagrant-bindfs will try to install bindfs automatically if it is not installed.
 On other system, you'll get warned.
 
 
