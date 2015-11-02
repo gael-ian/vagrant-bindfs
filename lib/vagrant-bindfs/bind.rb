@@ -46,7 +46,7 @@ module VagrantPlugins
               next
             end
 
-            unless @machine.communicate.test("getent passwd #{command.user.shellescape}")
+            unless options[:skip_verify_user] == true || @machine.communicate.test("getent passwd #{command.user.shellescape}")
               @env[:ui].error I18n.t(
                 "vagrant.config.bindfs.errors.user_not_exist",
                 user: command.user
@@ -54,7 +54,7 @@ module VagrantPlugins
               next
             end
 
-            unless @machine.communicate.test("getent group #{command.group.shellescape}")
+            unless options[:skip_verify_user] == true || @machine.communicate.test("getent group #{command.group.shellescape}")
               @env[:ui].error I18n.t(
                 "vagrant.config.bindfs.errors.group_not_exist",
                 group: command.group
