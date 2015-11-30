@@ -74,61 +74,68 @@ module VagrantPlugins
         @available_options ||= begin
           options = {
             # File ownership
-            "force-user"            => { long: ["force-user", "user", "owner"], short: ["u"], type: :option,  default: "vagrant" },
-            "force-group"           => { long: ["force-group", "group"],        short: ["g"], type: :option,  default: "vagrant" },
-            "mirror"                => { long: ["mirror"],                      short: ["m"], type: :option,  default: nil },
-            "mirror-only"           => { long: ["mirror-only"],                 short: ["M"], type: :option,  default: nil },
-            "map"                   => { long: ["map"],                         short: [],    type: :option,  default: nil },
-
-            # Permission bits
-            "perms"                 => { long: ["perms"],                       short: ["p"], type: :option,  default: "u=rwX:g=rD:o=rD" },
+            "force-user"              => { long: ["force-user", "user", "owner"], short: ["u"], type: :option,  default: "vagrant" },
+            "force-group"             => { long: ["force-group", "group"],        short: ["g"], type: :option,  default: "vagrant" },
+            "perms"                   => { long: ["perms"],                       short: ["p"], type: :option,  default: "u=rwX:g=rD:o=rD" },
+            "mirror"                  => { long: ["mirror"],                      short: ["m"], type: :option,  default: nil },
+            "mirror-only"             => { long: ["mirror-only"],                 short: ["M"], type: :option,  default: nil },
+            "map"                     => { long: ["map"],                         short: [],    type: :option,  default: nil },
 
             # File creation policy
-            "create-as-user"        => { long: ["create-as-user"],              short: [],    type: :flag,    default: false },
-            "create-as-mounter"     => { long: ["create-as-mounter"],           short: [],    type: :flag,    default: false },
-            "create-for-user"       => { long: ["create-for-user"],             short: [],    type: :option,  default: nil },
-            "create-for-group"      => { long: ["create-for-group"],            short: [],    type: :option,  default: nil },
-            "create-with-perms"     => { long: ["create-with-perms"],           short: [],    type: :option,  default: nil },
+            "create-as-user"          => { long: ["create-as-user"],              short: [],    type: :flag,    default: false },
+            "create-as-mounter"       => { long: ["create-as-mounter"],           short: [],    type: :flag,    default: false },
+            "create-for-user"         => { long: ["create-for-user"],             short: [],    type: :option,  default: nil },
+            "create-for-group"        => { long: ["create-for-group"],            short: [],    type: :option,  default: nil },
+            "create-with-perms"       => { long: ["create-with-perms"],           short: [],    type: :option,  default: nil },
 
             # Chown policy
-            "chown-normal"          => { long: ["chown-normal"],                short: [],    type: :flag,    default: false },
-            "chown-ignore"          => { long: ["chown-ignore"],                short: [],    type: :flag,    default: false },
-            "chown-deny"            => { long: ["chown-deny"],                  short: [],    type: :flag,    default: false },
+            "chown-normal"            => { long: ["chown-normal"],                short: [],    type: :flag,    default: false },
+            "chown-ignore"            => { long: ["chown-ignore"],                short: [],    type: :flag,    default: false },
+            "chown-deny"              => { long: ["chown-deny"],                  short: [],    type: :flag,    default: false },
 
             # Chgrp policy
-            "chgrp-normal"          => { long: ["chgrp-normal"],                short: [],    type: :flag,    default: false },
-            "chgrp-ignore"          => { long: ["chgrp-ignore"],                short: [],    type: :flag,    default: false },
-            "chgrp-deny"            => { long: ["chgrp-deny"],                  short: [],    type: :flag,    default: false },
+            "chgrp-normal"            => { long: ["chgrp-normal"],                short: [],    type: :flag,    default: false },
+            "chgrp-ignore"            => { long: ["chgrp-ignore"],                short: [],    type: :flag,    default: false },
+            "chgrp-deny"              => { long: ["chgrp-deny"],                  short: [],    type: :flag,    default: false },
 
             # Chmod policy
-            "chmod-normal"          => { long: ["chmod-normal"],                short: [],    type: :flag,    default: false },
-            "chmod-ignore"          => { long: ["chmod-ignore"],                short: [],    type: :flag,    default: false },
-            "chmod-deny"            => { long: ["chmod-deny"],                  short: [],    type: :flag,    default: false },
-            "chmod-filter"          => { long: ["chmod-filter"],                short: [],    type: :option,  default: nil },
-            "chmod-allow-x"         => { long: ["chmod-allow-x"],               short: [],    type: :flag,    default: false },
+            "chmod-normal"            => { long: ["chmod-normal"],                short: [],    type: :flag,    default: false },
+            "chmod-ignore"            => { long: ["chmod-ignore"],                short: [],    type: :flag,    default: false },
+            "chmod-deny"              => { long: ["chmod-deny"],                  short: [],    type: :flag,    default: false },
+            "chmod-filter"            => { long: ["chmod-filter"],                short: [],    type: :option,  default: nil },
+            "chmod-allow-x"           => { long: ["chmod-allow-x"],               short: [],    type: :flag,    default: false },
 
             # Extended attribute policy
-            "xattr-none"            => { long: ["xattr-none"],                  short: [],    type: :flag,    default: false },
-            "xattr-ro"              => { long: ["xattr-ro"],                    short: [],    type: :flag,    default: false },
-            "xattr-rw"              => { long: ["xattr-rw"],                    short: [],    type: :flag,    default: false },
+            "xattr-none"              => { long: ["xattr-none"],                  short: [],    type: :flag,    default: false },
+            "xattr-ro"                => { long: ["xattr-ro"],                    short: [],    type: :flag,    default: false },
+            "xattr-rw"                => { long: ["xattr-rw"],                    short: [],    type: :flag,    default: false },
 
             # Rate limits
-            "read-rate"             => { long: ["read-rate"],                   short: [],    type: :option,  default: false },
-            "write-rate"            => { long: ["write-rate"],                  short: [],    type: :option,  default: false },
+            "read-rate"               => { long: ["read-rate"],                   short: [],    type: :option,  default: nil },
+            "write-rate"              => { long: ["write-rate"],                  short: [],    type: :option,  default: nil },
+
+            # Link handling
+            "hide-hard-links"         => { long: ["hide-hard-links"],             short: [],    type: :flag,    default: false },
+            "resolve-symlinks"        => { long: ["resolve-symlinks"],            short: [],    type: :flag,    default: false },
+            "resolve-symlink-policy"  => { long: ["resolve-symlink-policy"],      short: [],    type: :option,  default: nil },
 
             # Miscellaneous
-            "no-allow-other"        => { long: ["no-allow-other"],              short: ["n"], type: :flag,    default: false },
-            "realistic-permissions" => { long: ["realistic-permissions"],       short: [],    type: :flag,    default: false },
-            "ctime-from-mtime"      => { long: ["ctime-from-mtime"],            short: [],    type: :flag,    default: false },
-            "hide-hard-links"       => { long: ["hide-hard-links"],             short: [],    type: :flag,    default: false },
-            "multithreaded"         => { long: ["multithreaded"],               short: [],    type: :flag,    default: false },
+            "no-allow-other"          => { long: ["no-allow-other"],              short: ["n"], type: :flag,    default: false },
+            "realistic-permissions"   => { long: ["realistic-permissions"],       short: [],    type: :flag,    default: false },
+            "ctime-from-mtime"        => { long: ["ctime-from-mtime"],            short: [],    type: :flag,    default: false },
+            "multithreaded"           => { long: ["multithreaded"],               short: [],    type: :flag,    default: false },
 
             # FUSE options
-            "o"                     => { long: [],                              short: ["o"], type: :option,  default: nil },
-            "r"                     => { long: [],                              short: ["r"], type: :flag,    default: false },
-            "d"                     => { long: [],                              short: ["d"], type: :flag,    default: false },
-            "f"                     => { long: [],                              short: ["f"], type: :flag,    default: false },
+            "o"                       => { long: [],                              short: ["o"], type: :option,  default: nil },
+            "r"                       => { long: [],                              short: ["r"], type: :flag,    default: false },
+            "d"                       => { long: [],                              short: ["d"], type: :flag,    default: false },
+            "f"                       => { long: [],                              short: ["f"], type: :flag,    default: false },
           }
+
+          if bindfs_version_lower_than("1.13.0")
+            options.delete("resolve-symlinks")
+            options.delete("resolve-symlink-policy")
+          end
 
           if bindfs_version_lower_than("1.12.6")
             options.delete("read-rate")
