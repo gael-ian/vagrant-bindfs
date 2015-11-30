@@ -36,7 +36,7 @@ module VagrantPlugins
 
           binded_folders.each do |id, options|
 
-            command = VagrantPlugins::Bindfs::Command.new(@machine, options)
+            command = VagrantPlugins::Bindfs::Command.new(@env, options)
 
             unless @machine.communicate.test("test -d #{command.source}")
               @env[:ui].error I18n.t(

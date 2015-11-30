@@ -6,8 +6,9 @@ module VagrantPlugins
       attr_reader :destination
       attr_reader :arguments
 
-      def initialize(machine, options)
-        @machine = machine
+      def initialize(env, options)
+        @env     = env
+        @machine = env[:machine]
         options  = normalize_keys(options)
 
         @source       = options.delete("source-path")
@@ -70,7 +71,7 @@ module VagrantPlugins
 
       # TODO: Update after each bindfs release
       def available_options
-        @available_options || begin
+        @available_options ||= begin
           options = {
             # File ownership
             "force-user"            => { long: ["force-user", "user", "owner"], short: ["u"], type: :option,  default: "vagrant" },
@@ -165,8 +166,20 @@ module VagrantPlugins
       
       def bindfs_version
         @bindfs_version ||= begin
-          bindfs_version = @machine.communicate.execute(%{sudo -i bindfs --version | cut -d" " -f2});
-          Gem::Version.new(bindfs_version)
+          version = catch(:version) do
+            [
+              %{sudo bindfs --version | cut -d" " -f2},
+              %{sudo -i bindfs --version | cut -d" " -f2}
+            ].each do |command|
+              @machine.communicate.execute(command) do |type, version|
+                @env[:ui].info("#{command}: #{version.inspect}") if @machine.config.bindfs.debug
+                throw(:version, Gem::Version.new(version)) if Gem::Version.correct?(version)
+              end
+            end
+            Gem::Version.new("0.0")
+          end
+          @env[:ui].info("Detected bindfs version: #{version}") if @machine.config.bindfs.debug
+          version
         end
       end
 
