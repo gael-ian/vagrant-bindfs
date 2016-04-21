@@ -16,6 +16,7 @@ def setup(machine)
   machine.bindfs.bind_folder "/etc",  "/etc-binded-with-option", owner: "root"
   machine.bindfs.bind_folder "/etc",  "/etc-binded-with-flag", "create-as-user" => true
   machine.bindfs.bind_folder "/etc",  "/etc-binded-with-short-option", r: true
+  machine.bindfs.bind_folder "/etc",  "/etc-binded-without-explicit-owner", owner: nil
 
   # This should fail
   machine.bindfs.bind_folder "/etc3", "/etc-nonexit"
