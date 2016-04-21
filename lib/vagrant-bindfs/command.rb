@@ -178,11 +178,11 @@ module VagrantPlugins
               %{sudo bindfs --version | cut -d" " -f2},
               %{sudo -i bindfs --version | cut -d" " -f2}
             ].each do |command|
-              @machine.communicate.execute(command) do |type, version|
-                if version.strip().length > 0 then
-                  @env[:ui].info("#{command}: #{version.inspect}") if @machine.config.bindfs.debug
-                  throw(:version, Gem::Version.new(version)) if Gem::Version.correct?(version)
-                end
+              @machine.communicate.execute(command) do |type, output|
+                @env[:ui].info("#{command}: #{output.inspect}") if @machine.config.bindfs.debug
+                
+                version = output.strip
+                throw(:version, Gem::Version.new(version)) if version.length > 0 && Gem::Version.correct?(version)
               end
             end
             Gem::Version.new("0.0")
