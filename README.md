@@ -92,7 +92,7 @@ end
 ### bindfs support
 
 The `bind_folder` config accept any option you can pass to bindfs.
-vagrant-bindfs is compatible with bindfs from version 1.9 to 1.12.6.
+vagrant-bindfs is compatible with bindfs from version 1.9 to 1.13.0.
 Check [lib/vagrant-bindfs/command.rb](https://github.com/gael-ian/vagrant-bindfs/blob/master/lib/vagrant-bindfs/command.rb#L66) for a complete list of supported options and default values.
 
 Both long arguments and shorthand are supported.
