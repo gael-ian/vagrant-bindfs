@@ -1,70 +1,12 @@
-
-Gemfile.lock
-
-### vagrant
+# Vagrant
 .vagrant/*
 
-### gem build
+# Bundler
+/.bundle
+/vendor/bundle
+Gemfile.lock
 
+# Rubygems
 *.gem
 pkg/
 
-### Ruby versions managers
-
-/.rvmrc
-/.ruby-version
-/.ruby-gemset
-/.rbenv-version
-
-### bundler
-
-/.bundle
-/vendor/bundle
-
-### Mess files
-
-.~lock.*
-.tmp*
-**.orig
-
-
-### Editors meta-data
-
-## IntelliJ IDEA / RubyMine
-*.iml
-*.ipr
-*.iws
-.idea/
-
-## Eclipse project management files
-.buildpath
-.loadpath
-.project
-.settings/*
-.externalToolBuilders/*
-
-## Textmate
-*.tmproj
-*.tmproject
-tmtags
-
-# SublimeText project files
-/*.sublime-project
-*.sublime-workspace
-
-
-### OS temporary files
-
-## Mac OS X
-.DS_Store
-._*
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
-
-## Windows
-Thumbs.db
-
-## Linux
-*~
-.directory
