@@ -4,7 +4,10 @@ module VagrantPlugins
     VERSION         = "0.4.8"
     
     SOURCE_VERSION  = "1.13.1"
-    SOURCE_URL      = "http://bindfs.org/downloads/bindfs-#{SOURCE_VERSION}.tar.gz"
+    SOURCE_URLS     = [
+      "http://bindfs.org/downloads/bindfs-#{SOURCE_VERSION}.tar.gz",
+      "http://bindfs.dnsalias.net/downloads/bindfs-#{SOURCE_VERSION}.tar.gz"
+    ]
     
   end
 end
