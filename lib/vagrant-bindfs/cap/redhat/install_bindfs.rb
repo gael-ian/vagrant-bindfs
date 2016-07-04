@@ -11,7 +11,7 @@ module VagrantPlugins
               if comm.test("test 0 -eq $(sudo yum search bindfs 2>&1 >/dev/null | wc -l)")
                 comm.sudo("yum -y install bindfs")
               else
-                comm.sudo("yum -y install fuse fuse-devel gcc wget")
+                comm.sudo("yum -y install fuse fuse-devel gcc wget tar make")
                 comm.sudo <<-SHELL
                 for u in "#{SOURCE_URLS.join('" "')}"; do
                   if wget -q --spider $u; then
