@@ -4,10 +4,11 @@
 # Uncomment machines you want to test
 test_machines = {
   # debian: "debian/jessie64",
+  # ubuntu: "ubuntu/trusty64",       # Ubuntu 14.04 with bindfs 1.12.3
   # fedora: "fedora/23-cloud-base",
   # redhat: "centos/7",
+  osx:    "jhcook/osx-elcapitan-10.11",
   # suse: ?,
-  # ubuntu: "ubuntu/trusty64"       # Ubuntu 14.04 with bindfs 1.12.3
 }
 
 def setup(machine)
