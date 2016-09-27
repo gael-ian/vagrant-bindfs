@@ -120,11 +120,12 @@ We could also use some specs…
 ### How to Test Changes
 
 If you've made changes to this plugin, you can easily test it locally in vagrant.
-From the root of the repo, do:
 
-- `bundle install`
-- `rake build`
-- `bundle exec vagrant up`
+Edit `Vagrantfile` and uncomment one or more of the selected test boxes.
+Then, from the root of the repo, do:
 
-This will spin up a default Debian VM and try to bindfs-mount some shares in it.
-Feel free to modify the included `Vagrantfile` to add additional test cases.
+    bundle install
+    bundle exec vagrant up
+
+This will spin up one or more VM and try to bindfs-mount some shares in it.
+Feel free to modify the included `Vagrantfile` or test helpers (in `test/test_helpers.rb`) to add additional boxes and test cases.
