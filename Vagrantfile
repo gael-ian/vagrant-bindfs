@@ -3,11 +3,17 @@
 
 # Uncomment machines you want to test
 test_machines = {
-  # debian: "debian/jessie64",
-  # fedora: "fedora/23-cloud-base",
-  # redhat: "centos/7",
-  # suse: ?,
-  # ubuntu: "ubuntu/trusty64"       # Ubuntu 14.04 with bindfs 1.12.3
+  # debian: "bento/debian-8.5",
+  # ubuntu: "bento/ubuntu-16.04",
+  # fedora: "bento/fedora-24",
+  # redhat: "bento/centos-7.2",
+  # suse:   "bento/opensuse-leap-42.1",
+  osx:    "jhcook/osx-elcapitan-10.11",
+
+  # When you add a new test machine, please ensure that it will stay
+  # available and regularly updated for future tests. We recommend to
+  # use officialy supported boxes, as stated in the Vagrant
+  # documentation. See https://goo.gl/LbkPVF
 }
 
 def setup(machine)
