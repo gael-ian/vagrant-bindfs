@@ -4,6 +4,7 @@ module VagrantPlugins
   module Bindfs
     module Action
       class Bind
+      
         def initialize(app, env, hook)
           @app  = app
           @env  = env
@@ -46,7 +47,7 @@ module VagrantPlugins
               next
             end
 
-            unless options[:skip_verify_user] == true || command.user.nil? || @machine.communicate.test("getent passwd #{command.user.shellescape}")
+            unless options[:skip_verify_user] == true || @machine.guest.capability(:bindfs_check_user, command.user)
               @env[:ui].error I18n.t(
                 "vagrant.config.bindfs.errors.user_not_exist",
                 user: command.user
@@ -54,15 +55,15 @@ module VagrantPlugins
               next
             end
 
-            unless options[:skip_verify_user] == true || command.group.nil? || @machine.communicate.test("getent group #{command.group.shellescape}")
+            unless options[:skip_verify_user] == true || @machine.guest.capability(:bindfs_check_group, command.group)
               @env[:ui].error I18n.t(
                 "vagrant.config.bindfs.errors.group_not_exist",
                 group: command.group
               )
               next
             end
-
-            if @machine.communicate.test("mount | grep '^bindfs' | grep #{command.destination}")
+            
+            if @machine.guest.capability(:bindfs_check_mount, command.destination)
               @env[:ui].info I18n.t(
                 "vagrant.config.bindfs.already_mounted",
                 dest: command.destination

@@ -3,12 +3,17 @@
 
 # Uncomment machines you want to test
 test_machines = {
-  # debian: "bento/debian-8.5",
-  # ubuntu: "bento/ubuntu-16.04",
-  # fedora: "bento/fedora-24",
-  # redhat: "bento/centos-7.2",
-  # suse:   "bento/opensuse-leap-42.1",
-  # osx:    "jhcook/osx-elcapitan-10.11",
+  # debian: { box: "bento/debian-8.5"   },
+  # ubuntu: { box: "bento/ubuntu-16.04" },
+  # fedora: { box: "bento/fedora-24"    },
+  # redhat: { box: "bento/centos-7.2"   },
+  
+  # The `vagrant` user group does not exist in this box.
+  # suse:   { box: "bento/opensuse-leap-42.1",    args: { group: 'users' } },
+  
+  # **This box require the Oracle VM VirtualBox Extension Pack for Virtualbox.**
+  # The `vagrant` user group does not exist in this box.
+  # osx:    { box: "jhcook/osx-elcapitan-10.11",  args: { group: 'staff' } },
 
   # When you add a new test machine, please ensure that it will stay
   # available and regularly updated for future tests. We recommend to
@@ -26,10 +31,10 @@ Vagrant.configure("2") do |config|
     vb.cpus = 2
   end
 
-  test_machines.each do |distro, base_box|
+  test_machines.each do |distro, options|
     config.vm.define "vagrant-bindfs-test-#{distro}" do |machine|
-      machine.vm.box = base_box
-      tests_setup machine
+      machine.vm.box = options[:box]
+      tests_setup(machine, (options[:args] || {}))
     end
   end
 end

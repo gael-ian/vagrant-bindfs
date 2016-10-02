@@ -3,11 +3,13 @@ module VagrantPlugins
     module Cap
       module All
         module BindfsInstalled
+          class << self
 
-          def self.bindfs_installed(machine)
-            machine.communicate.test("bindfs --help")
+            def bindfs_installed(machine)
+              machine.communicate.test("bindfs --help")
+            end
+
           end
-
         end
       end
     end

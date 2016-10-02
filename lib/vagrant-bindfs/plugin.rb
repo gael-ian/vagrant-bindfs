@@ -15,6 +15,39 @@ module VagrantPlugins
       end
       
 
+      guest_capability("linux", "bindfs_check_user") do
+        require "vagrant-bindfs/cap/linux/checks"
+        Cap::Linux::Checks
+      end
+      
+      guest_capability("darwin", "bindfs_check_user") do
+        require "vagrant-bindfs/cap/darwin/checks"
+        Cap::Darwin::Checks
+      end
+      
+
+      guest_capability("linux", "bindfs_check_group") do
+        require "vagrant-bindfs/cap/linux/checks"
+        Cap::Linux::Checks
+      end
+      
+      guest_capability("darwin", "bindfs_check_group") do
+        require "vagrant-bindfs/cap/darwin/checks"
+        Cap::Darwin::Checks
+      end
+      
+
+      guest_capability("linux", "bindfs_check_mount") do
+        require "vagrant-bindfs/cap/all/checks"
+        Cap::All::Checks
+      end
+      
+      guest_capability("darwin", "bindfs_check_mount") do
+        require "vagrant-bindfs/cap/all/checks"
+        Cap::All::Checks
+      end
+      
+
       guest_capability("linux", "bindfs_installed") do
         require "vagrant-bindfs/cap/all/bindfs_installed"
         Cap::All::BindfsInstalled
@@ -27,29 +60,24 @@ module VagrantPlugins
 
       
       guest_capability("linux", "fuse_loaded") do
-        require "vagrant-bindfs/cap/all/fuse_loaded"
-        Cap::All::FuseLoaded
-      end
-      
-      guest_capability("darwin", "fuse_loaded") do
-        require "vagrant-bindfs/cap/all/fuse_loaded"
-        Cap::All::FuseLoaded
+        require "vagrant-bindfs/cap/linux/fuse_loaded"
+        Cap::Linux::FuseLoaded
       end
       
       guest_capability("ubuntu", "fuse_loaded") do
         require "vagrant-bindfs/cap/ubuntu/fuse_loaded"
         Cap::Ubuntu::FuseLoaded
       end
+      
+      guest_capability("darwin", "fuse_loaded") do
+        require "vagrant-bindfs/cap/darwin/fuse_loaded"
+        Cap::Darwin::FuseLoaded
+      end
 
       
       guest_capability("linux", "enable_fuse") do
-        require "vagrant-bindfs/cap/all/enable_fuse"
-        Cap::All::EnableFuse
-      end
-      
-      guest_capability("darwin", "enable_fuse") do
-        require "vagrant-bindfs/cap/all/enable_fuse"
-        Cap::All::EnableFuse
+        require "vagrant-bindfs/cap/linux/enable_fuse"
+        Cap::Linux::EnableFuse
       end
       
 

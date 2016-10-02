@@ -3,11 +3,13 @@ module VagrantPlugins
     module Cap
       module Linux
         module FuseLoaded
+          class << self
 
-          def self.fuse_loaded(machine)
-            machine.communicate.test("lsmod | grep -q fuse")
+            def fuse_loaded(machine)
+              machine.communicate.test("lsmod | grep -q fuse")
+            end
+
           end
-
         end
       end
     end

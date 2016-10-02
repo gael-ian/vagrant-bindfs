@@ -3,13 +3,13 @@ module VagrantPlugins
     module Cap
       module Fedora
         module InstallBindfs
+          class << self
 
-          def self.install_bindfs(machine)
-            machine.communicate.tap do |comm|
-              comm.sudo('yum -y install bindfs')
+            def install_bindfs(machine)
+              machine.communicate.sudo('yum -y install bindfs')
             end
-          end
 
+          end
         end
       end
     end
