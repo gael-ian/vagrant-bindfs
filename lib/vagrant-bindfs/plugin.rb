@@ -15,9 +15,47 @@ module VagrantPlugins
       end
       
 
+      guest_capability("linux", "bindfs_check_user") do
+        require "vagrant-bindfs/cap/linux/checks"
+        Cap::Linux::Checks
+      end
+      
+      guest_capability("darwin", "bindfs_check_user") do
+        require "vagrant-bindfs/cap/darwin/checks"
+        Cap::Darwin::Checks
+      end
+      
+
+      guest_capability("linux", "bindfs_check_group") do
+        require "vagrant-bindfs/cap/linux/checks"
+        Cap::Linux::Checks
+      end
+      
+      guest_capability("darwin", "bindfs_check_group") do
+        require "vagrant-bindfs/cap/darwin/checks"
+        Cap::Darwin::Checks
+      end
+      
+
+      guest_capability("linux", "bindfs_check_mount") do
+        require "vagrant-bindfs/cap/all/checks"
+        Cap::All::Checks
+      end
+      
+      guest_capability("darwin", "bindfs_check_mount") do
+        require "vagrant-bindfs/cap/all/checks"
+        Cap::All::Checks
+      end
+      
+
       guest_capability("linux", "bindfs_installed") do
-        require "vagrant-bindfs/cap/linux/bindfs_installed"
-        Cap::Linux::BindfsInstalled
+        require "vagrant-bindfs/cap/all/bindfs_installed"
+        Cap::All::BindfsInstalled
+      end
+      
+      guest_capability("darwin", "bindfs_installed") do
+        require "vagrant-bindfs/cap/all/bindfs_installed"
+        Cap::All::BindfsInstalled
       end
 
       
@@ -29,6 +67,11 @@ module VagrantPlugins
       guest_capability("ubuntu", "fuse_loaded") do
         require "vagrant-bindfs/cap/ubuntu/fuse_loaded"
         Cap::Ubuntu::FuseLoaded
+      end
+      
+      guest_capability("darwin", "fuse_loaded") do
+        require "vagrant-bindfs/cap/darwin/fuse_loaded"
+        Cap::Darwin::FuseLoaded
       end
 
       
@@ -43,9 +86,9 @@ module VagrantPlugins
         Cap::Debian::InstallBindfs
       end
 
-      guest_capability("suse", "install_bindfs") do
-        require "vagrant-bindfs/cap/suse/install_bindfs"
-        Cap::Suse::InstallBindfs
+      guest_capability("redhat", "install_bindfs") do
+        require 'vagrant-bindfs/cap/redhat/install_bindfs'
+        Cap::RedHat::InstallBindfs
       end
 
       guest_capability("fedora", "install_bindfs") do
@@ -53,9 +96,14 @@ module VagrantPlugins
         Cap::Fedora::InstallBindfs
       end
 
-      guest_capability("redhat", "install_bindfs") do
-        require 'vagrant-bindfs/cap/redhat/install_bindfs'
-        Cap::RedHat::InstallBindfs
+      guest_capability("suse", "install_bindfs") do
+        require "vagrant-bindfs/cap/suse/install_bindfs"
+        Cap::Suse::InstallBindfs
+      end
+
+      guest_capability("darwin", "install_bindfs") do
+        require "vagrant-bindfs/cap/darwin/install_bindfs"
+        Cap::Darwin::InstallBindfs
       end
       
 

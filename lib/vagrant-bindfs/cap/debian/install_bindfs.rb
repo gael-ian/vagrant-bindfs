@@ -3,14 +3,13 @@ module VagrantPlugins
     module Cap
       module Debian
         module InstallBindfs
+          class << self
 
-          def self.install_bindfs(machine)
-            machine.communicate.tap do |comm|
-              comm.sudo("apt-get update")
-              comm.sudo("apt-get install -y bindfs")
+            def install_bindfs(machine)
+              machine.communicate.sudo("apt-get update && apt-get install -y bindfs")
             end
-          end
 
+          end
         end
       end
     end

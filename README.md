@@ -93,26 +93,27 @@ end
 
 The `bind_folder` config accept any option you can pass to bindfs.
 vagrant-bindfs is compatible with bindfs from version 1.9 to 1.13.1.
-Check [lib/vagrant-bindfs/command.rb](https://github.com/gael-ian/vagrant-bindfs/blob/master/lib/vagrant-bindfs/command.rb#L66) for a complete list of supported options and default values.
+Check [lib/vagrant-bindfs/command.rb](https://github.com/gael-ian/vagrant-bindfs/blob/master/lib/vagrant-bindfs/command.rb#L66) for a complete list of supported options and default values and read the [bindfs man page](http://bindfs.org/docs/bindfs.1.html) for full documentation.
 
 Both long arguments and shorthand are supported.
 If you set both, shorthand will prevail.
 Long arguments can be written indifferently with underscore ('force_user') or dash ('force-user') and as strings (:'force-user') or symbols (:force_user).
 
 You can overwrite default options _via_ `config.bindfs.default_options`.
-See [bindfs man page](http://bindfs.org/docs/bindfs.1.html) for details.
 
 vagrant-bindfs detects installed version of bindfs, translate option names when needed and ignore an option if it is not supported.
 As we may have missed something, it will warn you when a binding command fail.
 
-On Debian (this includes Ubuntu), SUSE and CentOS (5-6) guest systems, vagrant-bindfs will try to install bindfs automatically if it is not installed.
+On Debian (this includes Ubuntu), SUSE, Fedora, CentOS (5-6) and OS X guest systems, vagrant-bindfs will try to install bindfs automatically if it is not installed.
 On other system, you'll get warned.
+
+OS X guests may need some specific options. See [bindfs README](https://github.com/mpartel/bindfs#os-x-note) for details.
 
 
 ## Contributing
 
 If you find this plugin useful, we could use a few enhancements!
-In particular, capabilities files for installing vagrant-bindfs on systems other than Debian or SUSE would be useful.
+In particular, capabilities files for installing vagrant-bindfs on other systems would be useful.
 We could also use some specs…
 
 

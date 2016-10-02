@@ -2,6 +2,8 @@ en:
   vagrant:
     config:
       bindfs:
+        homebrew_not_installed: "Homebrew seems to not be installed on the virtual machine, installing now"
+        osxfuse_not_installed: "OSXFuse seems to not be installed on the virtual machine, installing now"
         not_installed: "Bindfs seems to not be installed on the virtual machine, installing now"
         not_loaded: "Fuse kernel module seems to be not loaded, trying to load it"
         already_mounted: "There's already a bindfs mount to destination %{dest}"
