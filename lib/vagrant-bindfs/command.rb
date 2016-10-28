@@ -80,6 +80,8 @@ module VagrantPlugins
             "mirror"                  => { long: ["mirror"],                      short: ["m"], type: :option,  default: nil },
             "mirror-only"             => { long: ["mirror-only"],                 short: ["M"], type: :option,  default: nil },
             "map"                     => { long: ["map"],                         short: [],    type: :option,  default: nil },
+            "uid-offset"              => { long: ["uid-offset"],                  short: [],    type: :option,  default: nil },
+            "gid-offset"              => { long: ["gid-offset"],                  short: [],    type: :option,  default: nil },
 
             # File creation policy
             "create-as-user"          => { long: ["create-as-user"],              short: [],    type: :flag,    default: false },
@@ -118,12 +120,17 @@ module VagrantPlugins
             "hide-hard-links"         => { long: ["hide-hard-links"],             short: [],    type: :flag,    default: false },
             "resolve-symlinks"        => { long: ["resolve-symlinks"],            short: [],    type: :flag,    default: false },
             "resolve-symlink-policy"  => { long: ["resolve-symlink-policy"],      short: [],    type: :option,  default: nil },
+            
+            # Multithreading
+            "multithreaded"           => { long: ["multithreaded"],               short: [],    type: :flag,    default: false },
+            "enable-lock-forwarding"  => { long: ["enable-lock-forwarding"],      short: [],    type: :flag,    default: false },
+            "disable-lock-forwarding" => { long: ["disable-lock-forwarding"],     short: [],    type: :flag,    default: false },
 
             # Miscellaneous
             "no-allow-other"          => { long: ["no-allow-other"],              short: ["n"], type: :flag,    default: false },
             "realistic-permissions"   => { long: ["realistic-permissions"],       short: [],    type: :flag,    default: false },
             "ctime-from-mtime"        => { long: ["ctime-from-mtime"],            short: [],    type: :flag,    default: false },
-            "multithreaded"           => { long: ["multithreaded"],               short: [],    type: :flag,    default: false },
+            "enabe-ioctl"             => { long: ["enable-ioctl"],                short: [],    type: :flag,    default: false },
 
             # FUSE options
             "o"                       => { long: [],                              short: ["o"], type: :option,  default: nil },
@@ -131,6 +138,14 @@ module VagrantPlugins
             "d"                       => { long: [],                              short: ["d"], type: :flag,    default: false },
             "f"                       => { long: [],                              short: ["f"], type: :flag,    default: false },
           }
+
+          if bindfs_version_lower_than("1.13.2")
+            options.delete("uid-offset")
+            options.delete("gid-offset")
+            options.delete("enable-ioctl")
+            options.delete("enable-lock-forwarding")
+            options.delete("disable-lock-forwarding")
+          end
 
           if bindfs_version_lower_than("1.13.0")
             options.delete("resolve-symlinks")
