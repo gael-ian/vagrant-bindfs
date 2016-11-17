@@ -1,7 +1,6 @@
 # vagrant-bindfs
 
-A Vagrant plugin to automate [bindfs](http://bindfs.org/) mount in the VM. This allow you to change
-owner, group and permissions on files and, for example, work around NFS share permissions issues.
+A Vagrant plugin to automate [bindfs](http://bindfs.org/) mount in the VM. This allow you to change owner, group and permissions on files and, for example, work around NFS share permissions issues.
 
 
 ## Some Background: Why `vagrant-bindfs`
@@ -13,7 +12,7 @@ People often recommend switching to [vagrant's VMWare-fusion provider](http://ww
 This reportedly has better performance, but shares with symlinks [won't work](http://communities.vmware.com/thread/428199?start=0&tstart=0).
 You also have to buy both the plugin and VMware Fusion.
 
-The final recommendation, at least on Linux/OSX hosts, is to [use nfs](http://docs.vagrantup.com/v2/synced-folders/nfs.html).
+The final recommendation, at least on Linux/OSX hosts, is to [use NFS](http://docs.vagrantup.com/v2/synced-folders/nfs.html).
 However, an NFS mount has the same numeric permissions in the guest as in the host.
 If you're on OSX, for instance, a folder owned by the default OSX user will appear to be [owned by `501:20`](https://groups.google.com/forum/?fromgroups#!topic/vagrant-up/qXXJ-AQuKQM) in the guest.
 
@@ -29,7 +28,7 @@ _Note that `map_uid` and `map_gid` NFS options can be used to set the identity u
 
 ## Installation
 
-Vagrant-bindfs is distributed as a Ruby gem.
+vagrant-bindfs is distributed as a Ruby gem.
 You can install it as any other Vagrant plugin with `vagrant plugin install vagrant-bindfs`.
 
 
@@ -92,7 +91,7 @@ end
 ### bindfs support
 
 The `bind_folder` config accept any option you can pass to bindfs.
-vagrant-bindfs is compatible with bindfs from version 1.9 to 1.13.1.
+vagrant-bindfs is compatible with bindfs from version 1.9 to 1.13.4.
 Check [lib/vagrant-bindfs/command.rb](https://github.com/gael-ian/vagrant-bindfs/blob/master/lib/vagrant-bindfs/command.rb#L66) for a complete list of supported options and default values and read the [bindfs man page](http://bindfs.org/docs/bindfs.1.html) for full documentation.
 
 Both long arguments and shorthand are supported.
