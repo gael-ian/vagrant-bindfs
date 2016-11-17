@@ -13,8 +13,9 @@ en:
         errors:
           invalid_hook: "Invalid hook specified. Must use one of %{hooks}"
           no_path_supplied: "You must pass a destination and a source path as arguments"
-          destination_path_relative: "Destination path is relative for bind whatever"
-          source_path_relative: "Source path is relative for bind whatever"
+          destination_path_relative: "Destination path %{path} is relative for bind whatever"
+          destination_path_reserved: "Destination path %{path} is part of a reserved subtree for Vagrant use"
+          source_path_relative: "Source path %{path} is relative for bind whatever"
           source_path_not_exist: "Cannot bind source path %{path} because it doesn't exist"
           user_not_exist: "Cannot bind to user '%{user}' because it doesn't exist"
           group_not_exist: "Cannot bind to group '%{group}' because it doesn't exist"

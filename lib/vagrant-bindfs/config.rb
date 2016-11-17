@@ -82,6 +82,13 @@ module VagrantPlugins
               path: options[:source_path]
             )
           end
+
+          unless Pathname.new(options[:dest_path]).to_path.match(/^\/vagrant/).nil?
+            errors << I18n.t(
+                "vagrant.config.bindfs.errors.destination_path_reserved",
+                path: options[:dest_path]
+            )
+          end
         end
 
         if errors.any?

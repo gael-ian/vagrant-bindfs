@@ -77,16 +77,13 @@ Vagrant.configure("2") do |config|
   # Use vagrant-bindfs to re-mount folder
   config.bindfs.bind_folder "/vagrant-nfs", "guest/mount/point"
 
-
-  ## Share the default `vagrant` folder via NFS with your own options
-  config.vm.synced_folder ".", "/vagrant", type: :nfs
-  config.bindfs.bind_folder "/vagrant", "/vagrant"
-
   # Bind a folder after provisioning
   config.bindfs.bind_folder "/vagrant-after-provision", "another/guest/mount/point", after: :provision
 
 end
 ```
+
+Remember that Vagrant use `/vagrant` on guest side as a shared directory dedicated to provisioning and configuration. Binding a folder to `/vagrant` or one of its subfolders will fail.
 
 ### bindfs support
 
