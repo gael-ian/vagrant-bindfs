@@ -1,17 +1,21 @@
-require 'vagrant'
-require 'vagrant/errors'
-require 'vagrant/util/template_renderer'
+require "vagrant"
 
 module VagrantPlugins
   module Bindfs
     class Config < Vagrant.plugin("2", :config)
-      attr_accessor :default_options, :debug, :bind_folders
+
+      attr_accessor :debug
+      attr_accessor :source_version
+
+      attr_accessor :default_options
+      attr_accessor :bind_folders
 
       def initialize
-        @default_options = UNSET_VALUE
-        @debug = UNSET_VALUE
-        @bind_folders = {}
-        @logger = Log4r::Logger.new('vagrantplugins::bindfs::config')
+        @debug            = UNSET_VALUE
+        @source_version   = UNSET_VALUE
+
+        @default_options  = UNSET_VALUE
+        @bind_folders     = {}
       end
 
       def default_options(new_values = {})
@@ -44,8 +48,17 @@ module VagrantPlugins
       end
 
       def finalize!
-        @default_options = {} if @default_options == UNSET_VALUE
-        @debug = false if @debug == UNSET_VALUE
+        if @debug == UNSET_VALUE
+          @debug = false
+        end
+
+        if @source_version == UNSET_VALUE
+          @source_version = VagrantPlugins::Bindfs::SOURCE_VERSION
+        end
+
+        if @default_options == UNSET_VALUE
+          @default_options = {}
+        end
       end
 
       def validate!(machine)
