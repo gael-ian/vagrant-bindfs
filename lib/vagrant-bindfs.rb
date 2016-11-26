@@ -9,14 +9,13 @@ require "vagrant-bindfs/errors"
 
 require "pathname"
 
-module VagrantPlugins
-  module Bindfs
+module VagrantBindfs
     
-    def self.source_root
-      @source_root ||= Pathname.new(File.expand_path("../../", __FILE__))
-    end
-
-    I18n.load_path << File.expand_path("locales/en.yml", source_root)
-    I18n.reload!
+  def self.source_root
+    @source_root ||= Pathname.new(File.expand_path("../../", __FILE__))
   end
+
+  I18n.load_path << File.expand_path("locales/en.yml", source_root)
+  I18n.reload!
+
 end

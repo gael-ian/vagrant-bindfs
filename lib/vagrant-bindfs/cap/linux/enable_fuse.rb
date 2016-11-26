@@ -1,15 +1,13 @@
-module VagrantPlugins
-  module Bindfs
-    module Cap
-      module Linux
-        module EnableFuse
-          class << self
+module VagrantBindfs
+  module Cap
+    module Linux
+      module EnableFuse
+        class << self
 
-            def enable_fuse(machine)
-              machine.communicate.sudo("/sbin/modprobe fuse")
-            end
-
+          def enable_fuse(machine)
+            machine.communicate.sudo("/sbin/modprobe fuse")
           end
+
         end
       end
     end

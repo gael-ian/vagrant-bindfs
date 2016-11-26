@@ -1,25 +1,23 @@
-module VagrantPlugins
-  module Bindfs
-    module Cap
-      module Darwin
-        module Checks
-          class << self
+module VagrantBindfs
+  module Cap
+    module Darwin
+      module Checks
+        class << self
 
-            def bindfs_check_user(machine, user)
-              (
-                user.nil? || \
-                machine.communicate.test("test -n \"$(dscacheutil -q user -a name #{user.shellescape})\"")
-              )
-            end
-
-            def bindfs_check_group(machine, group)
-              (
-                group.nil? || \
-                machine.communicate.test("test -n \"$(dscacheutil -q group -a name #{group.shellescape})\"")
-              )
-            end
-
+          def bindfs_check_user(machine, user)
+            (
+              user.nil? || \
+              machine.communicate.test("test -n \"$(dscacheutil -q user -a name #{user.shellescape})\"")
+            )
           end
+
+          def bindfs_check_group(machine, group)
+            (
+              group.nil? || \
+              machine.communicate.test("test -n \"$(dscacheutil -q group -a name #{group.shellescape})\"")
+            )
+          end
+
         end
       end
     end

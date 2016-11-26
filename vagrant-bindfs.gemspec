@@ -6,7 +6,7 @@ require "vagrant-bindfs/version"
 Gem::Specification.new do |s|
 
   s.name        = "vagrant-bindfs"
-  s.version     = VagrantPlugins::Bindfs::VERSION
+  s.version     = VagrantBindfs::VERSION
   s.summary     = "A Vagrant plugin to automate bindfs mount in the VM"
   s.description = <<-DESC.gsub(/[\s]+/, ' ')
     A Vagrant plugin to automate bindfs mount in the VM.
