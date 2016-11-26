@@ -9,7 +9,6 @@ module VagrantBindfs
 
 
     config(:bindfs) do
-      require "vagrant-bindfs/config"
       Config
     end
 
@@ -105,8 +104,6 @@ module VagrantBindfs
       Cap::Darwin::InstallBindfs
     end
 
-
-    require "vagrant-bindfs/action"
 
     %w{up reload}.each do |action|
       action_hook(:bindfs, "machine_action_#{action}".to_sym) do |hook|

@@ -1,5 +1,3 @@
-require "vagrant"
-
 module VagrantBindfs
   class Config < Vagrant.plugin("2", :config)
 

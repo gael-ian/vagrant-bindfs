@@ -1,5 +1,3 @@
-require "vagrant-bindfs/command"
-
 module VagrantBindfs
   class Action
 

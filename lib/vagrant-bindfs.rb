@@ -10,6 +10,14 @@ require "vagrant-bindfs/errors"
 require "pathname"
 
 module VagrantBindfs
+
+  autoload :Plugin,   "vagrant-bindfs/plugin"
+  autoload :Config,   "vagrant-bindfs/config"
+  autoload :Action,   "vagrant-bindfs/action"
+  autoload :Error,    "vagrant-bindfs/errors"
+
+  autoload :Command,  "vagrant-bindfs/command"
+
     
   def self.source_root
     @source_root ||= Pathname.new(File.expand_path("../../", __FILE__))
