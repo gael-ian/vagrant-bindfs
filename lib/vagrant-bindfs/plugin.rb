@@ -106,12 +106,12 @@ module VagrantBindfs
     end
 
 
-    require "vagrant-bindfs/bind"
+    require "vagrant-bindfs/action"
 
     %w{up reload}.each do |action|
       action_hook(:bindfs, "machine_action_#{action}".to_sym) do |hook|
         hooks.each do |(name, action)|
-          hook.before(action, Action::Bind, name)
+          hook.before(action, Action, name)
         end
       end
     end
