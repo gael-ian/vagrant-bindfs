@@ -1,5 +1,5 @@
 module VagrantBindfs
-  module Cap
+  module Capabilities
     module All
       module BindfsInstalled
         class << self

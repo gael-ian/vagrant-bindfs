@@ -1,5 +1,5 @@
 module VagrantBindfs
-  module Cap
+  module Capabilities
     module Darwin
       module InstallBindfs
         class << self

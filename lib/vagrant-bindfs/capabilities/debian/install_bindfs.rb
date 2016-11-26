@@ -1,11 +1,11 @@
 module VagrantBindfs
-  module Cap
-    module Fedora
+  module Capabilities
+    module Debian
       module InstallBindfs
         class << self
 
           def install_bindfs(machine)
-            machine.communicate.sudo('yum -y install bindfs')
+            machine.communicate.sudo("apt-get update && apt-get install -y bindfs")
           end
 
         end

@@ -1,7 +1,7 @@
 require "vagrant-bindfs/version"
 
 module VagrantBindfs
-  module Cap
+  module Capabilities
     module RedHat
       module InstallBindfs
         class << self

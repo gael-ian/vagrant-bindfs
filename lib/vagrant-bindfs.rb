@@ -4,19 +4,17 @@ rescue LoadError
   raise "The Vagrant bindfs plugin must be run within Vagrant"
 end
 
-require "vagrant-bindfs/plugin"
-require "vagrant-bindfs/errors"
-
 require "pathname"
 
 module VagrantBindfs
 
-  autoload :Plugin,   "vagrant-bindfs/plugin"
-  autoload :Config,   "vagrant-bindfs/config"
-  autoload :Action,   "vagrant-bindfs/action"
-  autoload :Error,    "vagrant-bindfs/errors"
+  autoload :Plugin,       "vagrant-bindfs/plugin"
+  autoload :Config,       "vagrant-bindfs/config"
+  autoload :Capabilities, "vagrant-bindfs/capabilities"
+  autoload :Action,       "vagrant-bindfs/action"
+  autoload :Error,        "vagrant-bindfs/errors"
 
-  autoload :Command,  "vagrant-bindfs/command"
+  autoload :Command,      "vagrant-bindfs/command"
 
     
   def self.source_root
@@ -27,3 +25,5 @@ module VagrantBindfs
   I18n.reload!
 
 end
+
+require "vagrant-bindfs/plugin"

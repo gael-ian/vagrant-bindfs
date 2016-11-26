@@ -1,13 +1,13 @@
 module VagrantBindfs
-  module Cap
-    module Darwin
+  module Capabilities
+    module Ubuntu
       module FuseLoaded
         class << self
 
           def fuse_loaded(machine)
-            # OSXFuse is automatically loaded.
+            # Ubuntu 6.10 and after automatically load fuse.
             # Just check if it is installed
-            machine.communicate.test("test -d /Library/Frameworks/OSXFUSE.framework/")
+            machine.communicate.test("test -e /dev/fuse")
           end
 
         end

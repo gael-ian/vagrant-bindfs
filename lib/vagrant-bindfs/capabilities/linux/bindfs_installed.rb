@@ -1,5 +1,5 @@
 module VagrantPlugins
-  module Cap
+  module Capabilities
     module Linux
       module BindfsInstalled
         class << self
