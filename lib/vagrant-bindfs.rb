@@ -8,15 +8,8 @@ require "pathname"
 
 module VagrantBindfs
 
-  # Vagrant
-  autoload :Plugin,       "vagrant-bindfs/plugin"
-  autoload :Config,       "vagrant-bindfs/config"
-  autoload :Capabilities, "vagrant-bindfs/capabilities"
-  autoload :Action,       "vagrant-bindfs/action"
-  autoload :Error,        "vagrant-bindfs/errors"
-
-  # Bindfs
-  autoload :Bindfs,      "vagrant-bindfs/bindfs"
+  autoload :Vagrant,      "vagrant-bindfs/vagrant"
+  autoload :Bindfs,       "vagrant-bindfs/bindfs"
 
 
     
@@ -29,4 +22,4 @@ module VagrantBindfs
 
 end
 
-require "vagrant-bindfs/plugin"
+require "vagrant-bindfs/vagrant/plugin"

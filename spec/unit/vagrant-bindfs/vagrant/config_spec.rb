@@ -1,4 +1,4 @@
-describe VagrantBindfs::Config do
+describe VagrantBindfs::Vagrant::Config do
   subject { described_class.new }
 
 
