@@ -2,113 +2,73 @@ module VagrantBindfs
   class Config < Vagrant.plugin("2", :config)
 
     attr_accessor :debug
+
     attr_accessor :source_version
 
     attr_accessor :default_options
-    attr_accessor :bind_folders
+    attr_accessor :binded_folders
+
 
     def initialize
-      @debug            = UNSET_VALUE
+      @debug            = false
+
       @source_version   = UNSET_VALUE
 
-      @default_options  = UNSET_VALUE
-      @bind_folders     = {}
+      @binded_folders   = {}
+      @default_options  = Bindfs::OptionSet.new(nil, {
+        'force-user'  => 'vagrant',
+        'force-group' => 'vagrant',
+        'perms'       => 'u=rwX:g=rD:o=rD'
+      })
     end
 
-    def default_options(new_values = {})
-      @default_options = {} if @default_options == UNSET_VALUE
-      @default_options.merge! new_values
+    def debug=(value)
+      @debug = (value == true)
     end
 
-    def bind_folder(source_path, dest_path, options = {})
-      options[:source_path] = source_path
-      options[:dest_path] = dest_path
-      options[:hook] ||= options.delete(:after) || VagrantBindfs::Plugin.hook_names.first
-
-      @bind_folders[options[:dest_path]] = options
+    def source_version=(value)
+      @source_version = Gem::Version.new(value.to_s)
     end
+
+    def default_options=(options = {})
+      @default_options = Bindfs::OptionSet.new(nil, options)
+    end
+
+    def binded_folder=
+      # TODO: raise error and try to convert to call to bind_folder
+    end
+
+    def bind_folder(source, destination, options = {})
+      hook = options.delete(:after) || :synced_folders
+      folder = Bindfs::Folder.new(hook, source, destination, options)
+      @binded_folders[folder.id] = folder
+    end
+
 
     def merge(other)
       super.tap do |result|
-        result.default_options(default_options(other.default_options))
-
-        new_folders = bind_folders.dup
-        other_folders = other.bind_folders
-
-        other_folders.each do |id, options|
-          new_folders[id] ||= {}
-          new_folders[id].merge! options
-        end
-
-        result.bind_folders = new_folders
+        result.debug            = (debug || other.debug)
+        result.default_options  = default_options.merge(other.default_options)
+        result.binded_folders   = binded_folders.merge(other.binded_folders)
+        source_version          = [ source_version, other.source_version ].select{ |v| v != UNSET_VALUE }.min
+        result.source_version   =  source_version unless source_version.nil?
       end
     end
 
     def finalize!
-      if @debug == UNSET_VALUE
-        @debug = false
-      end
-
-      if @source_version == UNSET_VALUE
-        @source_version = VagrantBindfs::SOURCE_VERSION
-      end
-
-      if @default_options == UNSET_VALUE
-        @default_options = {}
-      end
+      @source_version = Gem::Version.new(VagrantBindfs::SOURCE_VERSION) if @source_version == UNSET_VALUE
     end
 
-    def validate!(machine)
-      finalize!
-      errors = []
+    def validate(machine)
+      errors = _detected_errors
 
-      bind_folders.each do |id, options|
-        next if options[:disabled]
-
-        unless VagrantBindfs::Bindfs::Plugin.hook_names.include?(options[:hook].to_sym)
-          errors << I18n.t(
-              "vagrant.config.bindfs.errors.invalid_hook",
-              hooks: VagrantBindfs::Bindfs::Plugin.hook_names
-          )
-        end
-
-        if options[:dest_path].nil? or options[:source_path].nil?
-          errors << I18n.t(
-            "vagrant.config.bindfs.errors.no_path_supplied",
-            path: options[:dest_path]
-          )
-        end
-
-        if Pathname.new(options[:dest_path]).relative?
-          errors << I18n.t(
-            "vagrant.config.bindfs.errors.destination_path_relative",
-            path: options[:dest_path]
-          )
-        end
-
-        if Pathname.new(options[:source_path]).relative?
-          errors << I18n.t(
-            "vagrant.config.bindfs.errors.source_path_relative",
-            path: options[:source_path]
-          )
-        end
-
-        unless Pathname.new(options[:dest_path]).to_path.match(/^\/vagrant/).nil?
-          errors << I18n.t(
-              "vagrant.config.bindfs.errors.destination_path_reserved",
-              path: options[:dest_path]
-          )
-        end
+      binded_folders.each do |_, folder|
+        validator = Bindfs::Validator.new(folder, machine)
+        errors << validator.errors unless validator.valid?
       end
 
-      if errors.any?
-        rendered_errors = Vagrant::Util::TemplateRenderer.render(
-          'config/validation_failed',
-          errors: { 'vagrant-bindfs' => errors }
-        )
-
-        fail Vagrant::Errors::ConfigInvalid, errors: rendered_errors
-      end
+      { 'vagrant-bindfs' => errors.flatten }
     end
+
   end
 end

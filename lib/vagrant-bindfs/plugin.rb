@@ -1,10 +1,9 @@
 module VagrantBindfs
   class Plugin < Vagrant.plugin("2")
 
-    name "Bindfs"
+    name "bindfs"
     description <<-DESC
-    This plugin allows you to mount -o bind filesystems inside the guest. This is
-    useful to change their ownership and permissions.
+    A Vagrant plugin to automate [bindfs](http://bindfs.org/) mount in the VM. This allow you to change owner, group and permissions on files and, for example, work around NFS share permissions issues.
     DESC
 
 

@@ -1,4 +1,23 @@
 en:
+  vagrant-bindfs:
+    validations:
+      source_path_required: "A source path is required as argument to bind_folder"
+      source_path_does_not_exist: "Source path '%{path}' doesn't exist"
+
+      destination_path_required: "A destination path is required as argument to bind_folder"
+      destination_path_reserved: "Destination path '%{path}' is part of a reserved subtree for Vagrant use"
+      destination_already_mounted: "Destination path '%{dest}' is already a bindfs mount"
+
+      path_must_be_absolute: "Path '%{path}' is relative but an absolute path is attended"
+      user_does_not_exist: "User '%{user}' doesn't exist"
+      group_does_not_exist: "Group '%{group}' doesn't exist"
+
+      errors_found: "Cannot create bind mount from '%{source}' to '%{dest}': %{errors}"
+
+    deprecations:
+      disabled: "':disabled' option is not supported anymore. Comment the line in your Vagrantfile"
+
+
   vagrant:
     config:
       bindfs:
@@ -6,7 +25,6 @@ en:
         osxfuse_not_installed: "OSXFuse seems to not be installed on the virtual machine, installing now"
         not_installed: "Bindfs seems to not be installed on the virtual machine, installing now"
         not_loaded: "Fuse kernel module seems to be not loaded, trying to load it"
-        already_mounted: "There's already a bindfs mount to destination %{dest}"
         status:
           binding_all: "Creating bind mounts for selected devices"
           binding_entry: "Creating bind mount from %{source} to %{dest}"
@@ -17,8 +35,6 @@ en:
           destination_path_reserved: "Destination path %{path} is part of a reserved subtree for Vagrant use"
           source_path_relative: "Source path %{path} is relative for bind whatever"
           source_path_not_exist: "Cannot bind source path %{path} because it doesn't exist"
-          user_not_exist: "Cannot bind to user '%{user}' because it doesn't exist"
-          group_not_exist: "Cannot bind to group '%{group}' because it doesn't exist"
           cannot_enable_fuse: "The fuse kernel module seems to not be loadable on the virtual machine"
           binding_failed: |-
             The bind command `%{command}` failed to run!

@@ -1,0 +1,67 @@
+// TODO: Update after each bindfs release
+{
+  // "File" ownership
+  "force-user":               { "long": ["force-user", "user", "owner"], "short": ["u"], "type": "option", "since": "0.0.1"   },
+  "force-group":              { "long": ["force-group", "group"],        "short": ["g"], "type": "option", "since": "0.0.1"   },
+  "perms":                    { "long": ["perms"],                       "short": ["p"], "type": "option", "since": "0.0.1"   },
+  "mirror":                   { "long": ["mirror"],                      "short": ["m"], "type": "option", "since": "0.0.1"   },
+  "mirror-only":              { "long": ["mirror-only"],                 "short": ["M"], "type": "option", "since": "0.0.1"   },
+  "map":                      { "long": ["map"],                         "short": [],    "type": "option", "since": "1.10"    },
+  "uid-offset":               { "long": ["uid-offset"],                  "short": [],    "type": "option", "since": "1.13.2"  },
+  "gid-offset":               { "long": ["gid-offset"],                  "short": [],    "type": "option", "since": "1.13.2"  },
+
+  // File creation policy
+  "create-as-user":           { "long": ["create-as-user"],              "short": [],    "type": "flag",   "since": "0.0.1"   },
+  "create-as-mounter":        { "long": ["create-as-mounter"],           "short": [],    "type": "flag",   "since": "0.0.1"   },
+  "create-for-user":          { "long": ["create-for-user"],             "short": [],    "type": "option", "since": "0.0.1"   },
+  "create-for-group":         { "long": ["create-for-group"],            "short": [],    "type": "option", "since": "0.0.1"   },
+  "create-with-perms":        { "long": ["create-with-perms"],           "short": [],    "type": "option", "since": "0.0.1"   },
+
+  // Chown policy
+  "chown-normal":             { "long": ["chown-normal"],                "short": [],    "type": "flag",   "since": "0.0.1"   },
+  "chown-ignore":             { "long": ["chown-ignore"],                "short": [],    "type": "flag",   "since": "0.0.1"   },
+  "chown-deny":               { "long": ["chown-deny"],                  "short": [],    "type": "flag",   "since": "0.0.1"   },
+
+  // Chgrp policy
+  "chgrp-normal":             { "long": ["chgrp-normal"],                "short": [],    "type": "flag",   "since": "0.0.1"   },
+  "chgrp-ignore":             { "long": ["chgrp-ignore"],                "short": [],    "type": "flag",   "since": "0.0.1"   },
+  "chgrp-deny":               { "long": ["chgrp-deny"],                  "short": [],    "type": "flag",   "since": "0.0.1"   },
+
+  // Chmod policy
+  "chmod-normal":             { "long": ["chmod-normal"],                "short": [],    "type": "flag",   "since": "0.0.1"   },
+  "chmod-ignore":             { "long": ["chmod-ignore"],                "short": [],    "type": "flag",   "since": "0.0.1"   },
+  "chmod-deny":               { "long": ["chmod-deny"],                  "short": [],    "type": "flag",   "since": "0.0.1"   },
+  "chmod-filter":             { "long": ["chmod-filter"],                "short": [],    "type": "option", "since": "1.12.2"  },
+  "chmod-allow-x":            { "long": ["chmod-allow-x"],               "short": [],    "type": "flag",   "since": "0.0.1"   },
+
+  // Extended attribute policy
+  "xattr-none":               { "long": ["xattr-none"],                  "short": [],    "type": "flag",   "since": "0.0.1"   },
+  "xattr-ro":                 { "long": ["xattr-ro"],                    "short": [],    "type": "flag",   "since": "0.0.1"   },
+  "xattr-rw":                 { "long": ["xattr-rw"],                    "short": [],    "type": "flag",   "since": "0.0.1"   },
+
+  // Rate limits
+  "read-rate":                { "long": ["read-rate"],                   "short": [],    "type": "option", "since": "1.12.6"  },
+  "write-rate":               { "long": ["write-rate"],                  "short": [],    "type": "option", "since": "1.12.6"  },
+
+  // Link handling
+  "hide-hard-links":          { "long": ["hide-hard-links"],             "short": [],    "type": "flag",   "since": "1.10"    },
+  "resolve-symlinks":         { "long": ["resolve-symlinks"],            "short": [],    "type": "flag",   "since": "1.13.0"  },
+  "resolve-symlink-policy":   { "long": ["resolve-symlink-policy"],      "short": [],    "type": "option", "since": "1.13.0"  },
+
+  // Multithreading
+  "multithreaded":            { "long": ["multithreaded"],               "short": [],    "type": "flag",   "since": "1.11"    },
+  "enable-lock-forwarding":   { "long": ["enable-lock-forwarding"],      "short": [],    "type": "flag",   "since": "1.13.2"  },
+  "disable-lock-forwarding":  { "long": ["disable-lock-forwarding"],     "short": [],    "type": "flag",   "since": "1.13.2"  },
+
+  // Miscellaneous
+  "no-allow-other":           { "long": ["no-allow-other"],              "short": ["n"], "type": "flag",   "since": "0.0.1"   },
+  "realistic-permissions":    { "long": ["realistic-permissions"],       "short": [],    "type": "flag",   "since": "1.10"    },
+  "ctime-from-mtime":         { "long": ["ctime-from-mtime"],            "short": [],    "type": "flag",   "since": "0.0.1"   },
+  "enabe-ioctl":              { "long": ["enable-ioctl"],                "short": [],    "type": "flag",   "since": "1.13.2"  },
+
+  // FUSE options
+  "o":                        { "long": [],                              "short": ["o"], "type": "option", "since": "0.0.1"   },
+  "r":                        { "long": [],                              "short": ["r"], "type": "flag",   "since": "0.0.1"   },
+  "d":                        { "long": [],                              "short": ["d"], "type": "flag",   "since": "0.0.1"   },
+  "f":                        { "long": [],                              "short": ["f"], "type": "flag",   "since": "0.0.1"   }
+}

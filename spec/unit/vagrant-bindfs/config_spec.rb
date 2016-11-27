@@ -7,9 +7,23 @@ describe VagrantBindfs::Config do
     expect(subject).to respond_to(:debug=)
   end
 
+  describe "#debug" do
+    it "should force the debug option to a boolean" do
+      subject.debug = 'true'
+      expect(subject.debug).to be false
+    end
+  end
+
   it "has an option for bindfs version when installed from sources" do
     expect(subject).to respond_to(:source_version)
     expect(subject).to respond_to(:source_version=)
+  end
+
+  describe "#source_version=" do
+    it "should convert given version to a Gem::Version instance" do
+      subject.source_version = "1.0.0"
+      expect(subject.source_version).to eq(Gem::Version.new("1.0.0"))
+    end
   end
 
   it "has an option for default bindfs options" do
@@ -17,9 +31,26 @@ describe VagrantBindfs::Config do
     expect(subject).to respond_to(:default_options=)
   end
 
+  describe "#default_options" do
+    it "should be an instance of VagrantBindfs::Command::OptionSet" do
+      expect(subject.default_options).to be_a(VagrantBindfs::Bindfs::OptionSet)
+    end
+  end
+
+  describe "#default_options=" do
+    it "should convert options to an instance of VagrantBindfs::Command::OptionSet" do
+      subject.default_options = {
+        group:  "dummy",
+        user:   "dummy"
+      }
+
+      expect(subject.default_options).to be_a(VagrantBindfs::Bindfs::OptionSet)
+      expect(subject.default_options.keys).to contain_exactly('force-group', 'force-user')
+    end
+  end
+
   it "has an option for binded folders set" do
-    expect(subject).to respond_to(:bind_folders)
-    expect(subject).to respond_to(:bind_folders=)
+    expect(subject).to respond_to(:binded_folders)
   end
 
 
@@ -27,9 +58,6 @@ describe VagrantBindfs::Config do
 
   end
 
-  describe "#validate" do
-
-  end
 
   describe "#merge" do
 
@@ -62,15 +90,13 @@ describe VagrantBindfs::Config do
     end
 
     it "should merge default bindfs options" do
-      expect(subject.default_options).to eq({
-        create_as_user: true,
-        create_as_mounter: true
-      })
+      expect(subject.default_options.keys).to contain_exactly('create-as-user', 'create-as-mounter')
+      expect(subject.default_options['create-as-user']).to be true
+      expect(subject.default_options['create-as-mounter']).to be true
     end
 
     it "should merge binded folders set" do
-      expect(subject.bind_folders.keys).to include("/etc-binded", "/usr-bin-binded", "/bin-binded")
-      expect(subject.bind_folders["/etc-binded"]).to include(group: 'dummy', user: 'dummy', create_as_user: true)
+      expect(subject.binded_folders.keys).to include("/etc-binded", "/usr-bin-binded", "/bin-binded")
     end
 
   end
@@ -87,15 +113,26 @@ describe VagrantBindfs::Config do
     end
 
     it "defaults to install bindfs from sources of the latest supported version" do
-      expect(subject.source_version).to eq(VagrantBindfs::SOURCE_VERSION)
+      expect(subject.source_version.to_s).to eq(VagrantBindfs::SOURCE_VERSION)
     end
 
     it "defaults to empty default bindfs options" do
-      expect(subject.default_options).to eq({})
+      expect(subject.default_options.keys.count).to eq(0)
     end
 
     it "defaults to empty binded folders set" do
-      expect(subject.bind_folders).to eq({})
+      expect(subject.binded_folders).to eq({})
+    end
+  end
+
+
+  it "should respond to #validate" do
+    expect(subject).to respond_to(:validate)
+  end
+
+  describe "#validate" do
+    it "should return a hash of errors" do
+
     end
   end
 end

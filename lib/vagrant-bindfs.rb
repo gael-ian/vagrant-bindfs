@@ -8,13 +8,16 @@ require "pathname"
 
 module VagrantBindfs
 
+  # Vagrant
   autoload :Plugin,       "vagrant-bindfs/plugin"
   autoload :Config,       "vagrant-bindfs/config"
   autoload :Capabilities, "vagrant-bindfs/capabilities"
   autoload :Action,       "vagrant-bindfs/action"
   autoload :Error,        "vagrant-bindfs/errors"
 
-  autoload :Command,      "vagrant-bindfs/command"
+  # Bindfs
+  autoload :Bindfs,      "vagrant-bindfs/bindfs"
+
 
     
   def self.source_root

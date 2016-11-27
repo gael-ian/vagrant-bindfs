@@ -11,10 +11,10 @@ def tests_setup(machine, options = {})
   machine.bindfs.bind_folder "/etc", "/etc-binded-without-explicit-owner", options.merge({ owner: nil })
 
   # This should fail
-  machine.bindfs.bind_folder "/etc3", "/etc-nonexit", options
+  # machine.bindfs.bind_folder "/etc3", "/etc-nonexit", options
 
   # These should also fail
-  machine.bindfs.bind_folder "/etc", "/etc-binded-with-nonexistent-user", options.merge({ user: "nonuser", after: :provision })
-  machine.bindfs.bind_folder "/etc", "/etc-binded-with-nonexistent-group", options.merge({ group: "nongroup", after: :provision })
+  # machine.bindfs.bind_folder "/etc", "/etc-binded-with-nonexistent-user", options.merge({ user: "nonuser", after: :provision })
+  # machine.bindfs.bind_folder "/etc", "/etc-binded-with-nonexistent-group", options.merge({ group: "nongroup", after: :provision })
 
 end
