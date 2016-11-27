@@ -1,12 +1,12 @@
 module VagrantBindfs
   module Vagrant
-    module Cap
+    module Capabilities
       module Suse
-        module InstallBindfs
+        module PackageManager
           class << self
 
-            def install_bindfs(machine)
-              machine.communicate.sudo("zypper -n install bindfs")
+            def bindfs_package_manager_name(machine)
+              "zypper"
             end
 
           end

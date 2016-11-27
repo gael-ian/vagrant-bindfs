@@ -9,11 +9,11 @@ test_machines = {
   # redhat: { box: "bento/centos-7.2"   },
   
   # The `vagrant` user group does not exist in this box.
-  # suse:   { box: "bento/opensuse-leap-42.1",    args: { group: 'users' } },
+  suse:   { box: "bento/opensuse-leap-42.1",    args: { group: 'users' } },
   
   # **This box require the Oracle VM VirtualBox Extension Pack for Virtualbox.**
   # The `vagrant` user group does not exist in this box.
-  # osx:    { box: "jhcook/osx-elcapitan-10.11",  args: { group: 'staff' } },
+  osx:    { box: "jhcook/osx-elcapitan-10.11",  args: { group: 'staff' } },
 
   # When you add a new test machine, please ensure that it will stay
   # available and regularly updated for future tests. We recommend to

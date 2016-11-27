@@ -37,7 +37,7 @@ module VagrantBindfs
 
         return unless machine_ready?
 
-        unless @machine.communicate.test("test -d #{source}")
+        unless @machine.guest.capability(:bindfs_exists_directory, source)
           @errors << I18n.t("vagrant-bindfs.validations.source_path_does_not_exist", path: source)
         end
       end
@@ -57,7 +57,7 @@ module VagrantBindfs
 
         return unless machine_ready?
 
-        if @machine.guest.capability(:bindfs_check_mount, destination)
+        if @machine.guest.capability(:bindfs_exists_mount, destination)
           @errors << I18n.t("vagrant-bindfs.validations.destination_already_mounted", dest: destination)
         end
       end
@@ -72,11 +72,11 @@ module VagrantBindfs
 
         return unless machine_ready?
 
-        unless @machine.guest.capability(:bindfs_check_user, options['force-user'])
+        unless @machine.guest.capability(:bindfs_exists_user, options['force-user'])
           @errors << I18n.t("vagrant-bindfs.validations.user_does_not_exist", user: options['force-user'])
         end
 
-        unless @machine.guest.capability(:bindfs_check_group, options['force-group'])
+        unless @machine.guest.capability(:bindfs_exists_group, options['force-group'])
           @errors << I18n.t("vagrant-bindfs.validations.group_does_not_exist", group: options['force-group'])
         end
       end

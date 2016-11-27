@@ -2,10 +2,14 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module All
-        module Checks
+        module SystemChecks
           class << self
 
-            def bindfs_check_mount(machine, directory)
+            def bindfs_exists_directory(machine, directory)
+              machine.communicate.test("test -d #{directory.shellescape}")
+            end
+
+            def bindfs_exists_mount(machine, directory)
               machine.communicate.test("mount | grep '^bindfs' | grep #{directory.shellescape}")
             end
 

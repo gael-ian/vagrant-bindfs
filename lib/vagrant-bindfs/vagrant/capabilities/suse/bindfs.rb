@@ -1,12 +1,12 @@
 module VagrantBindfs
   module Vagrant
     module Capabilities
-      module Fedora
-        module InstallBindfs
+      module Suse
+        module Bindfs
           class << self
 
-            def install_bindfs(machine)
-              machine.communicate.sudo('yum -y install bindfs')
+            def bindfs_bindfs_install(machine)
+              machine.communicate.sudo("zypper -n install bindfs")
             end
 
           end

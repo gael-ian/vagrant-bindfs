@@ -1,12 +1,12 @@
 module VagrantBindfs
   module Vagrant
     module Capabilities
-      module All
-        module BindfsInstalled
+      module RedHat
+        module PackageManager
           class << self
 
-            def bindfs_installed(machine)
-              machine.communicate.test("bindfs --help")
+            def bindfs_package_manager_name(machine)
+              "yum"
             end
 
           end

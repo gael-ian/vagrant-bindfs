@@ -1,12 +1,12 @@
 module VagrantBindfs
   module Vagrant
     module Capabilities
-      module Linux
-        module EnableFuse
+      module Suse
+        module Fuse
           class << self
 
-            def enable_fuse(machine)
-              machine.communicate.sudo("/sbin/modprobe fuse")
+            def bindfs_fuse_install(machine)
+              machine.communicate.sudo("zypper -n install fuse")
             end
 
           end

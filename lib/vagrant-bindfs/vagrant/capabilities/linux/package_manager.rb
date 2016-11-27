@@ -2,11 +2,11 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module Linux
-        module FuseLoaded
+        module PackageManager
           class << self
 
-            def fuse_loaded(machine)
-              machine.communicate.test("lsmod | grep -q fuse")
+            def bindfs_package_manager_install(machine)
+              # TODO: raise an error. WTF happened man?
             end
 
           end

@@ -1,5 +1,16 @@
 en:
   vagrant-bindfs:
+    capabilities:
+      package_manager:
+        not_installed: "Package manager seems to not be installed on the virtual machine, installing now"
+        detected: "Package manager %{name} is installed"
+      fuse:
+        not_installed: "Fuse seems to not be installed on the virtual machine, installing now"
+        not_loaded: "Fuse kernel module seems to be not loaded, trying to load it"
+      bindfs:
+        not_installed: "Bindfs seems to not be installed on the virtual machine, installing now"
+        detected: "Bindfs %{version} is installed"
+
     validations:
       source_path_required: "A source path is required as argument to bind_folder"
       source_path_does_not_exist: "Source path '%{path}' doesn't exist"

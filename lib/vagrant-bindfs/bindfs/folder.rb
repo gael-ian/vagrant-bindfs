@@ -22,6 +22,10 @@ module VagrantBindfs
         @id ||= Digest::SHA1.new.digest((destination))
       end
 
+      def reverse_merge!(options)
+        @options = Bindfs::OptionSet.new(nil, options).merge(@options)
+      end
+
       def merge!(options)
         @options = @options.merge(options)
       end

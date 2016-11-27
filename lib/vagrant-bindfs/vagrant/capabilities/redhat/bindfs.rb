@@ -4,10 +4,10 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module RedHat
-        module InstallBindfs
+        module Bindfs
           class << self
 
-            def install_bindfs(machine)
+            def bindfs_bindfs_install(machine)
               machine.communicate.tap do |comm|
                 if comm.test("test 0 -eq $(sudo yum search bindfs 2>&1 >/dev/null | wc -l)")
                   comm.sudo("yum -y install bindfs")
@@ -41,7 +41,7 @@ module VagrantBindfs
             end
 
             def source_version(machine)
-              machine.config.bindfs.source_version
+              machine.config.bindfs.source_version.to_s
             end
 
           end
