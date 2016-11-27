@@ -21,7 +21,7 @@ test_machines = {
   # documentation. See https://goo.gl/LbkPVF
 }
 
-require File.expand_path("../test/test_helper", __FILE__)
+require File.expand_path("../spec/vagrantfile_helper", __FILE__)
 
 Vagrant.configure("2") do |config|
 

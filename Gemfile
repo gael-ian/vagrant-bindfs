@@ -18,6 +18,7 @@ group :development do
   
   # Development dependencies
   gem "rake"
+  gem "rspec",  "~> 3.5.0"
   
 end
 

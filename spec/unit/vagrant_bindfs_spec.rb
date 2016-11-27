@@ -1,0 +1,4 @@
+
+describe VagrantBindfs do
+
+end
