@@ -18,8 +18,9 @@ module VagrantBindfs
       %w{up reload}.each do |action|
         action_hook(:bindfs, "machine_action_#{action}".to_sym) do |hook|
           hooks.each do |(name, action)|
-            hook.before(action, Action, name)
+            hook.before(action, Actions::Mounter, name)
           end
+          hook.before(hooks[:synced_folders], Actions::Installer)
         end
       end
 
