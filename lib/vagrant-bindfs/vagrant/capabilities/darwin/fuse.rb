@@ -10,6 +10,7 @@ module VagrantBindfs
             end
 
             def bindfs_fuse_install(machine)
+              machine.guest.capability(:bindfs_package_manager_update)
               machine.communicate.execute("brew tap caskroom/cask && brew cask install osxfuse")
             end
 

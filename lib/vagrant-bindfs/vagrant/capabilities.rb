@@ -11,7 +11,6 @@ module VagrantBindfs
       autoload :Ubuntu, "vagrant-bindfs/vagrant/capabilities/ubuntu"
 
       autoload :RedHat, "vagrant-bindfs/vagrant/capabilities/redhat"
-      autoload :Fedora, "vagrant-bindfs/vagrant/capabilities/fedora"
 
       autoload :Suse,   "vagrant-bindfs/vagrant/capabilities/suse"
 
@@ -51,10 +50,10 @@ module VagrantBindfs
           base.guest_capability("darwin", "bindfs_package_manager_install") { Capabilities::Darwin::PackageManager }
           base.guest_capability("linux",  "bindfs_package_manager_install") { Capabilities::Linux::PackageManager }
 
-          base.guest_capability("darwin", "bindfs_package_manager_package_find") { Capabilities::Darwin::PackageManager }
-          base.guest_capability("debian", "bindfs_package_manager_package_find") { Capabilities::Debian::PackageManager }
-          base.guest_capability("redhat", "bindfs_package_manager_package_find") { Capabilities::RedHat::PackageManager }
-          base.guest_capability("suse",   "bindfs_package_manager_package_find") { Capabilities::Suse::PackageManager }
+          base.guest_capability("darwin", "bindfs_package_manager_update") { Capabilities::Darwin::PackageManager }
+          base.guest_capability("debian", "bindfs_package_manager_update") { Capabilities::Debian::PackageManager }
+          base.guest_capability("redhat", "bindfs_package_manager_update") { Capabilities::RedHat::PackageManager }
+          base.guest_capability("suse",   "bindfs_package_manager_update") { Capabilities::Suse::PackageManager }
         end
 
         def declare_capabilities_for_fuse!(base)
@@ -85,11 +84,25 @@ module VagrantBindfs
           base.guest_capability("darwin", "bindfs_bindfs_install") { Capabilities::Darwin::Bindfs }
           base.guest_capability("debian", "bindfs_bindfs_install") { Capabilities::Debian::Bindfs }
           base.guest_capability("redhat", "bindfs_bindfs_install") { Capabilities::RedHat::Bindfs }
-          base.guest_capability("fedora", "bindfs_bindfs_install") { Capabilities::Fedora::Bindfs }
           base.guest_capability("suse",   "bindfs_bindfs_install") { Capabilities::Suse::Bindfs }
 
-          base.guest_capability("darwin", "bindfs_bindfs_install_from_source") { Capabilities::Darwin::Bindfs }
-          base.guest_capability("linux",  "bindfs_bindfs_install_from_source") { Capabilities::Linux::Bindfs }
+          base.guest_capability("darwin", "bindfs_bindfs_search_version") { Capabilities::Darwin::Bindfs }
+          base.guest_capability("debian", "bindfs_bindfs_search_version") { Capabilities::Debian::Bindfs }
+          base.guest_capability("redhat", "bindfs_bindfs_search_version") { Capabilities::RedHat::Bindfs }
+          base.guest_capability("suse",   "bindfs_bindfs_search_version") { Capabilities::Suse::Bindfs }
+
+          base.guest_capability("darwin", "bindfs_bindfs_install_version") { Capabilities::Darwin::Bindfs }
+          base.guest_capability("debian", "bindfs_bindfs_install_version") { Capabilities::Debian::Bindfs }
+          base.guest_capability("redhat", "bindfs_bindfs_install_version") { Capabilities::RedHat::Bindfs }
+          base.guest_capability("suse",   "bindfs_bindfs_install_version") { Capabilities::Suse::Bindfs }
+
+          base.guest_capability("darwin", "bindfs_bindfs_install_compilation_requirements") { Capabilities::Darwin::Bindfs }
+          base.guest_capability("debian", "bindfs_bindfs_install_compilation_requirements") { Capabilities::Debian::Bindfs }
+          base.guest_capability("redhat", "bindfs_bindfs_install_compilation_requirements") { Capabilities::RedHat::Bindfs }
+          base.guest_capability("suse",   "bindfs_bindfs_install_compilation_requirements") { Capabilities::Suse::Bindfs }
+
+          base.guest_capability("darwin", "bindfs_bindfs_install_from_source") { Capabilities::All::Bindfs }
+          base.guest_capability("linux",  "bindfs_bindfs_install_from_source") { Capabilities::All::Bindfs }
         end
 
       end

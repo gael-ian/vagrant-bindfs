@@ -9,6 +9,10 @@ module VagrantBindfs
               "apt-get"
             end
 
+            def bindfs_package_manager_update(machine)
+              machine.communicate.sudo("apt-get update")
+            end
+
           end
         end
       end

@@ -4,19 +4,21 @@ module VagrantBindfs
 
       attr_accessor :debug
 
-      attr_accessor :source_version
+      attr_accessor :bindfs_version
+      attr_accessor :install_bindfs_from_source
 
       attr_accessor :default_options
       attr_accessor :binded_folders
 
 
       def initialize
-        @debug            = false
+        @debug                      = false
 
-        @source_version   = UNSET_VALUE
+        @bindfs_version             = UNSET_VALUE
+        @install_bindfs_from_source = false
 
-        @binded_folders   = {}
-        @default_options  = Bindfs::OptionSet.new(nil, {
+        @binded_folders             = {}
+        @default_options            = Bindfs::OptionSet.new(nil, {
           'force-user'  => 'vagrant',
           'force-group' => 'vagrant',
           'perms'       => 'u=rwX:g=rD:o=rD'
@@ -28,7 +30,11 @@ module VagrantBindfs
       end
 
       def source_version=(value)
-        @source_version = Gem::Version.new(value.to_s)
+        @bindfs_version = Gem::Version.new(value.to_s)
+      end
+
+      def install_bindfs_from_source=(value)
+        @install_bindfs_from_source = (value == true)
       end
 
       def default_options=(options = {})
@@ -48,19 +54,22 @@ module VagrantBindfs
 
       def merge(other)
         super.tap do |result|
-          result.debug            = (debug || other.debug)
-          result.default_options  = default_options.merge(other.default_options)
-          result.binded_folders   = binded_folders.merge(other.binded_folders)
-          source_version          = [ source_version, other.source_version ].select{ |v| v != UNSET_VALUE }.min
-          result.source_version   =  source_version unless source_version.nil?
+          result.debug                      = (debug || other.debug)
+
+          _bindfs_version                   = [ bindfs_version, other.bindfs_version ].select{ |v| v != UNSET_VALUE }.min
+          result.bindfs_version             =  _bindfs_version unless _bindfs_version.nil?
+          result.install_bindfs_from_source = (install_bindfs_from_source || other.install_bindfs_from_source)
+
+          result.default_options            = default_options.merge(other.default_options)
+          result.binded_folders             = binded_folders.merge(other.binded_folders)
         end
       end
 
       def finalize!
-        @source_version = Gem::Version.new(VagrantBindfs::SOURCE_VERSION) if @source_version == UNSET_VALUE
+        @bindfs_version = :latest if @bindfs_version == UNSET_VALUE
       end
 
-      def validate(machine)
+      def validate!(machine)
         errors = _detected_errors
 
         binded_folders.each do |_, folder|

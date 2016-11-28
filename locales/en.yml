@@ -15,6 +15,7 @@ en:
         loaded: "Fuse kernel module is loaded"
       bindfs:
         not_installed: "Bindfs seems to not be installed on the virtual machine, installing now"
+        not_found_in_repository: "Bindfs %{version} can not be found in any of the repositories, installing now from sources"
         detected: "Bindfs %{version} is installed"
       mounter:
         start: "Creating bind mounts after %{hook}..."
@@ -39,9 +40,6 @@ en:
 
 
     errors:
-      fuse:
-        cannot_enable: "The fuse kernel module can not be loaded on the virtual machine"
-
       bindfs:
         mount_failed: |-
           The following bindfs command failed to run!

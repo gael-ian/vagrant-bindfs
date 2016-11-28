@@ -6,7 +6,7 @@ module VagrantBindfs
           class << self
 
             def bindfs_fuse_installed(machine)
-              machine.communicate.test("test -e /dev/fuse")
+              machine.communicate.test("test -f /etc/fuse.conf")
             end
 
             def bindfs_fuse_loaded(machine)

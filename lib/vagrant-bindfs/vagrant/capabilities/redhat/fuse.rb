@@ -6,7 +6,8 @@ module VagrantBindfs
           class << self
 
             def bindfs_fuse_install(machine)
-              machine.communicate.sudo("yum -y install fuse fuse-devel")
+              machine.guest.capability(:bindfs_package_manager_update)
+              machine.communicate.sudo("yum -y install fuse")
             end
 
           end

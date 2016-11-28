@@ -9,6 +9,10 @@ module VagrantBindfs
               "yum"
             end
 
+            def bindfs_package_manager_update(machine)
+              machine.communicate.sudo("yum clean expire-cache")
+            end
+
           end
         end
       end

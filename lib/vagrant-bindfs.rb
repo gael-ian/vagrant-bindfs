@@ -11,7 +11,6 @@ module VagrantBindfs
   autoload :Vagrant,      "vagrant-bindfs/vagrant"
   autoload :Bindfs,       "vagrant-bindfs/bindfs"
 
-
     
   def self.source_root
     @source_root ||= Pathname.new(File.expand_path("../../", __FILE__))

@@ -55,7 +55,7 @@ module VagrantBindfs
 
             machine.communicate.tap do |comm|
               comm.sudo("mkdir -p #{folder.destination}")
-              comm.sudo(command.to_s, error_class: VagrantBindfs::Vagrant::Error, error_key: :binding_failed)
+              comm.sudo(command.to_s, error_class: VagrantBindfs::Vagrant::Error, error_key: 'bindfs.mount_failed')
               debug(command.to_s)
             end
           end

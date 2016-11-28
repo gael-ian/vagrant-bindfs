@@ -38,9 +38,7 @@ module VagrantBindfs
         def ensure_package_manager_is_installed!
           unless guest.capability(:bindfs_package_manager_installed)
             warn(I18n.t("vagrant-bindfs.actions.package_manager.not_installed"))
-            unless guest.capability(:bindfs_package_manager_install)
-              raise VagrantBindfs::Error, :cannot_install
-            end
+            guest.capability(:bindfs_package_manager_install)
           end
 
           detail(I18n.t(
@@ -52,9 +50,7 @@ module VagrantBindfs
         def ensure_fuse_is_installed!
           unless guest.capability(:bindfs_fuse_installed)
             warn(I18n.t("vagrant-bindfs.actions.fuse.not_installed"))
-            unless guest.capability(:bindfs_fuse_install)
-              raise VagrantBindfs::Error, :cannot_install
-            end
+            guest.capability(:bindfs_fuse_install)
           end
 
           detail(I18n.t("vagrant-bindfs.actions.fuse.installed"))
@@ -63,9 +59,7 @@ module VagrantBindfs
         def ensure_fuse_is_loaded!
           unless guest.capability(:bindfs_fuse_loaded)
             warn(I18n.t("vagrant-bindfs.actions.fuse.not_loaded"))
-            unless guest.capability(:bindfs_fuse_load)
-              raise VagrantBindfs::Error, :cannot_load
-            end
+            guest.capability(:bindfs_fuse_load)
           end
 
           detail(I18n.t("vagrant-bindfs.actions.fuse.loaded"))
@@ -74,8 +68,23 @@ module VagrantBindfs
         def ensure_bindfs_is_installed!
           unless guest.capability(:bindfs_bindfs_installed)
             warn(I18n.t("vagrant-bindfs.actions.bindfs.not_installed"))
-            unless guest.capability(:bindfs_bindfs_install)
-              raise VagrantBindfs::Error, :cannot_install
+
+            case true
+              when config.install_bindfs_from_source
+                install_bindfs_from_source!
+
+              when config.bindfs_version == :latest
+                guest.capability(:bindfs_bindfs_install)
+
+              when config.bindfs_version != :latest && guest.capability(:bindfs_bindfs_search_version, config.bindfs_version)
+                guest.capability(:bindfs_bindfs_install_version, config.bindfs_version)
+
+              else
+                warn(I18n.t(
+                  "vagrant-bindfs.actions.bindfs.not_found_in_repository",
+                  version: config.bindfs_version
+                ))
+                install_bindfs_from_source!
             end
           end
 
@@ -83,6 +92,12 @@ module VagrantBindfs
             "vagrant-bindfs.actions.bindfs.detected",
             version: guest.capability(:bindfs_bindfs_version)
           ))
+        end
+
+        def install_bindfs_from_source!
+          version = (config.bindfs_version == :latest ? VagrantBindfs::Bindfs::SOURCE_VERSION : config.bindfs_version.to_s)
+          guest.capability(:bindfs_bindfs_install_compilation_requirements)
+          guest.capability(:bindfs_bindfs_install_from_source, version)
         end
 
       end

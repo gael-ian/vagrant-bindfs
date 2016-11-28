@@ -14,15 +14,28 @@ describe VagrantBindfs::Vagrant::Config do
     end
   end
 
+
+  it "has an option to enable/disable installation of bindfs from sources" do
+    expect(subject).to respond_to(:install_bindfs_from_source)
+    expect(subject).to respond_to(:install_bindfs_from_source=)
+  end
+
+  describe "#install_bindfs_from_source" do
+    it "should force the option to a boolean" do
+      subject.install_bindfs_from_source = 'true'
+      expect(subject.install_bindfs_from_source).to be false
+    end
+  end
+
   it "has an option for bindfs version when installed from sources" do
-    expect(subject).to respond_to(:source_version)
+    expect(subject).to respond_to(:bindfs_version)
     expect(subject).to respond_to(:source_version=)
   end
 
-  describe "#source_version=" do
+  describe "#@bindfs_version=" do
     it "should convert given version to a Gem::Version instance" do
       subject.source_version = "1.0.0"
-      expect(subject.source_version).to eq(Gem::Version.new("1.0.0"))
+      expect(subject.bindfs_version).to eq(Gem::Version.new("1.0.0"))
     end
   end
 
@@ -113,7 +126,7 @@ describe VagrantBindfs::Vagrant::Config do
     end
 
     it "defaults to install bindfs from sources of the latest supported version" do
-      expect(subject.source_version.to_s).to eq(VagrantBindfs::SOURCE_VERSION)
+      expect(subject.bindfs_version.to_s).to eq(VagrantBindfs::SOURCE_VERSION)
     end
 
     it "defaults to empty default bindfs options" do

@@ -9,6 +9,10 @@ module VagrantBindfs
               "zypper"
             end
 
+            def bindfs_package_manager_update(machine)
+              machine.communicate.sudo("zypper ref -s")
+            end
+
           end
         end
       end

@@ -19,41 +19,31 @@ module VagrantBindfs
               Gem::Version.new("0.0")
             end
 
-            def bindfs_bindfs_install_from_source(machine)
-              machine.communicate.tap do |comm|
-                if comm.test("test 0 -eq $(sudo yum search bindfs 2>&1 >/dev/null | wc -l)")
-                  comm.sudo("yum -y install bindfs")
-                else
-                  comm.sudo("yum -y install fuse fuse-devel gcc wget tar make")
-                  comm.sudo <<-SHELL
-                  for u in "#{source_urls(machine).join('" "')}"; do
+            def bindfs_bindfs_install_from_source(machine, version)
+              version     = version.to_s.strip.gsub(/\.0$/, '')
+              source_urls = VagrantBindfs::Bindfs::SOURCE_URLS.map{ |url| url.gsub('%{bindfs_version}', version) }
+
+              begin
+                machine.communicate.execute <<-SHELL
+                  for u in "#{source_urls.join('" "')}"; do
                     if wget -q --spider $u; then
                       url=$u;
                       break;
                     fi;
                   done;
-                  [ -n "$url" ]                               && \
-                  wget $url -O bindfs.tar.gz                  && \
-                  tar --overwrite -zxvf bindfs.tar.gz         && \
-                  [ -d ./bindfs-#{source_version(machine)} ]  && \
-                  cd bindfs-#{source_version(machine)}        && \
-                  ./configure                                 && \
-                  make                                        && \
-                  make install                                && \
-                  ln -s /usr/local/bin/bindfs /usr/bin
-                  SHELL
-                end
+                  [ -n "$url" ]               && \
+                  wget $url -O bindfs.tar.gz  && \
+                  tar -zxvf bindfs.tar.gz     && \
+                  [ -d ./bindfs-#{version} ]  && \
+                  cd bindfs-#{version}        && \
+                  ./configure                 && \
+                  make                        && \
+                  sudo make install
+                SHELL
+              ensure
+                machine.communicate.execute("[ -f ./bindfs.tar.gz ] && rm ./bindfs.tar.gz")
+                machine.communicate.execute("[ -d ./bindfs-#{version} ] && rm -rf ./bindfs-#{version}")
               end
-            end
-
-            protected
-
-            def source_urls(machine)
-              SOURCE_URLS.map{ |url| url.gsub('%{source_version}', source_version(machine)) }
-            end
-
-            def source_version(machine)
-              machine.config.bindfs.source_version
             end
 
           end

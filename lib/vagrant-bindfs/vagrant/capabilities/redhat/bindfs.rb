@@ -1,5 +1,3 @@
-require "vagrant-bindfs/version"
-
 module VagrantBindfs
   module Vagrant
     module Capabilities
@@ -8,40 +6,30 @@ module VagrantBindfs
           class << self
 
             def bindfs_bindfs_install(machine)
+              machine.guest.capability(:bindfs_package_manager_update)
+              machine.communicate.sudo('yum -y install bindfs')
+            end
+
+            def bindfs_bindfs_search_version(machine, version)
+              machine.guest.capability(:bindfs_package_manager_update)
               machine.communicate.tap do |comm|
-                if comm.test("test 0 -eq $(sudo yum search bindfs 2>&1 >/dev/null | wc -l)")
-                  comm.sudo("yum -y install bindfs")
-                else
-                  comm.sudo("yum -y install fuse fuse-devel gcc wget tar make")
-                  comm.sudo <<-SHELL
-                  for u in "#{source_urls(machine).join('" "')}"; do
-                    if wget -q --spider $u; then
-                      url=$u;
-                      break;
-                    fi;
-                  done;
-                  [ -n "$url" ]                               && \
-                  wget $url -O bindfs.tar.gz                  && \
-                  tar --overwrite -zxvf bindfs.tar.gz         && \
-                  [ -d ./bindfs-#{source_version(machine)} ]  && \
-                  cd bindfs-#{source_version(machine)}        && \
-                  ./configure                                 && \
-                  make                                        && \
-                  make install                                && \
-                  ln -s /usr/local/bin/bindfs /usr/bin
-                  SHELL
+                comm.sudo("yum -y install yum-utils")
+                comm.execute("repoquery --show-duplicates bindfs-#{version}*  2>/dev/null | head -n1") do |_, output|
+                  package_name = output.strip
+                  return package_name if package_name.length > 0
                 end
               end
+              false
             end
 
-            protected
-
-            def source_urls(machine)
-              SOURCE_URLS.map{ |url| url.gsub('%{source_version}', source_version(machine)) }
+            def bindfs_bindfs_install_version(machine, version)
+              machine.guest.capability(:bindfs_package_manager_update)
+              package_name = machine.guest.capability(:bindfs_bindfs_search_version, version)
+              machine.communicate.sudo("yum -y install #{package_name.shellescape}")
             end
 
-            def source_version(machine)
-              machine.config.bindfs.source_version.to_s
+            def bindfs_bindfs_install_compilation_requirements(machine)
+              machine.communicate.sudo("yum -y install make automake gcc gcc-c++ kernel-devel wget tar fuse-devel")
             end
 
           end
