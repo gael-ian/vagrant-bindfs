@@ -4,7 +4,7 @@ module VagrantBindfs
 
       name "bindfs"
       description <<-DESC
-      A Vagrant plugin to automate [bindfs](http://bindfs.org/) mount in the VM. This allow you to change owner, group and permissions on files and, for example, work around NFS share permissions issues.
+      A Vagrant plugin to automate bindfs mount in the VM. This allow you to change owner, group and permissions on files and, for example, work around NFS share permissions issues.
       DESC
 
 
@@ -20,7 +20,7 @@ module VagrantBindfs
           hooks.each do |(name, action)|
             hook.before(action, Actions::Mounter, name)
           end
-          hook.before(hooks[:synced_folders], Actions::Installer)
+          hook.before(hooks[hooks.keys.first], Actions::Installer)
         end
       end
 
@@ -39,10 +39,6 @@ module VagrantBindfs
               :provision      => ::Vagrant::Action::Builtin::Provision
             }
           end
-        end
-
-        def hook_names
-          hooks.keys
         end
 
       end
