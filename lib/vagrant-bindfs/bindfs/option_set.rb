@@ -48,7 +48,10 @@ module VagrantBindfs
           normalized_key = key.to_s.gsub("_", "-")
           canonical_name = canonical_option_name(normalized_key)
 
-          # TODO: raise error on conflicting option names
+          if normalized.key?(canonical_name)
+            raise VagrantBindfs::Vagrant::ConfigError.new(:conflicting_options, { :name => canonical_name })
+          end
+
           normalized[canonical_name] = value
           normalized
         end
@@ -90,7 +93,6 @@ module VagrantBindfs
         end
 
         def compatible_name_for_version(option_name, version)
-          # TODO: raise an error if version.nil? ?
           return 'user'   if option_name == 'force-user' && version_lower_than(version, "1.12")
           return 'group'  if option_name == 'force-group' && version_lower_than(version, "1.12")
           option_name

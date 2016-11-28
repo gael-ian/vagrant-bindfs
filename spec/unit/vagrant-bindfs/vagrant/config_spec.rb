@@ -29,10 +29,10 @@ describe VagrantBindfs::Vagrant::Config do
 
   it "has an option for bindfs version when installed from sources" do
     expect(subject).to respond_to(:bindfs_version)
-    expect(subject).to respond_to(:source_version=)
+    expect(subject).to respond_to(:bindfs_version=)
   end
 
-  describe "#@bindfs_version=" do
+  describe "#bindfs_version=" do
     it "should convert given version to a Gem::Version instance" do
       subject.source_version = "1.0.0"
       expect(subject.bindfs_version).to eq(Gem::Version.new("1.0.0"))
@@ -79,6 +79,7 @@ describe VagrantBindfs::Vagrant::Config do
 
       config.debug = false
       config.default_options = { create_as_user: true }
+      config.skip_validations << :user
       config.bind_folder "/bin", "/bin-binded"
       config.bind_folder "/etc", "/etc-binded", user: "dummy", create_as_user: false
 
@@ -90,6 +91,7 @@ describe VagrantBindfs::Vagrant::Config do
 
       config.debug = true
       config.default_options = { create_as_mounter: true }
+      config.skip_validations << :group
       config.bind_folder "/etc", "/etc-binded", group: "dummy", create_as_user: true
       config.bind_folder "/usr/bin", "/usr-bin-binded"
 
@@ -109,7 +111,11 @@ describe VagrantBindfs::Vagrant::Config do
     end
 
     it "should merge binded folders set" do
-      expect(subject.binded_folders.keys).to include("/etc-binded", "/usr-bin-binded", "/bin-binded")
+      expect(subject.binded_folders.collect{ |(_, f)| f.destination }).to include("/etc-binded", "/usr-bin-binded", "/bin-binded")
+    end
+
+    it "should merge skip_validations set" do
+      expect(subject.skip_validations).to contain_exactly(:user, :group)
     end
 
   end
@@ -126,15 +132,19 @@ describe VagrantBindfs::Vagrant::Config do
     end
 
     it "defaults to install bindfs from sources of the latest supported version" do
-      expect(subject.bindfs_version.to_s).to eq(VagrantBindfs::SOURCE_VERSION)
+      expect(subject.bindfs_version).to eq(:latest)
     end
 
-    it "defaults to empty default bindfs options" do
-      expect(subject.default_options.keys.count).to eq(0)
+    it "defaults to basics bindfs options" do
+      expect(subject.default_options.keys).to contain_exactly('force-user', 'force-group', 'perms')
     end
 
     it "defaults to empty binded folders set" do
       expect(subject.binded_folders).to eq({})
+    end
+
+    it "defaults to empty skip_validations set" do
+      expect(subject.skip_validations).to eq([])
     end
   end
 

@@ -20,6 +20,15 @@ describe VagrantBindfs::Bindfs::OptionSet do
     expect(option_set.keys).to contain_exactly('force-user', 'no-allow-other')
   end
 
+  it "should raise an error when more than one option refers to the same canonical name" do
+    expect {
+      VagrantBindfs::Bindfs::OptionSet.new(nil, {
+        'owner' => 'vagrant',
+        'user'  => 'another-user'
+      })
+    }.to raise_error(VagrantBindfs::Vagrant::ConfigError)
+  end
+
   it "should remove invalid option names" do
     option_set = VagrantBindfs::Bindfs::OptionSet.new(nil, {
       'force-user'        => 'vagrant',

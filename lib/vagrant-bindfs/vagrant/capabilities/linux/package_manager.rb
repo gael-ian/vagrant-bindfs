@@ -6,7 +6,7 @@ module VagrantBindfs
           class << self
 
             def bindfs_package_manager_install(machine)
-              # TODO: raise an error. WTF happened man?
+              raise VagrantBindfs::Vagrant::Error.new(:package_manager_missing)
             end
 
           end

@@ -33,7 +33,7 @@ module VagrantBindfs
             folder.reverse_merge!(config.default_options)
             folder.to_version!(bindfs_version)
 
-            validator = VagrantBindfs::Bindfs::Validator.new(folder, machine)
+            validator = VagrantBindfs::Bindfs::Validators::Runtime.new(folder, machine)
 
             unless validator.valid?
               error I18n.t(

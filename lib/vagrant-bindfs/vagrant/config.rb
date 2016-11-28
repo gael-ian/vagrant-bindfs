@@ -10,6 +10,8 @@ module VagrantBindfs
       attr_accessor :default_options
       attr_accessor :binded_folders
 
+      attr_accessor :skip_validations
+
 
       def initialize
         @debug                      = false
@@ -23,6 +25,8 @@ module VagrantBindfs
           'force-group' => 'vagrant',
           'perms'       => 'u=rwX:g=rD:o=rD'
         })
+
+        @skip_validations           = []
       end
 
       def debug=(value)
@@ -41,8 +45,8 @@ module VagrantBindfs
         @default_options = Bindfs::OptionSet.new(nil, options)
       end
 
-      def binded_folder=
-        # TODO: raise error and try to convert to call to bind_folder
+      def binded_folder=(*any_variant)
+        raise VagrantBindfs::Vagrant::ConfigError.new(:binded_folders)
       end
 
       def bind_folder(source, destination, options = {})
@@ -62,6 +66,8 @@ module VagrantBindfs
 
           result.default_options            = default_options.merge(other.default_options)
           result.binded_folders             = binded_folders.merge(other.binded_folders)
+
+          result.skip_validations           = (skip_validations + other.skip_validations).uniq
         end
       end
 
@@ -69,11 +75,11 @@ module VagrantBindfs
         @bindfs_version = :latest if @bindfs_version == UNSET_VALUE
       end
 
-      def validate!(machine)
+      def validate(machine)
         errors = _detected_errors
 
         binded_folders.each do |_, folder|
-          validator = Bindfs::Validator.new(folder, machine)
+          validator = Bindfs::Validators::Config.new(folder)
           errors << validator.errors unless validator.valid?
         end
 

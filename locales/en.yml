@@ -40,6 +40,11 @@ en:
 
 
     errors:
+      package_manager_missing: "No package manager found on the virtual machine. You may use an unsupported flavour of Linux."
+      config:
+        binded_folders: "config.bindfs.binded_folders= must no be called. Use config.bindfs.bind_folders instead."
+        conflicting_options: "Another option has already been set for the canonical name '%{name}'"
+
       bindfs:
         mount_failed: |-
           The following bindfs command failed to run!
@@ -51,4 +56,19 @@ en:
           it online at http://bindfs.org/docs/bindfs.1.html
 
     deprecations:
-      disabled: "':disabled' option is not supported anymore. Comment the line in your Vagrantfile"
+      disabled: |-
+        ':disabled' option is not supported anymore.
+        Please comment or remove the line in your Vagrantfile instead.
+      skip_verify_user: |-
+        ':skip_verify_user' option is not supported anymore via bind_folder.
+        If you need vagrant-bindfs to not check user existence, use the 'skip_validations' configuration options:
+
+            config.bindfs.skip_validations << :user
+      skip_verify_group: |-
+        ':skip_verify_group' option is not supported anymore via bind_folder.
+        If you need vagrant-bindfs to not check user existence, use the 'skip_validations' configuration options:
+
+            config.bindfs.skip_validations << :group
+      hook: |-
+        ':hook' option is not supported anymore.
+        Please use ':after' instead.
