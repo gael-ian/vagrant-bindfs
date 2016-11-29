@@ -1,7 +1,7 @@
 module VagrantPlugins
   module Bindfs
     
-    VERSION         = "0.4.13"
+    VERSION         = "0.4.14"
     
     SOURCE_VERSION  = "1.13.4"
     SOURCE_URLS     = [
