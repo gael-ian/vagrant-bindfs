@@ -1,0 +1,17 @@
+Metrics/LineLength:
+  Max: 150
+
+Metrics/MethodLength:
+  Max: 30
+
+Metrics/AbcSize:
+  Enabled: No
+
+Style/Documentation:
+  Enabled: No
+
+Style/BlockComments:
+  Enabled: No
+
+Style/DoubleNegation:
+  Enabled: No

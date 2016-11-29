@@ -1,22 +1,16 @@
+# frozen_string_literal: true
 begin
-  require "vagrant"
+  require 'vagrant'
 rescue LoadError
-  raise "The Vagrant bindfs plugin must be run within Vagrant"
+  raise 'The Vagrant bindfs plugin must be run within Vagrant'
 end
 
-require "vagrant-bindfs/plugin"
-require "vagrant-bindfs/errors"
-
-require "pathname"
-
-module VagrantPlugins
-  module Bindfs
-    
-    def self.source_root
-      @source_root ||= Pathname.new(File.expand_path("../../", __FILE__))
-    end
-
-    I18n.load_path << File.expand_path("locales/en.yml", source_root)
-    I18n.reload!
-  end
+module VagrantBindfs
+  autoload :Vagrant,      'vagrant-bindfs/vagrant'
+  autoload :Bindfs,       'vagrant-bindfs/bindfs'
 end
+
+I18n.load_path << File.expand_path('../../locales/en.yml', __FILE__)
+I18n.reload!
+
+require 'vagrant-bindfs/vagrant/plugin'

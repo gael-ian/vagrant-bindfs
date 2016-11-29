@@ -42,7 +42,7 @@ config.bindfs.bind_folder "/path/to/source", "/path/to/destination", options
 ```
 
 By default, all folders are binded after folders syncing between host and guest machines.
-You can pass a special `:after` (or `:hook`) option to the bind_folder method to choose when a folder should be binded.
+You can pass a special `:after` option to the bind_folder method to choose when a folder should be binded.
 Supported values are :
 
 * `:synced_folders` (default)
@@ -95,8 +95,6 @@ Both long arguments and shorthand are supported.
 If you set both, shorthand will prevail.
 Long arguments can be written indifferently with underscore ('force_user') or dash ('force-user') and as strings (:'force-user') or symbols (:force_user).
 
-You can overwrite default options _via_ `config.bindfs.default_options`.
-
 vagrant-bindfs detects installed version of bindfs, translate option names when needed and ignore an option if it is not supported.
 As we may have missed something, it will warn you when a binding command fail.
 
@@ -105,12 +103,76 @@ On other system, you'll get warned.
 
 OS X guests may need some specific options. See [bindfs README](https://github.com/mpartel/bindfs#os-x-note) for details.
 
+## Configuration
+
+This plugin supports the following configuration options
+
+### `debug`
+
+Setting `config.bindfs.debug` to true will increase the verbosity level of this plugin in Vagrant output.
+
+### `default_options`
+
+You can overwrite default bindfs options _via_ `config.bindfs.default_options=`.
+
+```ruby
+Vagrant.configure("2") do |config|
+
+  # These values are the default options 
+  config.bindfs.default_options = {
+    force_user:   'vagrant',
+    force_group:  'vagrant',
+    perms:        'u=rwX:g=rD:o=rD'
+  }
+
+end
+```
+
+### `skip_validations`
+
+By default, `vagrant-bindfs` will check if the user and the group set for a binded folder exist on the virtual machine.
+If either one, the other or both of them are missing, it will warn you and not execute any bindfs command for this folder.
+
+To skip these validations, you can add `:user`and/or `:group` to the `config.bindfs.skip_validations` array.
+
+
+```ruby
+Vagrant.configure("2") do |config|
+  
+  config.bindfs.skip_validations << :user
+  
+end
+```
+
+### `bindfs_version` and `install_bindfs_from_source`
+
+By default, if `bindfs` needs to be installed on the virtual machine, `vagrant-bindfs` will install the most recent release available in repositories (_via_ `homebrew` for OS X guests).
+If no version of `bindfs` is found, it will try to install the most recent supported version of `bindfs` from source. (See [lib/vagrant-bindfs/bindfs.rb](https://github.com/gael-ian/vagrant-bindfs/blob/master/lib/vagrant-bindfs/bindfs.rb#L4) for the exact version number).
+
+You can force the plugin to install the version of `bindfs` of your choice with the `bindfs_version` configuration option.
+It will then look for the specified version in repositories and install it if available. If not, it will install it from sources.
+
+You can also force installation from sources with the `install_bindfs_from_source` configuration option.
+This will skip any repositories look up.
+
+```ruby
+Vagrant.configure("2") do |config|
+  
+  # This will force the plugin to install bindfs-1.12.2 from sources
+  config.bindfs.bindfs_version = "1.12.2"
+  config.bindfs.install_bindfs_from_source = true
+  
+end
+```
+
+**This feature only works with exact version match and does not try to resolve dependencies.**
+In particular, Fuse will always be installed from the latest version available in repositories (_via_ Homebrew Cask for OS X guests).
 
 ## Contributing
 
 If you find this plugin useful, we could use a few enhancements!
 In particular, capabilities files for installing vagrant-bindfs on other systems would be useful.
-We could also use some specs…
+We could also use some more specs…
 
 
 ### How to Test Changes
