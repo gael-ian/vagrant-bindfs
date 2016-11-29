@@ -1,4 +1,5 @@
 require "vagrant"
+require "vagrant-bindfs/version"
 
 module VagrantPlugins
   module Bindfs
