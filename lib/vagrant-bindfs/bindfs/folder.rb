@@ -1,9 +1,9 @@
-require "digest/sha1"
+# frozen_string_literal: true
+require 'digest/sha1'
 
 module VagrantBindfs
   module Bindfs
     class Folder
-
       attr_reader :source
       attr_reader :destination
       attr_reader :options
@@ -19,7 +19,7 @@ module VagrantBindfs
       end
 
       def id
-        @id ||= Digest::SHA1.new.digest((destination))
+        @id ||= Digest::SHA1.new.digest(destination)
       end
 
       def reverse_merge!(options)
@@ -33,7 +33,6 @@ module VagrantBindfs
       def to_version!(version)
         @options = @options.to_version(version)
       end
-
     end
   end
 end

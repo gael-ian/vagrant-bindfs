@@ -1,20 +1,18 @@
+# frozen_string_literal: true
 module VagrantBindfs
   module Bindfs
     class OptionSet
-
       attr_reader :version
 
       attr_reader :options
       attr_reader :invalid_options
       attr_reader :unsupported_options
 
-
       include Enumerable
       extend Forwardable
-      [:each, :[], :keys, :key? ].each do |method|
+      [:each, :[], :keys, :key?].each do |method|
         def_delegator :@options, method
       end
-
 
       def initialize(version = nil, options = {})
         @version              = version
@@ -34,7 +32,7 @@ module VagrantBindfs
       end
 
       def merge(other)
-        self.dup.tap{ |result| result.merge!(other) }
+        dup.tap { |result| result.merge!(other) }
       end
 
       def to_version(new_version)
@@ -44,12 +42,12 @@ module VagrantBindfs
       protected
 
       def normalize_option_names(options)
-        options.reduce({}) do |normalized, (key, value)|
-          normalized_key = key.to_s.gsub("_", "-")
+        options.each_with_object({}) do |(key, value), normalized|
+          normalized_key = key.to_s.tr('_', '-')
           canonical_name = canonical_option_name(normalized_key)
 
           if normalized.key?(canonical_name)
-            raise VagrantBindfs::Vagrant::ConfigError.new(:conflicting_options, { :name => canonical_name })
+            raise VagrantBindfs::Vagrant::ConfigError.new(:conflicting_options, name: canonical_name)
           end
 
           normalized[canonical_name] = value
@@ -65,7 +63,6 @@ module VagrantBindfs
         option_name
       end
 
-
       def extract_invalid_options!
         extract_options_by_names!(options.keys - self.class.bindfs_options.keys, @invalid_options)
       end
@@ -76,25 +73,24 @@ module VagrantBindfs
 
       def extract_options_by_names!(names, to)
         return {} if names.empty?
-        names.each{ |name| to[name] = @options.delete(name) }
+        names.each { |name| to[name] = @options.delete(name) }
       end
 
       class << self
-
         def bindfs_options
-          @bindfs_options ||= JSON.parse(File.read(File.expand_path("../option_definitions.json", __FILE__)))
+          @bindfs_options ||= JSON.parse(File.read(File.expand_path('../option_definitions.json', __FILE__)))
         end
 
         def supported_options(version)
-          bindfs_options.reduce({}) do |supported, (name, definition)|
+          bindfs_options.each_with_object({}) do |(name, definition), supported|
             supported[name] = definition if version.nil? || !version_lower_than(version, definition['since'])
             supported
           end
         end
 
         def compatible_name_for_version(option_name, version)
-          return 'user'   if option_name == 'force-user' && version_lower_than(version, "1.12")
-          return 'group'  if option_name == 'force-group' && version_lower_than(version, "1.12")
+          return 'user'   if option_name == 'force-user' && version_lower_than(version, '1.12')
+          return 'group'  if option_name == 'force-group' && version_lower_than(version, '1.12')
           option_name
         end
 
@@ -103,9 +99,7 @@ module VagrantBindfs
         def version_lower_than(version, target)
           Gem::Version.new(version) < Gem::Version.new(target)
         end
-
       end
-
     end
   end
 end

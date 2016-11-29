@@ -1,9 +1,9 @@
+# frozen_string_literal: true
 module VagrantBindfs
   module Vagrant
     module Actions
       module Concerns
         module Log
-
           def logger
             env[:ui]
           end
@@ -27,7 +27,6 @@ module VagrantBindfs
           def error(message)
             logger.error message
           end
-
         end
       end
     end

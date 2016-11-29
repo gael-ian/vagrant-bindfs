@@ -1,11 +1,12 @@
+# frozen_string_literal: true
 module VagrantBindfs
   module Vagrant
     class Error < ::Vagrant::Errors::VagrantError
-      error_namespace("vagrant-bindfs.errors")
+      error_namespace('vagrant-bindfs.errors')
     end
 
     class ConfigError < Error
-      error_namespace("vagrant-bindfs.errors.config")
+      error_namespace('vagrant-bindfs.errors.config')
     end
   end
 end

@@ -1,7 +1,7 @@
+# frozen_string_literal: true
 module VagrantBindfs
   module Bindfs
     class Command
-
       attr_reader :folder
 
       def initialize(folder)
@@ -9,13 +9,13 @@ module VagrantBindfs
       end
 
       def to_s
-        [ "bindfs", arguments_for(folder.options).join(" "), folder.source, folder.destination ].compact.join(" ")
+        ['bindfs', arguments_for(folder.options).join(' '), folder.source, folder.destination].compact.join(' ')
       end
 
       protected
 
       def arguments_for(options)
-        options.reduce([]) do |args, (name, value)|
+        options.each_with_object([]) do |(name, value), args|
           args << format_argument(name, value) unless value.nil?
           args
         end.compact
@@ -26,11 +26,11 @@ module VagrantBindfs
         compatible_name = argument_compatible_name(name)
 
         if definition['type'] == 'flag' && !!value
-          return "-#{compatible_name}" if 0 == definition['long'].size # Shorthand only options
+          return "-#{compatible_name}" if definition['long'].empty? # Shorthand only options
           return "--#{compatible_name}"
         end
         if definition['type'] == 'option'
-          return "-#{compatible_name} #{value}" if 0 == definition['long'].size # Shorthand only options
+          return "-#{compatible_name} #{value}" if definition['long'].empty? # Shorthand only options
           return "--#{compatible_name}=#{value}"
         end
       end
@@ -42,7 +42,6 @@ module VagrantBindfs
       def argument_compatible_name(name)
         Bindfs::OptionSet.compatible_name_for_version(name, @folder.options.version)
       end
-
     end
   end
 end

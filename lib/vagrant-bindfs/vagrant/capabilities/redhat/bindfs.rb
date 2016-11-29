@@ -1,10 +1,10 @@
+# frozen_string_literal: true
 module VagrantBindfs
   module Vagrant
     module Capabilities
       module RedHat
         module Bindfs
           class << self
-
             def bindfs_bindfs_install(machine)
               machine.guest.capability(:bindfs_package_manager_update)
               machine.communicate.sudo('yum -y install bindfs')
@@ -13,10 +13,10 @@ module VagrantBindfs
             def bindfs_bindfs_search_version(machine, version)
               machine.guest.capability(:bindfs_package_manager_update)
               machine.communicate.tap do |comm|
-                comm.sudo("yum -y install yum-utils")
+                comm.sudo('yum -y install yum-utils')
                 comm.execute("repoquery --show-duplicates bindfs-#{version}*  2>/dev/null | head -n1") do |_, output|
                   package_name = output.strip
-                  return package_name if package_name.length > 0
+                  return package_name unless package_name.empty?
                 end
               end
               false
@@ -29,9 +29,8 @@ module VagrantBindfs
             end
 
             def bindfs_bindfs_install_compilation_requirements(machine)
-              machine.communicate.sudo("yum -y install make automake gcc gcc-c++ kernel-devel wget tar fuse-devel")
+              machine.communicate.sudo('yum -y install make automake gcc gcc-c++ kernel-devel wget tar fuse-devel')
             end
-
           end
         end
       end

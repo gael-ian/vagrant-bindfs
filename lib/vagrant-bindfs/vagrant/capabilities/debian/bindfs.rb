@@ -1,13 +1,13 @@
+# frozen_string_literal: true
 module VagrantBindfs
   module Vagrant
     module Capabilities
       module Debian
         module Bindfs
           class << self
-
             def bindfs_bindfs_install(machine)
               machine.guest.capability(:bindfs_package_manager_update)
-              machine.communicate.sudo("apt-get install -y bindfs")
+              machine.communicate.sudo('apt-get install -y bindfs')
             end
 
             def bindfs_bindfs_search_version(machine, version)
@@ -15,7 +15,7 @@ module VagrantBindfs
               machine.communicate.tap do |comm|
                 comm.sudo("aptitude versions bindfs | sed -n '/p/,${p}' | sed 's/\s\+/ /g' | cut -d' ' -f2") do |_, output|
                   package_version = output.strip
-                  return "bindfs-#{package_version}" if package_version.length > 0 && !package_version.match(/^#{version}/).nil?
+                  return "bindfs-#{package_version}" if !package_version.empty? && !package_version.match(/^#{version}/).nil?
                 end
               end
               false
@@ -29,9 +29,8 @@ module VagrantBindfs
 
             def bindfs_bindfs_install_compilation_requirements(machine)
               machine.guest.capability(:bindfs_package_manager_update)
-              machine.communicate.sudo("apt-get install -y build-essential pkg-config wget tar libfuse-dev")
+              machine.communicate.sudo('apt-get install -y build-essential pkg-config wget tar libfuse-dev')
             end
-
           end
         end
       end

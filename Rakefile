@@ -1,6 +1,7 @@
-require "rubygems"
-require "bundler/setup"
-require "rspec/core/rake_task"
+# frozen_string_literal: true
+require 'rubygems'
+require 'bundler/setup'
+require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 
 # Immediately sync all stdout
@@ -8,7 +9,7 @@ $stdout.sync = true
 $stderr.sync = true
 
 # Change to the directory of this file
-Dir.chdir(File.expand_path("../", __FILE__))
+Dir.chdir(File.expand_path('../', __FILE__))
 
 # Installs the tasks for gem creation
 Bundler::GemHelper.install_tasks
@@ -20,4 +21,4 @@ RSpec::Core::RakeTask.new
 RuboCop::RakeTask.new
 
 # Default task is to run the unit tests
-task :default => "spec"
+task default: 'spec'

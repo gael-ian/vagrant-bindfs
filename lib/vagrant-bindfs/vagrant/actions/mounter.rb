@@ -1,8 +1,8 @@
+# frozen_string_literal: true
 module VagrantBindfs
   module Vagrant
     module Actions
       class Mounter
-
         attr_reader :app
         attr_reader :env
         attr_reader :hook
@@ -25,11 +25,10 @@ module VagrantBindfs
         protected
 
         def bind_folders!
-          info I18n.t("vagrant-bindfs.actions.mounter.start", hook: hook)
+          info I18n.t('vagrant-bindfs.actions.mounter.start', hook: hook)
           bindfs_version = guest.capability(:bindfs_bindfs_version)
 
           binded_folders(hook).each do |_, folder|
-
             folder.reverse_merge!(config.default_options)
             folder.to_version!(bindfs_version)
 
@@ -37,10 +36,10 @@ module VagrantBindfs
 
             unless validator.valid?
               error I18n.t(
-                  "vagrant-bindfs.validations.errors_found",
-                  dest:   folder.destination,
-                  source: folder.source,
-                  errors: validator.errors.join(' ')
+                'vagrant-bindfs.validations.errors_found',
+                dest:   folder.destination,
+                source: folder.source,
+                errors: validator.errors.join(' ')
               )
               next
             end
@@ -48,7 +47,7 @@ module VagrantBindfs
             command = VagrantBindfs::Bindfs::Command.new(folder)
 
             detail I18n.t(
-              "vagrant-bindfs.actions.mounter.entry",
+              'vagrant-bindfs.actions.mounter.entry',
               dest: folder.destination,
               source: folder.source
             )
@@ -60,7 +59,6 @@ module VagrantBindfs
             end
           end
         end
-
       end
     end
   end

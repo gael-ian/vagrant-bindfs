@@ -1,10 +1,10 @@
+# frozen_string_literal: true
 module VagrantBindfs
   module Vagrant
     module Capabilities
       module Linux
         module SystemChecks
           class << self
-
             def bindfs_exists_user(machine, user)
               (
                 user.nil? || \
@@ -18,7 +18,6 @@ module VagrantBindfs
                 machine.communicate.test("getent group #{group.shellescape}")
               )
             end
-
           end
         end
       end

@@ -1,7 +1,7 @@
+# frozen_string_literal: true
 module VagrantBindfs
   module Vagrant
-    class Config < ::Vagrant.plugin("2", :config)
-
+    class Config < ::Vagrant.plugin('2', :config)
       attr_accessor :debug
 
       attr_accessor :bindfs_version
@@ -12,7 +12,6 @@ module VagrantBindfs
 
       attr_accessor :skip_validations
 
-
       def initialize
         @debug                      = false
 
@@ -20,11 +19,9 @@ module VagrantBindfs
         @install_bindfs_from_source = false
 
         @binded_folders             = {}
-        @default_options            = Bindfs::OptionSet.new(nil, {
-          'force-user'  => 'vagrant',
-          'force-group' => 'vagrant',
-          'perms'       => 'u=rwX:g=rD:o=rD'
-        })
+        @default_options            = Bindfs::OptionSet.new(nil, 'force-user' => 'vagrant',
+                                                                 'force-group' => 'vagrant',
+                                                                 'perms'       => 'u=rwX:g=rD:o=rD')
 
         @skip_validations           = []
       end
@@ -45,8 +42,8 @@ module VagrantBindfs
         @default_options = Bindfs::OptionSet.new(nil, options)
       end
 
-      def binded_folder=(*any_variant)
-        raise VagrantBindfs::Vagrant::ConfigError.new(:binded_folders)
+      def binded_folder=(*_any_variant)
+        raise VagrantBindfs::Vagrant::ConfigError, :binded_folders
       end
 
       def bind_folder(source, destination, options = {})
@@ -55,13 +52,12 @@ module VagrantBindfs
         @binded_folders[folder.id] = folder
       end
 
-
       def merge(other)
         super.tap do |result|
           result.debug                      = (debug || other.debug)
 
-          _bindfs_version                   = [ bindfs_version, other.bindfs_version ].select{ |v| v != UNSET_VALUE }.min
-          result.bindfs_version             =  _bindfs_version unless _bindfs_version.nil?
+          result_bindfs_version             = [bindfs_version, other.bindfs_version].select { |v| v != UNSET_VALUE }.min
+          result.bindfs_version             = result_bindfs_version unless result_bindfs_version.nil?
           result.install_bindfs_from_source = (install_bindfs_from_source || other.install_bindfs_from_source)
 
           result.default_options            = default_options.merge(other.default_options)
@@ -75,7 +71,7 @@ module VagrantBindfs
         @bindfs_version = :latest if @bindfs_version == UNSET_VALUE
       end
 
-      def validate(machine)
+      def validate(_machine)
         errors = _detected_errors
 
         binded_folders.each do |_, folder|
@@ -85,7 +81,6 @@ module VagrantBindfs
 
         { 'vagrant-bindfs' => errors.flatten }
       end
-
     end
   end
 end
