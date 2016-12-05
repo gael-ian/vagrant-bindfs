@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'enumerator'
 require 'forwardable'
 
 module VagrantBindfs
@@ -10,11 +11,9 @@ module VagrantBindfs
       attr_reader :invalid_options
       attr_reader :unsupported_options
 
-      include Enumerable
-      extend Forwardable
-      [:each, :[], :keys, :key?].each do |method|
-        def_delegator :@options, method
-      end
+      include ::Enumerable
+      extend ::Forwardable
+      def_delegators :@options, :each, :[], :keys, :key?
 
       def initialize(version = nil, options = {})
         @version              = version

@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'forwardable'
+
 module VagrantBindfs
   module Bindfs
     module Validators
@@ -6,10 +8,8 @@ module VagrantBindfs
         attr_reader :folder
         attr_reader :errors
 
-        extend Forwardable
-        def_delegator :@folder, :source
-        def_delegator :@folder, :destination
-        def_delegator :@folder, :options
+        extend ::Forwardable
+        def_delegators :@folder, :source, :destination, :options
 
         def initialize(folder)
           @folder   = folder
