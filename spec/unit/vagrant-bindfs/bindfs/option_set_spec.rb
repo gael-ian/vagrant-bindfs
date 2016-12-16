@@ -41,6 +41,21 @@ describe VagrantBindfs::Bindfs::OptionSet do
     expect(option_set.unsupported_options.keys).to contain_exactly('uid-offset')
   end
 
+  it 'should cast option values according to option type' do
+    option_set = VagrantBindfs::Bindfs::OptionSet.new(nil, 'force-user'        => :vagrant,
+                                                           'force-group'       => true,
+                                                           'uid-offset'        => 50,
+                                                           :'create-as-user'   => 1,
+                                                           'create-as-mounter' => 'off')
+
+    expect(option_set['force-user']).to eq('vagrant')
+    expect(option_set['force-group']).to eq('true')
+    expect(option_set['uid-offset']).to eq('50')
+
+    expect(option_set['create-as-user']).to be true
+    expect(option_set['create-as-mounter']).to be false
+  end
+
   it 'should be mergeable' do
     first_set = VagrantBindfs::Bindfs::OptionSet.new(nil, 'force-user'    => 'vagrant',
                                                           'force_group'   => 'vagrant',

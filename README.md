@@ -95,6 +95,9 @@ Both long arguments and shorthand are supported.
 If you set both, shorthand will prevail.
 Long arguments can be written indifferently with underscore ('force_user') or dash ('force-user') and as strings (:'force-user') or symbols (:force_user).
 
+Option arguments values can be anything that can be casted to a string _via_ `to_s`.
+The plugin will try to detect flag arguments values as true or false from common notations.  
+
 vagrant-bindfs detects installed version of bindfs, translate option names when needed and ignore an option if it is not supported.
 As we may have missed something, it will warn you when a binding command fail.
 

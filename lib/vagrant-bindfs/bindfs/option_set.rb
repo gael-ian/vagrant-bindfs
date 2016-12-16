@@ -23,13 +23,16 @@ module VagrantBindfs
 
         extract_invalid_options!
         extract_unsupported_options!
+        cast_option_values!
       end
 
       def merge!(other)
         other = other.to_version(version) if other.respond_to?(:to_version)
         @options.merge!(normalize_option_names(other))
+
         extract_invalid_options!
         extract_unsupported_options!
+        cast_option_values!
       end
 
       def merge(other)
@@ -75,6 +78,26 @@ module VagrantBindfs
       def extract_options_by_names!(names, to)
         return {} if names.empty?
         names.each { |name| to[name] = @options.delete(name) }
+      end
+
+      def cast_option_values!
+        @options = options.each_with_object({}) do |(key, value), normalized|
+          normalized[key] = case self.class.bindfs_options[key]['type']
+                            when 'option' then cast_value_as_option(value)
+                            when 'flag'   then cast_value_as_flag(value)
+                            end
+          normalized
+        end
+      end
+
+      def cast_value_as_option(value)
+        (value.respond_to?(:to_s) ? value.to_s : value)
+      end
+
+      def cast_value_as_flag(value)
+        return true if [true, 'true', 'True', 'yes', 'Yes', 'y', 'Y', 'on', 'On', 1].include?(value)
+        return false if [false, 'false', 'False', 'no', 'No', 'n', 'N', 'off', 'Off', 0].include?(value)
+        !!value
       end
 
       class << self
