@@ -89,8 +89,6 @@ module VagrantBindfs
           guest.capability(:bindfs_bindfs_install_from_source, version)
         end
 
-        protected
-
         def install_from_source?
           config.install_bindfs_from_source
         end
@@ -102,7 +100,6 @@ module VagrantBindfs
         def install_version_from_repositories?
           config.bindfs_version != :latest && guest.capability(:bindfs_bindfs_search_version, config.bindfs_version)
         end
-
       end
     end
   end
