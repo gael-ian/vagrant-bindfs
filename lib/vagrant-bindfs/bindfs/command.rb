@@ -8,8 +8,8 @@ module VagrantBindfs
         @folder = folder
       end
 
-      def to_s
-        ['bindfs', arguments_for(folder.options).join(' '), folder.source, folder.destination].compact.join(' ')
+      def to_s(bindfs_command = 'bindfs')
+        [bindfs_command, arguments_for(folder.options).join(' '), folder.source, folder.destination].compact.join(' ')
       end
 
       protected

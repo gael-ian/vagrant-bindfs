@@ -73,6 +73,9 @@ module VagrantBindfs
         end
 
         def declare_capabilities_for_bindfs!(base)
+          base.guest_capability('darwin', 'bindfs_bindfs_full_path') { Capabilities::All::Bindfs }
+          base.guest_capability('linux',  'bindfs_bindfs_full_path') { Capabilities::All::Bindfs }
+
           base.guest_capability('darwin', 'bindfs_bindfs_installed') { Capabilities::All::Bindfs }
           base.guest_capability('linux',  'bindfs_bindfs_installed') { Capabilities::All::Bindfs }
 

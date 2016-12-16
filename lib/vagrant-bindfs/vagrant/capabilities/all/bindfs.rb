@@ -5,12 +5,22 @@ module VagrantBindfs
       module All
         module Bindfs
           class << self
+            def bindfs_bindfs_full_path(machine)
+              machine.communicate.execute('type bindfs | cut -d" " -f3') do |_, output|
+                path = output.strip
+                return path unless path.empty?
+              end
+              'bindfs'
+            end
+
             def bindfs_bindfs_installed(machine)
-              machine.communicate.test('bindfs --help')
+              bindfs_full_path = machine.guest.capability(:bindfs_bindfs_full_path)
+              machine.communicate.test("#{bindfs_full_path} --help")
             end
 
             def bindfs_bindfs_version(machine)
-              [%(sudo bindfs --version | cut -d" " -f2), %(sudo -i bindfs --version | cut -d" " -f2)].each do |command|
+              bindfs_full_path = machine.guest.capability(:bindfs_bindfs_full_path)
+              [%(sudo #{bindfs_full_path} --version | cut -d" " -f2), %(sudo -i #{bindfs_full_path} --version | cut -d" " -f2)].each do |command|
                 machine.communicate.execute(command) do |_, output|
                   version = output.strip
                   return Gem::Version.new(version) if !version.empty? && Gem::Version.correct?(version)

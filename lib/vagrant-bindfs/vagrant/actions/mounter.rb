@@ -26,7 +26,9 @@ module VagrantBindfs
 
         def bind_folders!
           info I18n.t('vagrant-bindfs.actions.mounter.start', hook: hook)
-          bindfs_version = guest.capability(:bindfs_bindfs_version)
+
+          bindfs_version    = guest.capability(:bindfs_bindfs_version)
+          bindfs_full_path  = guest.capability(:bindfs_bindfs_full_path)
 
           binded_folders(hook).each do |_, folder|
             folder.reverse_merge!(config.default_options)
@@ -54,8 +56,8 @@ module VagrantBindfs
 
             machine.communicate.tap do |comm|
               comm.sudo("mkdir -p #{folder.destination}")
-              comm.sudo(command.to_s, error_class: VagrantBindfs::Vagrant::Error, error_key: 'bindfs.mount_failed')
-              debug(command.to_s)
+              comm.sudo(command.to_s(bindfs_full_path), error_class: VagrantBindfs::Vagrant::Error, error_key: 'bindfs.mount_failed')
+              debug(command.to_s(bindfs_full_path))
             end
           end
         end
