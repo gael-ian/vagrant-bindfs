@@ -66,26 +66,21 @@ module VagrantBindfs
         def ensure_bindfs_is_installed!
           unless guest.capability(:bindfs_bindfs_installed)
             warn(I18n.t('vagrant-bindfs.actions.bindfs.not_installed'))
-
-            case true
-            when config.install_bindfs_from_source
-              install_bindfs_from_source!
-
-            when config.bindfs_version == :latest
-              guest.capability(:bindfs_bindfs_install)
-
-            when config.bindfs_version != :latest && guest.capability(:bindfs_bindfs_search_version, config.bindfs_version)
-              guest.capability(:bindfs_bindfs_install_version, config.bindfs_version)
-
-            else
-              warn(I18n.t('vagrant-bindfs.actions.bindfs.not_found_in_repository',
-                          version: config.bindfs_version))
-              install_bindfs_from_source!
-            end
+            install_bindfs!
           end
 
           detail(I18n.t('vagrant-bindfs.actions.bindfs.detected',
                         version: guest.capability(:bindfs_bindfs_version)))
+        end
+
+        def install_bindfs!
+          return install_bindfs_from_source! if install_from_source?
+          return guest.capability(:bindfs_bindfs_install) if install_latest_from_repositories?
+          return guest.capability(:bindfs_bindfs_install_version, config.bindfs_version) if install_version_from_repositories?
+
+          warn(I18n.t('vagrant-bindfs.actions.bindfs.not_found_in_repository',
+                      version: config.bindfs_version))
+          install_bindfs_from_source!
         end
 
         def install_bindfs_from_source!
@@ -93,6 +88,21 @@ module VagrantBindfs
           guest.capability(:bindfs_bindfs_install_compilation_requirements)
           guest.capability(:bindfs_bindfs_install_from_source, version)
         end
+
+        protected
+
+        def install_from_source?
+          config.install_bindfs_from_source
+        end
+
+        def install_latest_from_repositories?
+          config.bindfs_version == :latest && guest.capability(:bindfs_bindfs_search)
+        end
+
+        def install_version_from_repositories?
+          config.bindfs_version != :latest && guest.capability(:bindfs_bindfs_search_version, config.bindfs_version)
+        end
+
       end
     end
   end

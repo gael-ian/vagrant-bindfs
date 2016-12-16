@@ -5,6 +5,11 @@ module VagrantBindfs
       module Suse
         module Bindfs
           class << self
+            def bindfs_bindfs_search(machine)
+              machine.guest.capability(:bindfs_package_manager_update)
+              machine.communicate.test('zypper se -s bindfs')
+            end
+
             def bindfs_bindfs_install(machine)
               machine.guest.capability(:bindfs_package_manager_update)
               machine.communicate.sudo('zypper -n install bindfs')

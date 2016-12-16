@@ -5,6 +5,11 @@ module VagrantBindfs
       module Darwin
         module Bindfs
           class << self
+            # Homebrew only use its own github repositories
+            def bindfs_bindfs_search(_machine)
+              true
+            end
+
             def bindfs_bindfs_install(machine)
               machine.guest.capability(:bindfs_package_manager_update)
               machine.communicate.execute('brew install homebrew/fuse/bindfs')

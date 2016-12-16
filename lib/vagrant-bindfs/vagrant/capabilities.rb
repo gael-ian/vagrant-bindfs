@@ -82,6 +82,11 @@ module VagrantBindfs
           base.guest_capability('darwin', 'bindfs_bindfs_version') { Capabilities::All::Bindfs }
           base.guest_capability('linux',  'bindfs_bindfs_version') { Capabilities::All::Bindfs }
 
+          base.guest_capability('darwin', 'bindfs_bindfs_search') { Capabilities::Darwin::Bindfs }
+          base.guest_capability('debian', 'bindfs_bindfs_search') { Capabilities::Debian::Bindfs }
+          base.guest_capability('redhat', 'bindfs_bindfs_search') { Capabilities::RedHat::Bindfs }
+          base.guest_capability('suse',   'bindfs_bindfs_search') { Capabilities::Suse::Bindfs }
+
           base.guest_capability('darwin', 'bindfs_bindfs_install') { Capabilities::Darwin::Bindfs }
           base.guest_capability('debian', 'bindfs_bindfs_install') { Capabilities::Debian::Bindfs }
           base.guest_capability('redhat', 'bindfs_bindfs_install') { Capabilities::RedHat::Bindfs }

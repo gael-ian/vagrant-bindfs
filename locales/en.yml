@@ -11,7 +11,7 @@ en:
       fuse:
         not_installed: "Fuse seems to not be installed on the virtual machine, installing now"
         installed: "Fuse kernel module is installed"
-        not_loaded: "Fuse kernel module seems to be not loaded, trying to load it"
+        not_loaded: "Fuse kernel module seems to be not loaded on the virtual machine, loading now"
         loaded: "Fuse kernel module is loaded"
       bindfs:
         not_installed: "Bindfs seems to not be installed on the virtual machine, installing now"

@@ -5,6 +5,11 @@ module VagrantBindfs
       module RedHat
         module Bindfs
           class << self
+            def bindfs_bindfs_search(machine)
+              machine.guest.capability(:bindfs_package_manager_update)
+              machine.communicate.test('[[ $(yum search bindfs 2>/dev/null | tail -n1) != "No matches found" ]]')
+            end
+
             def bindfs_bindfs_install(machine)
               machine.guest.capability(:bindfs_package_manager_update)
               machine.communicate.sudo('yum -y install bindfs')
