@@ -6,7 +6,7 @@ module VagrantBindfs
         module Bindfs
           class << self
             def bindfs_bindfs_full_path(machine)
-              machine.communicate.execute('type -p bindfs') do |_, output|
+              machine.communicate.execute('bash -c "type -P bindfs || true"') do |_, output|
                 path = output.strip
                 return path unless path.empty?
               end
