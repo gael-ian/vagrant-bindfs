@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module VagrantBindfs
   module Bindfs
-    SOURCE_VERSION  = '1.13.4'
+    SOURCE_VERSION  = '1.13.6'
     SOURCE_URLS     = [
       'http://bindfs.org/downloads/bindfs-%{bindfs_version}.tar.gz',
       'http://bindfs.dnsalias.net/downloads/bindfs-%{bindfs_version}.tar.gz'
