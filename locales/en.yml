@@ -47,9 +47,16 @@ en:
 
       bindfs:
         mount_failed: |-
-          The following bindfs command failed to run!
+          A bindfs command failed to run!
 
-              `%{command}`
+          Command (runned via sudo):
+          %{command}
+
+          Standard output:
+          %{stdout}
+
+          Error output:
+          %{stderr}
 
           Please check options values and compatibility. For a complete
           documentation, run `sudo bindfs --help` on the VM. You can see
