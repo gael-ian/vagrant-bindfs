@@ -4,6 +4,9 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Max: 30
 
+Metrics/BlockLength:
+  ExcludedMethods: describe
+
 Metrics/AbcSize:
   Enabled: No
 
