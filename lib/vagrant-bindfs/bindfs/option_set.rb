@@ -91,7 +91,7 @@ module VagrantBindfs
       end
 
       def cast_value_as_option(value)
-        return nil if value.respond_to?(:nil?) and value.nil?
+        return nil if value.respond_to?(:nil?) && value.nil?
         (value.respond_to?(:to_s) ? value.to_s : value)
       end
 
