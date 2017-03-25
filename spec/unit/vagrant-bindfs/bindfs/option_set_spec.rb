@@ -56,18 +56,34 @@ describe VagrantBindfs::Bindfs::OptionSet do
     expect(option_set['create-as-mounter']).to be false
   end
 
+  it 'should consider nil as a proper value for non boolean options' do
+    option_set = VagrantBindfs::Bindfs::OptionSet.new(nil, 'force-user'        => :vagrant,
+                                                           'force-group'       => nil,
+                                                           'uid-offset'        => 50,
+                                                           :'create-as-user'   => nil)
+
+    expect(option_set['force-user']).to eq('vagrant')
+    expect(option_set['force-group']).to eq(nil)
+
+    expect(option_set['uid-offset']).to eq('50')
+    expect(option_set['create-as-user']).to be false
+  end
+
   it 'should be mergeable' do
     first_set = VagrantBindfs::Bindfs::OptionSet.new(nil, 'force-user'    => 'vagrant',
                                                           'force_group'   => 'vagrant',
-                                                          :invalid        => true)
+                                                          :invalid        => true,
+                                                          'perms'         => 'u=rwX:g=rD:o=rD')
     second_set = VagrantBindfs::Bindfs::OptionSet.new(nil, 'force_group'  => 'other-group',
                                                            'mirror-only'  => 'joe,bob',
-                                                           :invalid       => true)
+                                                           :invalid       => true,
+                                                           'perms'        => nil)
 
     first_set.merge(second_set)
 
-    expect(first_set.keys).to contain_exactly('force-user', 'force-group', 'mirror-only')
+    expect(first_set.keys).to contain_exactly('force-user', 'force-group', 'mirror-only', 'perms')
     expect(first_set['force-group']).to eq('other-group')
+    expect(first_set['perms']).to be nil
   end
 
   it 'should be losslessly convertible to another version of bindfs' do
