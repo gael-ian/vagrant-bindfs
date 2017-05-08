@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 describe VagrantBindfs::Bindfs::OptionSet do
   it 'should normalize option names' do
     option_set = VagrantBindfs::Bindfs::OptionSet.new(nil, 'force-user'       => 'vagrant',

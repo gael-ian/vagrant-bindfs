@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module VagrantBindfs
   module Vagrant
     autoload :Plugin,       'vagrant-bindfs/vagrant/plugin'

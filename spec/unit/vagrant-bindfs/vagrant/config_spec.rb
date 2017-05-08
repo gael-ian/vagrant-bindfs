@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 describe VagrantBindfs::Vagrant::Config do
   subject { described_class.new }
 

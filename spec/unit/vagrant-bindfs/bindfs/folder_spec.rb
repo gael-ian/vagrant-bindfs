@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 describe VagrantBindfs::Bindfs::Folder do
   subject do
     described_class.new(:synced_folders, '/etc', '/etc-binded',

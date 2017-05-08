@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module VagrantBindfs
   module Vagrant
     class Config < ::Vagrant.plugin('2', :config)
@@ -56,7 +57,7 @@ module VagrantBindfs
         super.tap do |result|
           result.debug                      = (debug || other.debug)
 
-          result_bindfs_version             = [bindfs_version, other.bindfs_version].select { |v| v != UNSET_VALUE }.min
+          result_bindfs_version             = [bindfs_version, other.bindfs_version].reject { |v| v == UNSET_VALUE }.min
           result.bindfs_version             = result_bindfs_version unless result_bindfs_version.nil?
           result.install_bindfs_from_source = (install_bindfs_from_source || other.install_bindfs_from_source)
 

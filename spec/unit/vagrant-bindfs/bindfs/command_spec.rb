@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 describe VagrantBindfs::Bindfs::Command do
   it 'should build bindfs command as expected' do
     options = { force_user: 'vagrant', chown_deny: true, o: 'debug,allow_others', r: true }

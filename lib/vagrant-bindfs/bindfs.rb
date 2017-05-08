@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module VagrantBindfs
   module Bindfs
     SOURCE_VERSION  = '1.13.7'

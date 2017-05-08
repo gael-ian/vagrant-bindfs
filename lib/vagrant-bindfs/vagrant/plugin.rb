@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module VagrantBindfs
   module Vagrant
     class Plugin < ::Vagrant.plugin('2')
@@ -13,7 +14,7 @@ module VagrantBindfs
 
       include Capabilities
 
-      %w(up reload).each do |action|
+      %w[up reload].each do |action|
         action_hook(:bindfs, "machine_action_#{action}".to_sym) do |hook|
           hooks.each do |(name, middleware)|
             hook.before(middleware, Actions::Mounter, name)

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 # Du to some changes in bundler, specifying dependencies with the `gemspec`
