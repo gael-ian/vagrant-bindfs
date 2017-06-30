@@ -32,7 +32,7 @@ module VagrantBindfs
 
             def bindfs_bindfs_install_from_source(machine, version)
               version     = version.to_s.strip.gsub(/\.0$/, '')
-              source_urls = VagrantBindfs::Bindfs::SOURCE_URLS.map { |url| url.gsub('%{bindfs_version}', version) }
+              source_urls = VagrantBindfs::Bindfs::SOURCE_URLS.map { |url| url.gsub('%<bindfs_version>', version) }
 
               begin
                 machine.communicate.execute <<-SHELL
