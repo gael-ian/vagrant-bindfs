@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
 
   ## Advanced options
   config.bindfs.bind_folder "source/dir", "mount/point",
-    perms: "u=rw:g=r:o=r",
+    perms: "u=rw:g=r:o=r", # http://bindfs.org/docs/bindfs.1.html#sect12
     create_as_user: true
 
 
