@@ -3,12 +3,12 @@
 module VagrantBindfs
   module Vagrant
     class Config < ::Vagrant.plugin('2', :config)
-      attr_accessor :debug
+      attr_reader   :debug
 
       attr_accessor :bindfs_version
-      attr_accessor :install_bindfs_from_source
+      attr_reader   :install_bindfs_from_source
 
-      attr_accessor :default_options
+      attr_reader   :default_options
       attr_accessor :binded_folders
 
       attr_accessor :skip_validations
@@ -20,9 +20,10 @@ module VagrantBindfs
         @install_bindfs_from_source = false
 
         @binded_folders             = {}
-        @default_options            = Bindfs::OptionSet.new(nil, 'force-user' => 'vagrant',
-                                                                 'force-group' => 'vagrant',
-                                                                 'perms'       => 'u=rwX:g=rD:o=rD')
+        @default_options            = Bindfs::OptionSet.new(nil,
+                                                            'force-user'  => 'vagrant',
+                                                            'force-group' => 'vagrant',
+                                                            'perms'       => 'u=rwX:g=rD:o=rD')
 
         @skip_validations           = []
       end
@@ -75,7 +76,7 @@ module VagrantBindfs
       def validate(_machine)
         errors = _detected_errors
 
-        binded_folders.each do |_, folder|
+        binded_folders.each_value do |folder|
           validator = Bindfs::Validators::Config.new(folder)
           errors << validator.errors unless validator.valid?
         end

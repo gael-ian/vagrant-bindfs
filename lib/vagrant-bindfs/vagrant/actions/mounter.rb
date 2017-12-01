@@ -31,7 +31,7 @@ module VagrantBindfs
           bindfs_version    = guest.capability(:bindfs_bindfs_version)
           bindfs_full_path  = guest.capability(:bindfs_bindfs_full_path)
 
-          binded_folders(hook).each do |_, folder|
+          binded_folders(hook).each_value do |folder|
             folder.reverse_merge!(config.default_options)
             folder.to_version!(bindfs_version)
 
