@@ -23,17 +23,26 @@ module VagrantBindfs
       end
 
       def format_argument(name, value)
-        definition      = argument_definition(name)
-        compatible_name = argument_compatible_name(name)
+        send("format_#{argument_type(name)}", name, value)
+      end
 
-        if definition['type'] == 'flag' && !!value
-          return "-#{compatible_name}" if definition['long'].empty? # Shorthand only options
-          return "--#{compatible_name}"
-        end
-        if definition['type'] == 'option'
-          return "-#{compatible_name} #{value}" if definition['long'].empty? # Shorthand only options
-          return "--#{compatible_name}=#{value}"
-        end
+      def format_flag(name, value)
+        return unless !!value
+        compatible_name = argument_compatible_name(name)
+        (argument_shorthand_only?(name) ? "-#{compatible_name}" : "--#{compatible_name}")
+      end
+
+      def format_option(name, value)
+        compatible_name = argument_compatible_name(name)
+        (argument_shorthand_only?(name) ? "-#{compatible_name} #{value}" : "--#{compatible_name}=#{value}")
+      end
+
+      def argument_type(name)
+        argument_definition(name)['type']
+      end
+
+      def argument_shorthand_only?(name)
+        argument_definition(name)['long'].empty?
       end
 
       def argument_definition(name)
