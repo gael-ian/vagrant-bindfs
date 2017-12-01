@@ -39,6 +39,10 @@
   "xattr-ro":                 { "long": ["xattr-ro"],                    "short": [],    "type": "flag",   "since": "0.0.1"   },
   "xattr-rw":                 { "long": ["xattr-rw"],                    "short": [],    "type": "flag",   "since": "0.0.1"   },
 
+  // Other file operations
+  "delete-deny":              { "long": ["delete-deny"],                 "short": [],    "type": "flag",   "since": "1.13.9"  },
+  "rename-deny":              { "long": ["rename-deny"],                 "short": [],    "type": "flag",   "since": "1.13.9"  },
+
   // Rate limits
   "read-rate":                { "long": ["read-rate"],                   "short": [],    "type": "option", "since": "1.12.6"  },
   "write-rate":               { "long": ["write-rate"],                  "short": [],    "type": "option", "since": "1.12.6"  },
