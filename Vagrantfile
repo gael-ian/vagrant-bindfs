@@ -5,13 +5,13 @@
 
 # Uncomment machines you want to test
 test_machines = {
-  # debian: { box: "bento/debian-8.5"   },
-  # ubuntu: { box: "bento/ubuntu-16.04" },
-  # fedora: { box: "bento/fedora-24"    },
-  # redhat: { box: "bento/centos-7.2"   },
+  # debian: { box: "bento/debian-9"     },
+  # ubuntu: { box: "bento/ubuntu-17.10" },
+  # fedora: { box: "bento/fedora-26"    },
+  # redhat: { box: "bento/centos-7"     },
 
   # The `vagrant` user group does not exist in this box.
-  # suse:   { box: "bento/opensuse-leap-42.1",    args: { group: 'users' } },
+  # suse:   { box: "bento/opensuse-leap-42",      args: { group: 'users' } },
 
   # **This box require the Oracle VM VirtualBox Extension Pack for Virtualbox.**
   # The `vagrant` user group does not exist in this box.
