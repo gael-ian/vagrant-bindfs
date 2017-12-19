@@ -9,6 +9,7 @@ test_machines = {
   # ubuntu: { box: "bento/ubuntu-17.10" },
   # fedora: { box: "bento/fedora-26"    },
   # redhat: { box: "bento/centos-7"     },
+  # gentoo: { box: "generic/gentoo"     },
 
   # The `vagrant` user group does not exist in this box.
   # suse:   { box: "bento/opensuse-leap-42",      args: { group: 'users' } },

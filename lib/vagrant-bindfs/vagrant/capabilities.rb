@@ -11,6 +11,8 @@ module VagrantBindfs
       autoload :Debian, 'vagrant-bindfs/vagrant/capabilities/debian'
       autoload :Ubuntu, 'vagrant-bindfs/vagrant/capabilities/ubuntu'
 
+      autoload :Gentoo, 'vagrant-bindfs/vagrant/capabilities/gentoo'
+
       autoload :RedHat, 'vagrant-bindfs/vagrant/capabilities/redhat'
 
       autoload :Suse,   'vagrant-bindfs/vagrant/capabilities/suse'
@@ -24,92 +26,150 @@ module VagrantBindfs
         end
 
         def declare_capabilities_for_system_checks!(base)
-          base.guest_capability('darwin', 'bindfs_exists_user') { Capabilities::Darwin::SystemChecks }
-          base.guest_capability('linux',  'bindfs_exists_user') { Capabilities::Linux::SystemChecks }
+          declare_capability!(base, 'bindfs_exists_user', {
+            darwin: Capabilities::Darwin::SystemChecks,
+            linux:  Capabilities::Linux::SystemChecks,
+          })
+          
+          declare_capability!(base, 'bindfs_exists_group', {
+            darwin: Capabilities::Darwin::SystemChecks,
+            linux:  Capabilities::Linux::SystemChecks,
+          })
 
-          base.guest_capability('darwin', 'bindfs_exists_group') { Capabilities::Darwin::SystemChecks }
-          base.guest_capability('linux',  'bindfs_exists_group') { Capabilities::Linux::SystemChecks }
+          declare_capability!(base, 'bindfs_exists_directory', {
+            darwin: Capabilities::All::SystemChecks,
+            linux:  Capabilities::All::SystemChecks,
+          })
 
-          base.guest_capability('darwin', 'bindfs_exists_directory') { Capabilities::All::SystemChecks }
-          base.guest_capability('linux',  'bindfs_exists_directory') { Capabilities::All::SystemChecks }
-
-          base.guest_capability('darwin', 'bindfs_exists_mount') { Capabilities::All::SystemChecks }
-          base.guest_capability('linux',  'bindfs_exists_mount') { Capabilities::All::SystemChecks }
+          declare_capability!(base, 'bindfs_exists_mount', {
+            darwin: Capabilities::All::SystemChecks,
+            linux:  Capabilities::All::SystemChecks,
+          })
         end
 
         def declare_capabilities_for_package_manager!(base)
-          base.guest_capability('darwin', 'bindfs_package_manager_name') { Capabilities::Darwin::PackageManager }
-          base.guest_capability('debian', 'bindfs_package_manager_name') { Capabilities::Debian::PackageManager }
-          base.guest_capability('redhat', 'bindfs_package_manager_name') { Capabilities::RedHat::PackageManager }
-          base.guest_capability('suse',   'bindfs_package_manager_name') { Capabilities::Suse::PackageManager }
+          declare_capability!(base, 'bindfs_package_manager_name', {
+            darwin: Capabilities::Darwin::PackageManager,
+            debian: Capabilities::Debian::PackageManager,
+            gentoo: Capabilities::Gentoo::PackageManager,
+            redhat: Capabilities::RedHat::PackageManager,
+            suse:   Capabilities::Suse::PackageManager,
+          })
 
-          base.guest_capability('darwin', 'bindfs_package_manager_installed') { Capabilities::All::PackageManager }
-          base.guest_capability('linux',  'bindfs_package_manager_installed') { Capabilities::All::PackageManager }
+          declare_capability!(base, 'bindfs_package_manager_installed', {
+            darwin: Capabilities::All::PackageManager,
+            linux:  Capabilities::All::PackageManager,
+          })
 
-          base.guest_capability('darwin', 'bindfs_package_manager_install') { Capabilities::Darwin::PackageManager }
-          base.guest_capability('linux',  'bindfs_package_manager_install') { Capabilities::Linux::PackageManager }
-
-          base.guest_capability('darwin', 'bindfs_package_manager_update') { Capabilities::Darwin::PackageManager }
-          base.guest_capability('debian', 'bindfs_package_manager_update') { Capabilities::Debian::PackageManager }
-          base.guest_capability('redhat', 'bindfs_package_manager_update') { Capabilities::RedHat::PackageManager }
-          base.guest_capability('suse',   'bindfs_package_manager_update') { Capabilities::Suse::PackageManager }
+          declare_capability!(base, 'bindfs_package_manager_install', {
+            darwin: Capabilities::Darwin::PackageManager,
+            linux:  Capabilities::Linux::PackageManager,
+          })
+          
+          declare_capability!(base, 'bindfs_package_manager_update', {
+            darwin: Capabilities::Darwin::PackageManager,
+            debian: Capabilities::Debian::PackageManager,
+            gentoo: Capabilities::Gentoo::PackageManager,
+            redhat: Capabilities::RedHat::PackageManager,
+            suse:   Capabilities::Suse::PackageManager,
+          })
         end
 
         def declare_capabilities_for_fuse!(base)
-          base.guest_capability('darwin', 'bindfs_fuse_installed') { Capabilities::Darwin::Fuse }
-          base.guest_capability('linux',  'bindfs_fuse_installed') { Capabilities::Linux::Fuse }
+          declare_capability!(base, 'bindfs_fuse_installed', {
+            darwin: Capabilities::Darwin::Fuse,
+            linux:  Capabilities::Linux::Fuse,
+          })
 
-          base.guest_capability('darwin', 'bindfs_fuse_install') { Capabilities::Darwin::Fuse }
-          base.guest_capability('debian', 'bindfs_fuse_install') { Capabilities::Debian::Fuse }
-          base.guest_capability('redhat', 'bindfs_fuse_install') { Capabilities::RedHat::Fuse }
-          base.guest_capability('suse',   'bindfs_fuse_install') { Capabilities::Suse::Fuse }
+          declare_capability!(base, 'bindfs_fuse_install', {
+            darwin: Capabilities::Darwin::Fuse,
+            debian: Capabilities::Debian::Fuse,
+            gentoo: Capabilities::Gentoo::Fuse,
+            redhat: Capabilities::RedHat::Fuse,
+            suse:   Capabilities::Suse::Fuse,
+          })
+          
+          declare_capability!(base, 'bindfs_fuse_loaded', {
+            darwin: Capabilities::Darwin::Fuse,
+            linux:  Capabilities::Linux::Fuse,
+            ubuntu: Capabilities::Ubuntu::Fuse,
+          })
 
-          base.guest_capability('darwin', 'bindfs_fuse_loaded') { Capabilities::Darwin::Fuse }
-          base.guest_capability('linux',  'bindfs_fuse_loaded') { Capabilities::Linux::Fuse }
-          base.guest_capability('ubuntu', 'bindfs_fuse_loaded') { Capabilities::Ubuntu::Fuse }
-
-          base.guest_capability('darwin', 'bindfs_fuse_load') { Capabilities::Darwin::Fuse }
-          base.guest_capability('linux',  'bindfs_fuse_load') { Capabilities::Linux::Fuse }
-          base.guest_capability('ubuntu', 'bindfs_fuse_load') { Capabilities::Ubuntu::Fuse }
+          declare_capability!(base, 'bindfs_fuse_load', {
+            darwin: Capabilities::Darwin::Fuse,
+            linux:  Capabilities::Linux::Fuse,
+            ubuntu: Capabilities::Ubuntu::Fuse,
+          })
         end
 
         def declare_capabilities_for_bindfs!(base)
-          base.guest_capability('darwin', 'bindfs_bindfs_full_path') { Capabilities::All::Bindfs }
-          base.guest_capability('linux',  'bindfs_bindfs_full_path') { Capabilities::All::Bindfs }
+          declare_capability!(base, 'bindfs_bindfs_full_path', {
+            darwin: Capabilities::All::Bindfs,
+            linux:  Capabilities::All::Bindfs,
+          })
+          
+          declare_capability!(base, 'bindfs_bindfs_installed', {
+            darwin: Capabilities::All::Bindfs,
+            linux:  Capabilities::All::Bindfs,
+          })
 
-          base.guest_capability('darwin', 'bindfs_bindfs_installed') { Capabilities::All::Bindfs }
-          base.guest_capability('linux',  'bindfs_bindfs_installed') { Capabilities::All::Bindfs }
+          declare_capability!(base, 'bindfs_bindfs_version', {
+            darwin: Capabilities::All::Bindfs,
+            linux:  Capabilities::All::Bindfs,
+          })
 
-          base.guest_capability('darwin', 'bindfs_bindfs_version') { Capabilities::All::Bindfs }
-          base.guest_capability('linux',  'bindfs_bindfs_version') { Capabilities::All::Bindfs }
+          declare_capability!(base, 'bindfs_bindfs_search', {
+            darwin: Capabilities::Darwin::Bindfs,
+            debian: Capabilities::Debian::Bindfs,
+            gentoo: Capabilities::Gentoo::Bindfs,
+            redhat: Capabilities::RedHat::Bindfs,
+            suse:   Capabilities::Suse::Bindfs,
+          })
 
-          base.guest_capability('darwin', 'bindfs_bindfs_search') { Capabilities::Darwin::Bindfs }
-          base.guest_capability('debian', 'bindfs_bindfs_search') { Capabilities::Debian::Bindfs }
-          base.guest_capability('redhat', 'bindfs_bindfs_search') { Capabilities::RedHat::Bindfs }
-          base.guest_capability('suse',   'bindfs_bindfs_search') { Capabilities::Suse::Bindfs }
+          declare_capability!(base, 'bindfs_bindfs_install', {
+            darwin: Capabilities::Darwin::Bindfs,
+            debian: Capabilities::Debian::Bindfs,
+            gentoo: Capabilities::Gentoo::Bindfs,
+            redhat: Capabilities::RedHat::Bindfs,
+            suse:   Capabilities::Suse::Bindfs,
+          })
 
-          base.guest_capability('darwin', 'bindfs_bindfs_install') { Capabilities::Darwin::Bindfs }
-          base.guest_capability('debian', 'bindfs_bindfs_install') { Capabilities::Debian::Bindfs }
-          base.guest_capability('redhat', 'bindfs_bindfs_install') { Capabilities::RedHat::Bindfs }
-          base.guest_capability('suse',   'bindfs_bindfs_install') { Capabilities::Suse::Bindfs }
+          declare_capability!(base, 'bindfs_bindfs_search_version', {
+            darwin: Capabilities::Darwin::Bindfs,
+            debian: Capabilities::Debian::Bindfs,
+            gentoo: Capabilities::Gentoo::Bindfs,
+            redhat: Capabilities::RedHat::Bindfs,
+            suse:   Capabilities::Suse::Bindfs,
+          })
 
-          base.guest_capability('darwin', 'bindfs_bindfs_search_version') { Capabilities::Darwin::Bindfs }
-          base.guest_capability('debian', 'bindfs_bindfs_search_version') { Capabilities::Debian::Bindfs }
-          base.guest_capability('redhat', 'bindfs_bindfs_search_version') { Capabilities::RedHat::Bindfs }
-          base.guest_capability('suse',   'bindfs_bindfs_search_version') { Capabilities::Suse::Bindfs }
+          declare_capability!(base, 'bindfs_bindfs_install_version', {
+            darwin: Capabilities::Darwin::Bindfs,
+            debian: Capabilities::Debian::Bindfs,
+            gentoo: Capabilities::Gentoo::Bindfs,
+            redhat: Capabilities::RedHat::Bindfs,
+            suse:   Capabilities::Suse::Bindfs,
+          })
 
-          base.guest_capability('darwin', 'bindfs_bindfs_install_version') { Capabilities::Darwin::Bindfs }
-          base.guest_capability('debian', 'bindfs_bindfs_install_version') { Capabilities::Debian::Bindfs }
-          base.guest_capability('redhat', 'bindfs_bindfs_install_version') { Capabilities::RedHat::Bindfs }
-          base.guest_capability('suse',   'bindfs_bindfs_install_version') { Capabilities::Suse::Bindfs }
+          declare_capability!(base, 'bindfs_bindfs_install_compilation_requirements', {
+            darwin: Capabilities::Darwin::Bindfs,
+            debian: Capabilities::Debian::Bindfs,
+            gentoo: Capabilities::Gentoo::Bindfs,
+            redhat: Capabilities::RedHat::Bindfs,
+            suse:   Capabilities::Suse::Bindfs,
+          })
 
-          base.guest_capability('darwin', 'bindfs_bindfs_install_compilation_requirements') { Capabilities::Darwin::Bindfs }
-          base.guest_capability('debian', 'bindfs_bindfs_install_compilation_requirements') { Capabilities::Debian::Bindfs }
-          base.guest_capability('redhat', 'bindfs_bindfs_install_compilation_requirements') { Capabilities::RedHat::Bindfs }
-          base.guest_capability('suse',   'bindfs_bindfs_install_compilation_requirements') { Capabilities::Suse::Bindfs }
-
-          base.guest_capability('darwin', 'bindfs_bindfs_install_from_source') { Capabilities::All::Bindfs }
-          base.guest_capability('linux',  'bindfs_bindfs_install_from_source') { Capabilities::All::Bindfs }
+          declare_capability!(base, 'bindfs_bindfs_install_from_source', {
+            darwin: Capabilities::All::Bindfs,
+            linux:  Capabilities::All::Bindfs,
+          })
+        end
+        
+        private
+        
+        def declare_capability!(base, cap_name, oses = {})
+          oses.each do |os_name, _module|
+            base.guest_capability(os_name, cap_name) { _module }
+          end
         end
       end
     end
