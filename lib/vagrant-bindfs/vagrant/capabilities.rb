@@ -3,7 +3,6 @@
 module VagrantBindfs
   module Vagrant
     module Capabilities
-
       autoload :All,    'vagrant-bindfs/vagrant/capabilities/all'
 
       autoload :Darwin, 'vagrant-bindfs/vagrant/capabilities/darwin'
@@ -18,7 +17,6 @@ module VagrantBindfs
 
       autoload :Suse,   'vagrant-bindfs/vagrant/capabilities/suse'
 
-
       class << self
         def included(base)
           capabilities = JSON.parse(File.read(File.expand_path('../capabilities.json', __FILE__)))
@@ -31,7 +29,7 @@ module VagrantBindfs
         end
 
         def module_by_name(camel_cased_word)
-          camel_cased_word.split('::').inject(self){ |constant, name| constant.const_get(name) }
+          camel_cased_word.split('::').inject(self) { |constant, name| constant.const_get(name) }
         end
       end
     end

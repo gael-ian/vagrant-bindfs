@@ -50,9 +50,8 @@ module VagrantBindfs
           normalized_key = key.to_s.tr('_', '-')
           canonical_name = canonical_option_name(normalized_key)
 
-          if normalized.key?(canonical_name)
-            raise VagrantBindfs::Vagrant::ConfigError.new(:conflicting_options, name: canonical_name)
-          end
+          raise VagrantBindfs::Vagrant::ConfigError.new(:conflicting_options, name: canonical_name) \
+            if normalized.key?(canonical_name)
 
           normalized[canonical_name] = value
           normalized
