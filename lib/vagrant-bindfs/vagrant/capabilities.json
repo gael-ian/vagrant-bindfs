@@ -1,0 +1,120 @@
+{
+  // System checks
+  "bindfs_exists_user": {
+    "darwin": "Darwin::SystemChecks",
+    "linux":  "Linux::SystemChecks"
+  },
+  "bindfs_exists_group": {
+    "darwin": "Darwin::SystemChecks",
+    "linux":  "Linux::SystemChecks"
+  },
+  "bindfs_exists_directory": {
+    "darwin": "All::SystemChecks",
+    "linux":  "All::SystemChecks"
+  },
+  "bindfs_exists_mount": {
+    "darwin": "All::SystemChecks",
+    "linux":  "All::SystemChecks"
+  },
+
+  // Package manager
+  "bindfs_package_manager_name": {
+    "darwin": "Darwin::PackageManager",
+    "debian": "Debian::PackageManager",
+    "gentoo": "Gentoo::PackageManager",
+    "redhat": "RedHat::PackageManager",
+    "suse":   "Suse::PackageManager"
+  },
+  "bindfs_package_manager_installed": {
+    "darwin": "All::PackageManager",
+    "linux":  "All::PackageManager"
+  },
+  
+  "bindfs_package_manager_install": {
+    "darwin": "Darwin::PackageManager",
+    "linux":  "Linux::PackageManager"
+  },
+  "bindfs_package_manager_update": {
+    "darwin": "Darwin::PackageManager",
+    "debian": "Debian::PackageManager",
+    "gentoo": "Gentoo::PackageManager",
+    "redhat": "RedHat::PackageManager",
+    "suse":   "Suse::PackageManager"
+  },
+  
+  // Fuse
+  "bindfs_fuse_installed": {
+    "darwin": "Darwin::Fuse",
+    "linux":  "Linux::Fuse"
+  },
+  "bindfs_fuse_install": {
+    "darwin": "Darwin::Fuse",
+    "debian": "Debian::Fuse",
+    "gentoo": "Gentoo::Fuse",
+    "redhat": "RedHat::Fuse",
+    "suse":   "Suse::Fuse"
+  },
+  "bindfs_fuse_loaded": {
+    "darwin": "Darwin::Fuse",
+    "linux":  "Linux::Fuse",
+    "ubuntu": "Ubuntu::Fuse"
+  },
+  "bindfs_fuse_load": {
+    "darwin": "Darwin::Fuse",
+    "linux":  "Linux::Fuse",
+    "ubuntu": "Ubuntu::Fuse"
+  },
+  
+  // Bindfs
+  "bindfs_bindfs_full_path": {
+    "darwin": "All::Bindfs",
+    "linux":  "All::Bindfs"
+  },
+  "bindfs_bindfs_installed": {
+    "darwin": "All::Bindfs",
+    "linux":  "All::Bindfs"
+  },
+  "bindfs_bindfs_version": {
+    "darwin": "All::Bindfs",
+    "linux":  "All::Bindfs"
+  },
+  "bindfs_bindfs_search": {
+    "darwin": "Darwin::Bindfs",
+    "debian": "Debian::Bindfs",
+    "gentoo": "Gentoo::Bindfs",
+    "redhat": "RedHat::Bindfs",
+    "suse":   "Suse::Bindfs"
+  },
+  "bindfs_bindfs_install": {
+    "darwin": "Darwin::Bindfs",
+    "debian": "Debian::Bindfs",
+    "gentoo": "Gentoo::Bindfs",
+    "redhat": "RedHat::Bindfs",
+    "suse":   "Suse::Bindfs"
+  },
+  "bindfs_bindfs_search_version": {
+    "darwin": "Darwin::Bindfs",
+    "debian": "Debian::Bindfs",
+    "gentoo": "Gentoo::Bindfs",
+    "redhat": "RedHat::Bindfs",
+    "suse":   "Suse::Bindfs"
+  },
+  "bindfs_bindfs_install_version": {
+    "darwin": "Darwin::Bindfs",
+    "debian": "Debian::Bindfs",
+    "gentoo": "Gentoo::Bindfs",
+    "redhat": "RedHat::Bindfs",
+    "suse":   "Suse::Bindfs"
+  },
+  "bindfs_bindfs_install_compilation_requirements": {
+    "darwin": "Darwin::Bindfs",
+    "debian": "Debian::Bindfs",
+    "gentoo": "Gentoo::Bindfs",
+    "redhat": "RedHat::Bindfs",
+    "suse":   "Suse::Bindfs"
+  },
+  "bindfs_bindfs_install_from_source": {
+    "darwin": "All::Bindfs",
+    "linux":  "All::Bindfs"
+  }
+}

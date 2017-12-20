@@ -1,3 +1,6 @@
+Gemspec/RequiredRubyVersion:
+  Enabled: No
+
 Metrics/LineLength:
   Max: 150
 
@@ -13,8 +16,8 @@ Metrics/AbcSize:
 Style/Documentation:
   Enabled: No
 
-Style/BlockComments:
+Style/DoubleNegation:
   Enabled: No
 
-Style/DoubleNegation:
+Naming/FileName:
   Enabled: No

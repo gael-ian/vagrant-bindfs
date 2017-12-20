@@ -26,16 +26,18 @@ module VagrantBindfs
       class << self
         def hooks
           @hooks ||= begin
-            synced_folders = if ::Vagrant::Action::Builtin.const_defined? :NFS
-                               ::Vagrant::Action::Builtin::NFS
-                             else
-                               ::Vagrant::Action::Builtin::SyncedFolders
-                             end
-
             {
-              synced_folders: synced_folders,
+              synced_folders: synced_folders_hook,
               provision:      ::Vagrant::Action::Builtin::Provision
             }
+          end
+        end
+
+        def synced_folders_hook
+          if ::Vagrant::Action::Builtin.const_defined? :NFS
+            ::Vagrant::Action::Builtin::NFS
+          else
+            ::Vagrant::Action::Builtin::SyncedFolders
           end
         end
       end
