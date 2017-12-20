@@ -101,7 +101,7 @@ The plugin will try to detect flag arguments values as true or false from common
 vagrant-bindfs detects installed version of bindfs, translate option names when needed and ignore an option if it is not supported.
 As we may have missed something, it will warn you when a binding command fail.
 
-On Debian (this includes Ubuntu), SUSE, Fedora, CentOS (5-6) and OS X guest systems, vagrant-bindfs will try to install bindfs automatically if it is not installed.
+On Debian (this includes Ubuntu), SUSE, Fedora, CentOS (5-6), Gentoo and OS X guest systems, vagrant-bindfs will try to install bindfs automatically if it is not installed.
 On other system, you'll get warned.
 
 OS X guests may need some specific options. See [bindfs README](https://github.com/mpartel/bindfs#os-x-note) for details.
