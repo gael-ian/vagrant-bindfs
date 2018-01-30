@@ -35,6 +35,7 @@ Vagrant.configure('2') do |config|
 
   # For a more detailled output when you test, set this to true.
   config.bindfs.debug = false
+  config.bindfs.force_empty_mountpoints = true
 
   test_machines.each do |distro, options|
     config.vm.define "vagrant-bindfs-test-#{distro}" do |machine|

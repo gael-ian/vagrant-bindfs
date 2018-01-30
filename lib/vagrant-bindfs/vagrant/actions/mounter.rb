@@ -56,12 +56,28 @@ module VagrantBindfs
             )
 
             machine.communicate.tap do |comm|
+
+              if empty_mountpoint?(folder)
+                comm.sudo("rm -rf #{folder.destination}")
+                detail I18n.t(
+                  'vagrant-bindfs.actions.mounter.force_empty_mountpoints',
+                  dest: folder.destination
+                )
+              end
+
               comm.sudo("mkdir -p #{folder.destination}")
               comm.sudo(command.to_s(bindfs_full_path), error_class: VagrantBindfs::Vagrant::Error, error_key: 'bindfs.mount_failed')
               debug(command.to_s(bindfs_full_path))
             end
           end
         end
+
+        def empty_mountpoint?(folder)
+          return false unless config.force_empty_mountpoints
+          return false if folder.options.key?('o') and !folder.options['o'].match(%r{nonempty}).nil?
+          true
+        end
+
       end
     end
   end

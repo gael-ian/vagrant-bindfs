@@ -12,6 +12,7 @@ module VagrantBindfs
       attr_accessor :binded_folders
 
       attr_accessor :skip_validations
+      attr_reader   :force_empty_mountpoints
 
       def initialize
         @debug                      = false
@@ -26,6 +27,7 @@ module VagrantBindfs
                                                             'perms'       => 'u=rwX:g=rD:o=rD')
 
         @skip_validations           = []
+        @force_empty_mountpoints    = false
       end
 
       def debug=(value)
@@ -42,6 +44,10 @@ module VagrantBindfs
 
       def default_options=(options = {})
         @default_options = Bindfs::OptionSet.new(nil, options)
+      end
+
+      def force_empty_mountpoints=(value)
+        @force_empty_mountpoints = (value == true)
       end
 
       def binded_folder=(*_any_variant)
@@ -66,6 +72,7 @@ module VagrantBindfs
           result.binded_folders             = binded_folders.merge(other.binded_folders)
 
           result.skip_validations           = (skip_validations + other.skip_validations).uniq
+          result.force_empty_mountpoints    = (force_empty_mountpoints || other.force_empty_mountpoints)
         end
       end
 

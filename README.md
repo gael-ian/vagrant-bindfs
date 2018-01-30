@@ -171,6 +171,34 @@ end
 **This feature only works with exact version match and does not try to resolve dependencies.**
 In particular, Fuse will always be installed from the latest version available in repositories (_via_ Homebrew Cask for OS X guests).
 
+### `force_empty_mountpoints`
+
+By default, `vagrant-bindfs` won't try to empty an existing mount point before mount. Hence, if you try to bind a folder to a non-empty directory without explicitly allowing Fuse to do so (with the `nonempty` Fuse option), mount will fail.
+
+You can ask `vagrant-bindfs` to make sure the mount points are empty with the `config.bindfs.force_empty_mountpoints` option.
+Mount poitns will then be destroyed (with `rm -rf`) prior to mount, unless you allow Fuse to not mind (with the `nonempty` Fuse option).
+
+
+```ruby
+Vagrant.configure("2") do |config|
+  
+  config.bindfs.force_empty_mountpoint = true
+  
+  # This exemple assume two directories exist in your VM:
+  # - `a/non/empty/mount/point/and/its/content`
+  # - `another/non/empty/mount/point/and/its/content` 
+  
+  # `a/non/empty/mount/point` will be destroyed before mount and
+  #  all its content will be lost.
+  config.bindfs.bind_folder "/vagrant", "a/non/empty/mount/point"
+  
+  # `a/non/empty/mount/point` will not be destroyed before mount
+  # but its content will not be accessible while in use by bindfs.
+  config.bindfs.bind_folder "/vagrant", "a/non/empty/mount/point", o: :nonempty
+  
+end
+```
+
 ## Contributing
 
 If you find this plugin useful, we could use a few enhancements!

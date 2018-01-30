@@ -20,6 +20,7 @@ en:
       mounter:
         start: "Creating bind mounts after %{hook}..."
         entry: "%{source} => %{dest}"
+        force_empty_mountpoints: "All content in '%{dest}' as been removed before mount"
 
 
     validations:
