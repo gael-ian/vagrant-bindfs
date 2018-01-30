@@ -27,57 +27,75 @@ module VagrantBindfs
 
         def bind_folders!
           info I18n.t('vagrant-bindfs.actions.mounter.start', hook: hook)
-
-          bindfs_version    = guest.capability(:bindfs_bindfs_version)
-          bindfs_full_path  = guest.capability(:bindfs_bindfs_full_path)
-
           binded_folders(hook).each_value do |folder|
-            folder.reverse_merge!(config.default_options)
-            folder.to_version!(bindfs_version)
-
-            validator = VagrantBindfs::Bindfs::Validators::Runtime.new(folder, machine)
-
-            unless validator.valid?
-              error I18n.t(
-                'vagrant-bindfs.validations.errors_found',
-                dest:   folder.destination,
-                source: folder.source,
-                errors: validator.errors.join(' ')
-              )
-              next
-            end
-
-            command = VagrantBindfs::Bindfs::Command.new(folder)
-
-            detail I18n.t(
-              'vagrant-bindfs.actions.mounter.entry',
-              dest: folder.destination,
-              source: folder.source
-            )
-
-            machine.communicate.tap do |comm|
-
-              if empty_mountpoint?(folder)
-                comm.sudo("rm -rf #{folder.destination}")
-                detail I18n.t(
-                  'vagrant-bindfs.actions.mounter.force_empty_mountpoints',
-                  dest: folder.destination
-                )
-              end
-
-              comm.sudo("mkdir -p #{folder.destination}")
-              comm.sudo(command.to_s(bindfs_full_path), error_class: VagrantBindfs::Vagrant::Error, error_key: 'bindfs.mount_failed')
-              debug(command.to_s(bindfs_full_path))
-            end
+            bind_folder!(folder)
           end
+        end
+
+        def bind_folder!(folder)
+          folder.reverse_merge!(config.default_options)
+          folder.to_version!(bindfs_version)
+
+          return unless valid_folder?(folder)
+
+          machine.communicate.tap do |comm|
+            empty_mountpoint!(comm, folder) if empty_mountpoint?(folder)
+            ensure_mountpoint_exists!(comm, folder)
+            execute_bind_command!(comm, folder)
+          end
+        end
+
+        def valid_folder?(folder)
+          validator = VagrantBindfs::Bindfs::Validators::Runtime.new(folder, machine)
+          return true if validator.valid?
+
+          error I18n.t(
+            'vagrant-bindfs.validations.errors_found',
+            dest:   folder.destination,
+            source: folder.source,
+            errors: validator.errors.join(' ')
+          )
+          false
         end
 
         def empty_mountpoint?(folder)
           return false unless config.force_empty_mountpoints
-          return false if folder.options.key?('o') and !folder.options['o'].match(%r{nonempty}).nil?
+          return false if folder.options.key?('o') && !folder.options['o'].match(/nonempty/).nil?
           true
         end
 
+        def empty_mountpoint!(comm, folder)
+          detail I18n.t(
+            'vagrant-bindfs.actions.mounter.force_empty_mountpoints',
+            dest: folder.destination
+          )
+
+          comm.sudo("rm -rf #{folder.destination}")
+        end
+
+        def ensure_mountpoint_exists!(comm, folder)
+          comm.sudo("mkdir -p #{folder.destination}")
+        end
+
+        def execute_bind_command!(comm, folder)
+          detail I18n.t(
+            'vagrant-bindfs.actions.mounter.entry',
+            dest: folder.destination,
+            source: folder.source
+          )
+
+          command = VagrantBindfs::Bindfs::Command.new(folder)
+          comm.sudo(command.to_s(bindfs_full_path), error_class: VagrantBindfs::Vagrant::Error, error_key: 'bindfs.mount_failed')
+          debug(command.to_s(bindfs_full_path))
+        end
+
+        def bindfs_version
+          @bindfs_version ||= guest.capability(:bindfs_bindfs_version)
+        end
+
+        def bindfs_full_path
+          @bindfs_full_path ||= guest.capability(:bindfs_bindfs_full_path)
+        end
       end
     end
   end
