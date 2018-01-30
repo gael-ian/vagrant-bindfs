@@ -5,7 +5,7 @@ Metrics/LineLength:
   Max: 150
 
 Metrics/MethodLength:
-  Max: 30
+  Max: 25
 
 Metrics/BlockLength:
   ExcludedMethods: describe

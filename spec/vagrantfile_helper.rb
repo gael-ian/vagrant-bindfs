@@ -9,9 +9,8 @@ def tests_setup(machine, options = {})
                              '/etc-binded-after-provisioning',
                              options.merge(owner: 'root', after: :provision)
 
-
   machine.vm.provision :shell do |p|
-    p.name   = "create non emtpy mountpoints"
+    p.name   = 'create non emtpy mountpoints'
     p.inline = <<-COMMANDS
       mkdir -p /home/vagrant/mountpoint/non/empty
       mkdir -p /home/vagrant/mountpoint-nonempty/non/empty
