@@ -28,8 +28,12 @@ _Note that `map_uid` and `map_gid` NFS options can be used to set the identity u
 
 ## Installation
 
-vagrant-bindfs is distributed as a Ruby gem.
-You can install it as any other Vagrant plugin with `vagrant plugin install vagrant-bindfs`.
+vagrant-bindfs is distributed as a Ruby gem. 
+You can install it as any other Vagrant plugin with:
+
+```bash
+vagrant plugin install vagrant-bindfs
+```
 
 
 ## Usage
