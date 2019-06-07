@@ -6,8 +6,8 @@
 # Uncomment machines you want to test
 test_machines = {
   # debian: { box: "bento/debian-9"     },
-  # ubuntu: { box: "bento/ubuntu-17.10" },
-  # fedora: { box: "bento/fedora-26"    },
+  # ubuntu: { box: "bento/ubuntu-18.10" },
+  # fedora: { box: "bento/fedora-29"    },
   # redhat: { box: "bento/centos-7"     },
   # gentoo: { box: "generic/gentoo"     },
 
