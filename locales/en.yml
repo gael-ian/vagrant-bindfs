@@ -28,7 +28,6 @@ en:
       source_path_does_not_exist: "Source path '%{path}' doesn't exist"
 
       destination_path_required: "A destination path is required as argument to bind_folder"
-      destination_path_reserved: "Destination path '%{path}' is part of a reserved subtree for Vagrant use"
       destination_already_mounted: "Destination path '%{dest}' is already a bindfs mount"
 
       path_must_be_absolute: "Path '%{path}' is relative but an absolute path is attended"

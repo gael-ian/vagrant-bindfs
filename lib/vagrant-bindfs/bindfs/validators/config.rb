@@ -35,7 +35,6 @@ module VagrantBindfs
         def validate_destination!
           @errors << I18n.t('vagrant-bindfs.validations.destination_path_required')                     if destination.empty?
           @errors << I18n.t('vagrant-bindfs.validations.path_must_be_absolute', path: destination)      if relative_path?(destination)
-          @errors << I18n.t('vagrant-bindfs.validations.destination_path_reserved', path: destination)  if reserved_path?(destination)
         end
 
         def validate_options!
@@ -48,10 +47,6 @@ module VagrantBindfs
 
         def relative_path?(path)
           Pathname.new(path).relative?
-        end
-
-        def reserved_path?(path)
-          !Pathname.new(path).to_path.match(%r{^\/vagrant\/}).nil?
         end
       end
     end
