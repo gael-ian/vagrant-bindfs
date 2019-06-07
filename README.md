@@ -87,7 +87,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Remember that Vagrant use `/vagrant` on guest side as a shared directory dedicated to provisioning and configuration. Binding a folder to `/vagrant` or one of its subfolders will fail.
+Remember that Vagrant use `/vagrant` on guest side to automatically share your project directory (the one with the Vagrantfile), in particular for provisioning and configuration purposes. Binding a folder to `/vagrant` or one of its subfolders may expose unexpected behaviors.
 
 ### bindfs support
 
