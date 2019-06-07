@@ -76,6 +76,7 @@ module VagrantBindfs
 
       def extract_options_by_names!(names, to)
         return {} if names.empty?
+
         names.each { |name| to[name] = @options.delete(name) }
       end
 
@@ -91,18 +92,20 @@ module VagrantBindfs
 
       def cast_value_as_option(value)
         return nil if value.respond_to?(:nil?) && value.nil?
+
         (value.respond_to?(:to_s) ? value.to_s : value)
       end
 
       def cast_value_as_flag(value)
         return true if [true, 'true', 'True', 'yes', 'Yes', 'y', 'Y', 'on', 'On', 1].include?(value)
         return false if [false, 'false', 'False', 'no', 'No', 'n', 'N', 'off', 'Off', 0].include?(value)
+
         !!value
       end
 
       class << self
         def bindfs_options
-          @bindfs_options ||= JSON.parse(File.read(File.expand_path('../option_definitions.json', __FILE__)))
+          @bindfs_options ||= JSON.parse(File.read(File.expand_path('option_definitions.json', __dir__)))
         end
 
         def supported_options(version)
@@ -115,6 +118,7 @@ module VagrantBindfs
         def compatible_name_for_version(option_name, version)
           return 'user'   if option_name == 'force-user' && version_lower_than(version, '1.12')
           return 'group'  if option_name == 'force-group' && version_lower_than(version, '1.12')
+
           option_name
         end
 

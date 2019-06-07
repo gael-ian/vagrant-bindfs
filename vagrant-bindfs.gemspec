@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('lib', __dir__)
 require 'vagrant-bindfs/version'
 
 Gem::Specification.new do |s|
@@ -20,14 +20,14 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/gael-ian/vagrant-bindfs'
   if s.respond_to?(:metadata=)
     s.metadata = {
-      'allowed_push_host' =>  'https://rubygems.org',
-      'issue_tracker'     =>  'https://github.com/gael-ian/vagrant-bindfs/issues'
+      'allowed_push_host' => 'https://rubygems.org',
+      'issue_tracker' => 'https://github.com/gael-ian/vagrant-bindfs/issues'
     }
   end
 
   s.files       = Dir['{lib,locales}/**/*'] + ['README.md', 'Rakefile', 'MIT-LICENSE']
   s.test_files  = Dir['{specs}/**/*'] + ['Vagrantfile']
 
-  s.required_ruby_version     = '>= 2.0.0'
+  s.required_ruby_version     = '~> 2.2', '< 2.7'
   s.required_rubygems_version = '>= 1.3.6'
 end

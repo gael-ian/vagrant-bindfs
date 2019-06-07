@@ -19,7 +19,7 @@ module VagrantBindfs
 
       class << self
         def included(base)
-          capabilities = JSON.parse(File.read(File.expand_path('../capabilities.json', __FILE__)))
+          capabilities = JSON.parse(File.read(File.expand_path('capabilities.json', __dir__)))
           capabilities.each do |cap_name, oses|
             oses.each do |os_name, module_name|
               mod = module_by_name(module_name)

@@ -43,12 +43,14 @@ module VagrantBindfs
         def validate_user
           return if machine.config.bindfs.skip_validations.include?(:user)
           return if machine.guest.capability(:bindfs_exists_user, options['force-user'])
+
           @errors << I18n.t('vagrant-bindfs.validations.user_does_not_exist', user: options['force-user'])
         end
 
         def validate_group
           return if machine.config.bindfs.skip_validations.include?(:group)
           return if machine.guest.capability(:bindfs_exists_group, options['force-group'])
+
           @errors << I18n.t('vagrant-bindfs.validations.group_does_not_exist', group: options['force-group'])
         end
       end

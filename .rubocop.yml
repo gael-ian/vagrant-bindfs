@@ -1,5 +1,9 @@
-Gemspec/RequiredRubyVersion:
-  Enabled: No
+---
+require:
+  - rubocop-performance
+
+AllCops:
+  DisplayCopNames: true
 
 Metrics/LineLength:
   Max: 150
@@ -8,7 +12,8 @@ Metrics/MethodLength:
   Max: 25
 
 Metrics/BlockLength:
-  ExcludedMethods: describe
+  Exclude:
+    - 'spec/**/*_spec.rb'
 
 Metrics/AbcSize:
   Enabled: No

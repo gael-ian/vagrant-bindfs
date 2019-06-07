@@ -21,6 +21,7 @@ group :development do
   gem 'rake'
   gem 'rspec', '~> 3.5.0'
   gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
 end
 
 group :plugins do

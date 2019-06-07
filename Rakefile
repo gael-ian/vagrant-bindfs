@@ -10,7 +10,7 @@ $stdout.sync = true
 $stderr.sync = true
 
 # Change to the directory of this file
-Dir.chdir(File.expand_path('../', __FILE__))
+Dir.chdir(__dir__)
 
 # Installs the tasks for gem creation
 Bundler::GemHelper.install_tasks

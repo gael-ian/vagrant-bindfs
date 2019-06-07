@@ -53,8 +53,8 @@ describe VagrantBindfs::Vagrant::Config do
   describe '#default_options=' do
     it 'should convert options to an instance of VagrantBindfs::Command::OptionSet' do
       subject.default_options = {
-        group:  'dummy',
-        user:   'dummy'
+        group: 'dummy',
+        user: 'dummy'
       }
 
       expect(subject.default_options).to be_a(VagrantBindfs::Bindfs::OptionSet)

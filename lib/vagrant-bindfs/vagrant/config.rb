@@ -22,9 +22,9 @@ module VagrantBindfs
 
         @binded_folders             = {}
         @default_options            = Bindfs::OptionSet.new(nil,
-                                                            'force-user'  => 'vagrant',
+                                                            'force-user' => 'vagrant',
                                                             'force-group' => 'vagrant',
-                                                            'perms'       => 'u=rwX:g=rD:o=rD')
+                                                            'perms' => 'u=rwX:g=rD:o=rD')
 
         @skip_validations           = []
         @force_empty_mountpoints    = false

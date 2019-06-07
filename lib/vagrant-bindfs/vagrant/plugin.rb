@@ -28,7 +28,7 @@ module VagrantBindfs
           @hooks ||= begin
             {
               synced_folders: synced_folders_hook,
-              provision:      ::Vagrant::Action::Builtin::Provision
+              provision: ::Vagrant::Action::Builtin::Provision
             }
           end
         end

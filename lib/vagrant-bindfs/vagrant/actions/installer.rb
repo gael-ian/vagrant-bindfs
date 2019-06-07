@@ -24,6 +24,7 @@ module VagrantBindfs
 
         def apply!(_env)
           return if binded_folders.empty?
+
           ensure_guest_is_ready_to_bind!
         end
 

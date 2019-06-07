@@ -20,6 +20,7 @@ module VagrantBindfs
         def call(env)
           app.call(env)
           return if binded_folders(hook).empty?
+
           bind_folders!
         end
 
@@ -51,7 +52,7 @@ module VagrantBindfs
 
           error I18n.t(
             'vagrant-bindfs.validations.errors_found',
-            dest:   folder.destination,
+            dest: folder.destination,
             source: folder.source,
             errors: validator.errors.join(' ')
           )
@@ -61,6 +62,7 @@ module VagrantBindfs
         def empty_mountpoint?(folder)
           return false unless config.force_empty_mountpoints
           return false if folder.options.key?('o') && !folder.options['o'].match(/nonempty/).nil?
+
           true
         end
 

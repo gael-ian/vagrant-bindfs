@@ -11,7 +11,7 @@ module VagrantBindfs
   autoload :Bindfs,       'vagrant-bindfs/bindfs'
 end
 
-I18n.load_path << File.expand_path('../../locales/en.yml', __FILE__)
+I18n.load_path << File.expand_path('../locales/en.yml', __dir__)
 I18n.reload!
 
 require 'vagrant-bindfs/vagrant/plugin'
