@@ -63,6 +63,7 @@
   "ctime-from-mtime":         { "long": ["ctime-from-mtime"],            "short": [],    "type": "flag",   "since": "0.0.1"   },
   "enabe-ioctl":              { "long": ["enable-ioctl"],                "short": [],    "type": "flag",   "since": "1.13.2"  },
   "block-devices-as-files":   { "long": ["block-devices-as-files"],      "short": [],    "type": "flag",   "since": "1.13.7"  },
+  "forward-odirect":          { "long": ["forward-odirect"],             "short": [],    "type": "option", "since": "1.14.0"  },
 
   // FUSE options
   "o":                        { "long": [],                              "short": ["o"], "type": "option", "since": "0.0.1"   },
