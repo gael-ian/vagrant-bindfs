@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-def tests_setup(machine, options = {})
+def tests_setup(machine, options = {}) # rubocop:disable Metrics/MethodLength
   machine.bindfs.bind_folder '/etc',
                              '/etc-binded-after-synced-folder',
                              options.merge(owner: 'root')

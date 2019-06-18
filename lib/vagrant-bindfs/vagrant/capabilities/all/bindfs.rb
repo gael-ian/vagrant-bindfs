@@ -35,27 +35,29 @@ module VagrantBindfs
               tar_dirname = VagrantBindfs::Bindfs.source_tar_basename(version)
 
               begin
-                machine.communicate.execute <<-SHELL
-                  for u in "#{tar_urls.join('" "')}"; do
-                    if wget -q --spider $u; then
-                      url=$u;
-                      break;
-                    fi;
-                  done;
-                  [ -n "$url" ]               && \
-                  wget $url -O bindfs.tar.gz  && \
-                  tar -zxvf bindfs.tar.gz     && \
-                  [ -d ./#{tar_dirname} ]     && \
-                  cd #{tar_dirname}           && \
-                  ./configure                 && \
-                  make                        && \
-                  sudo make install
-                SHELL
+                machine.communicate.execute INSTALL_SCRIPT.format(urls: tar_urls, dirname: tar_dirname)
               ensure
                 machine.communicate.execute('[ -f ./bindfs.tar.gz ] && rm ./bindfs.tar.gz')
                 machine.communicate.execute("[ -d ./#{tar_dirname} ] && rm -rf ./#{tar_dirname}")
               end
             end
+
+            INSTALL_SCRIPT = <<-SHELL
+              for u in "%<urls>s"; do
+                if wget -q --spider $u; then
+                  url=$u;
+                  break;
+                fi;
+              done;
+              [ -n "$url" ]               && \
+              wget $url -O bindfs.tar.gz  && \
+              tar -zxvf bindfs.tar.gz     && \
+              [ -d ./%<dirname>s ]        && \
+              cd %<dirname>s              && \
+              ./configure                 && \
+              make                        && \
+              sudo make install
+            SHELL
           end
         end
       end
