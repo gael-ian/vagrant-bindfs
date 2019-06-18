@@ -27,7 +27,7 @@ module VagrantBindfs
       def normalize_version_in_tar_name(version)
         v = version.to_s.strip
         parts = (v.split('.').map(&:to_i) + [0, 0, 0]).take(3).compact
-        parts.pop if parts.last == 0 and Gem::Version.new(v) < Gem::Version.new(FULL_VERSION_NUMBER_SINCE)
+        parts.pop if parts.last.zero? && Gem::Version.new(v) < Gem::Version.new(FULL_VERSION_NUMBER_SINCE)
         parts.join('.')
       end
     end
