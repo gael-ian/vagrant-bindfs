@@ -5,8 +5,8 @@ module VagrantBindfs
     module Capabilities
       module Gentoo
         autoload :PackageManager, 'vagrant-bindfs/vagrant/capabilities/gentoo/package_manager'
-        autoload :Fuse,           'vagrant-bindfs/vagrant/capabilities/gentoo/fuse'
-        autoload :Bindfs,         'vagrant-bindfs/vagrant/capabilities/gentoo/bindfs'
+        autoload :Fuse, 'vagrant-bindfs/vagrant/capabilities/gentoo/fuse'
+        autoload :Bindfs, 'vagrant-bindfs/vagrant/capabilities/gentoo/bindfs'
       end
     end
   end

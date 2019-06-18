@@ -12,11 +12,11 @@ module VagrantBindfs
       attr_reader :hook
 
       def initialize(hook, source, destination, options = {})
-        @hook         = hook
+        @hook = hook
 
-        @source       = source
-        @destination  = destination
-        @options      = Bindfs::OptionSet.new(nil, options)
+        @source = source
+        @destination = destination
+        @options = Bindfs::OptionSet.new(nil, options)
       end
 
       def id

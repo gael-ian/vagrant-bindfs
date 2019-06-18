@@ -12,8 +12,8 @@ module VagrantBindfs
         include Concerns::Log
 
         def initialize(app, env, hook)
-          @app  = app
-          @env  = env
+          @app = app
+          @env = env
           @hook = hook
         end
 

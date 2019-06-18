@@ -16,10 +16,10 @@ module VagrantBindfs
       def_delegators :@options, :each, :[], :keys, :key?
 
       def initialize(version = nil, options = {})
-        @version              = version
-        @options              = normalize_option_names(options)
-        @invalid_options      = {}
-        @unsupported_options  = {}
+        @version = version
+        @options = normalize_option_names(options)
+        @invalid_options = {}
+        @unsupported_options = {}
 
         extract_invalid_options!
         extract_unsupported_options!
@@ -82,10 +82,11 @@ module VagrantBindfs
 
       def cast_option_values!
         @options = options.each_with_object({}) do |(key, value), normalized|
-          normalized[key] = case self.class.bindfs_options[key]['type']
-                            when 'option' then cast_value_as_option(value)
-                            when 'flag'   then cast_value_as_flag(value)
-                            end
+          normalized[key] =
+            case self.class.bindfs_options[key]['type']
+            when 'option' then cast_value_as_option(value)
+            when 'flag' then cast_value_as_flag(value)
+            end
           normalized
         end
       end
@@ -116,8 +117,8 @@ module VagrantBindfs
         end
 
         def compatible_name_for_version(option_name, version)
-          return 'user'   if option_name == 'force-user' && version_lower_than(version, '1.12')
-          return 'group'  if option_name == 'force-group' && version_lower_than(version, '1.12')
+          return 'user' if option_name == 'force-user' && version_lower_than(version, '1.12')
+          return 'group' if option_name == 'force-group' && version_lower_than(version, '1.12')
 
           option_name
         end

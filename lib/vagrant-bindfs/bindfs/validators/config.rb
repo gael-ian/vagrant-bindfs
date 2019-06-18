@@ -13,8 +13,8 @@ module VagrantBindfs
         def_delegators :@folder, :source, :destination, :options
 
         def initialize(folder)
-          @folder   = folder
-          @errors   = []
+          @folder = folder
+          @errors = []
         end
 
         def valid?
@@ -28,13 +28,13 @@ module VagrantBindfs
         protected
 
         def validate_source!
-          @errors << I18n.t('vagrant-bindfs.validations.source_path_required')                if source.empty?
+          @errors << I18n.t('vagrant-bindfs.validations.source_path_required') if source.empty?
           @errors << I18n.t('vagrant-bindfs.validations.path_must_be_absolute', path: source) if relative_path?(source)
         end
 
         def validate_destination!
-          @errors << I18n.t('vagrant-bindfs.validations.destination_path_required')                     if destination.empty?
-          @errors << I18n.t('vagrant-bindfs.validations.path_must_be_absolute', path: destination)      if relative_path?(destination)
+          @errors << I18n.t('vagrant-bindfs.validations.destination_path_required') if destination.empty?
+          @errors << I18n.t('vagrant-bindfs.validations.path_must_be_absolute', path: destination) if relative_path?(destination)
         end
 
         def validate_options!

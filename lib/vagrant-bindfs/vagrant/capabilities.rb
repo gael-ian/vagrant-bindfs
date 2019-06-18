@@ -3,10 +3,10 @@
 module VagrantBindfs
   module Vagrant
     module Capabilities
-      autoload :All,    'vagrant-bindfs/vagrant/capabilities/all'
+      autoload :All, 'vagrant-bindfs/vagrant/capabilities/all'
 
       autoload :Darwin, 'vagrant-bindfs/vagrant/capabilities/darwin'
-      autoload :Linux,  'vagrant-bindfs/vagrant/capabilities/linux'
+      autoload :Linux, 'vagrant-bindfs/vagrant/capabilities/linux'
 
       autoload :Debian, 'vagrant-bindfs/vagrant/capabilities/debian'
       autoload :Ubuntu, 'vagrant-bindfs/vagrant/capabilities/ubuntu'
@@ -15,7 +15,7 @@ module VagrantBindfs
 
       autoload :RedHat, 'vagrant-bindfs/vagrant/capabilities/redhat'
 
-      autoload :Suse,   'vagrant-bindfs/vagrant/capabilities/suse'
+      autoload :Suse, 'vagrant-bindfs/vagrant/capabilities/suse'
 
       class << self
         def included(base)

@@ -5,8 +5,8 @@ module VagrantBindfs
     module Capabilities
       module RedHat
         autoload :PackageManager, 'vagrant-bindfs/vagrant/capabilities/redhat/package_manager'
-        autoload :Fuse,           'vagrant-bindfs/vagrant/capabilities/redhat/fuse'
-        autoload :Bindfs,         'vagrant-bindfs/vagrant/capabilities/redhat/bindfs'
+        autoload :Fuse, 'vagrant-bindfs/vagrant/capabilities/redhat/fuse'
+        autoload :Bindfs, 'vagrant-bindfs/vagrant/capabilities/redhat/bindfs'
       end
     end
   end
