@@ -31,12 +31,12 @@ module VagrantBindfs
             end
 
             def bindfs_bindfs_install_from_source(machine, version)
-              version     = version.to_s.strip.gsub(/\.0$/, '')
-              source_urls = VagrantBindfs::Bindfs::SOURCE_URLS.map { |url| url.gsub('%<bindfs_version>', version) }
+              tar_urls = VagrantBindfs::Bindfs.source_tar_urls(version)
+              tar_dirname = VagrantBindfs::Bindfs.source_tar_basename(version)
 
               begin
                 machine.communicate.execute <<-SHELL
-                  for u in "#{source_urls.join('" "')}"; do
+                  for u in "#{tar_urls.join('" "')}"; do
                     if wget -q --spider $u; then
                       url=$u;
                       break;
@@ -45,15 +45,15 @@ module VagrantBindfs
                   [ -n "$url" ]               && \
                   wget $url -O bindfs.tar.gz  && \
                   tar -zxvf bindfs.tar.gz     && \
-                  [ -d ./bindfs-#{version} ]  && \
-                  cd bindfs-#{version}        && \
+                  [ -d ./#{tar_dirname} ]     && \
+                  cd #{tar_dirname}           && \
                   ./configure                 && \
                   make                        && \
                   sudo make install
                 SHELL
               ensure
                 machine.communicate.execute('[ -f ./bindfs.tar.gz ] && rm ./bindfs.tar.gz')
-                machine.communicate.execute("[ -d ./bindfs-#{version} ] && rm -rf ./bindfs-#{version}")
+                machine.communicate.execute("[ -d ./#{tar_dirname} ] && rm -rf ./#{tar_dirname}")
               end
             end
           end
