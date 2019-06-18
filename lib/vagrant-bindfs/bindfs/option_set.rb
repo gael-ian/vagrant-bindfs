@@ -100,7 +100,7 @@ module VagrantBindfs
         return true if [true, 'true', 'True', 'yes', 'Yes', 'y', 'Y', 'on', 'On', 1].include?(value)
         return false if [false, 'false', 'False', 'no', 'No', 'n', 'N', 'off', 'Off', 0].include?(value)
 
-        !!value
+        !!value # rubocop:disable Style/DoubleNegation
       end
 
       class << self

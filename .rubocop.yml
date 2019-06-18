@@ -21,8 +21,5 @@ Metrics/AbcSize:
 Style/Documentation:
   Enabled: No
 
-Style/DoubleNegation:
-  Enabled: No
-
 Naming/FileName:
   Enabled: No

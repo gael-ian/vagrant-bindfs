@@ -27,7 +27,7 @@ module VagrantBindfs
       end
 
       def format_flag(name, value)
-        return unless !!value
+        return unless value
 
         compatible_name = argument_compatible_name(name)
         (argument_shorthand_only?(name) ? "-#{compatible_name}" : "--#{compatible_name}")
