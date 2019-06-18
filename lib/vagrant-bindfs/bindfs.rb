@@ -4,8 +4,8 @@ module VagrantBindfs
   module Bindfs
     SOURCE_VERSION  = '1.14.0'
     SOURCE_URLS     = [
-      'http://bindfs.org/downloads/bindfs-%<bindfs_version>.tar.gz',
-      'http://bindfs.dy.fi/downloads/bindfs-%<bindfs_version>.tar.gz'
+      'https://bindfs.org/downloads/%<basename>s.tar.gz',
+      'https://bindfs.dy.fi/downloads/%<basename>s.tar.gz'
     ].freeze
 
     autoload :Command,    'vagrant-bindfs/bindfs/command'
