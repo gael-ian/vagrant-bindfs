@@ -38,11 +38,9 @@ module VagrantBindfs
         end
 
         def validate_options!
-          invalid_options = folder.options.invalid_options.keys
-          @errors << I18n.t('vagrant-bindfs.deprecations.disabled')           if invalid_options.include?('disabled')
-          @errors << I18n.t('vagrant-bindfs.deprecations.skip_verify_user')   if invalid_options.include?('skip-verify-user')
-          @errors << I18n.t('vagrant-bindfs.deprecations.skip_verify_group')  if invalid_options.include?('skip-verify-group')
-          @errors << I18n.t('vagrant-bindfs.deprecations.hook')               if invalid_options.include?('hook')
+          folder.options.invalid_options.keys.each do |option_name|
+            @errors << I18n.t(option_name.tr('-', '_'), scope: 'vagrant-bindfs.deprecations')
+          end
         end
 
         def relative_path?(path)

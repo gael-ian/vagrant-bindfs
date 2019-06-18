@@ -60,7 +60,7 @@ module VagrantBindfs
         @binded_folders[folder.id] = folder
       end
 
-      def merge(other)
+      def merge(other) # rubocop:disable Metrics/AbcSize
         super.tap do |result|
           result.debug                      = (debug || other.debug)
 

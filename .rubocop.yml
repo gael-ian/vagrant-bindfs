@@ -15,9 +15,6 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*_spec.rb'
 
-Metrics/AbcSize:
-  Enabled: No
-
 Style/Documentation:
   Enabled: No
 

@@ -77,12 +77,17 @@ module VagrantBindfs
 
         def install_bindfs!
           return install_bindfs_from_source! if install_from_source?
-          return guest.capability(:bindfs_bindfs_install) if install_latest_from_repositories?
-          return guest.capability(:bindfs_bindfs_install_version, config.bindfs_version) if install_version_from_repositories?
+          return install_bindfs_from_repositories! if install_from_repositories?
 
           warn(I18n.t('vagrant-bindfs.actions.bindfs.not_found_in_repository',
                       version: config.bindfs_version))
           install_bindfs_from_source!
+        end
+
+        def install_bindfs_from_repositories!
+          return guest.capability(:bindfs_bindfs_install) if install_latest_from_repositories?
+
+          guest.capability(:bindfs_bindfs_install_version, config.bindfs_version)
         end
 
         def install_bindfs_from_source!
@@ -93,6 +98,10 @@ module VagrantBindfs
 
         def install_from_source?
           config.install_bindfs_from_source
+        end
+
+        def install_from_repositories?
+          install_latest_from_repositories? || install_version_from_repositories?
         end
 
         def install_latest_from_repositories?
