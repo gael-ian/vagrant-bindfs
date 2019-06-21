@@ -35,7 +35,7 @@ module VagrantBindfs
               tar_dirname = VagrantBindfs::Bindfs.source_tar_basename(version)
 
               begin
-                machine.communicate.execute INSTALL_SCRIPT.format(urls: tar_urls, dirname: tar_dirname)
+                machine.communicate.execute format(INSTALL_SCRIPT, urls: tar_urls.join('" "'), dirname: tar_dirname)
               ensure
                 machine.communicate.execute('([ -f ./bindfs.tar.gz ] && rm ./bindfs.tar.gz) || true')
                 machine.communicate.execute("([ -d ./#{tar_dirname} ] && rm -rf ./#{tar_dirname}) || true")
