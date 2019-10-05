@@ -137,7 +137,7 @@ end
 
 ### `skip_validations`
 
-By default, `vagrant-bindfs` will check if the user and the group set for a bound folder exist on the virtual machine.
+By default, `vagrant-bindfs` will check if the user and the group set for a bound folder exists on the virtual machine.
 If either one, the other or both of them are missing, it will warn you and not execute any bindfs command for this folder.
 
 To skip these validations, you can add `:user`and/or `:group` to the `config.bindfs.skip_validations` array.
