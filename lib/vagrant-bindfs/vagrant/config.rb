@@ -9,7 +9,7 @@ module VagrantBindfs
       attr_reader :install_bindfs_from_source
 
       attr_reader :default_options
-      attr_accessor :binded_folders
+      attr_accessor :bound_folders
 
       attr_accessor :skip_validations
       attr_reader :force_empty_mountpoints
@@ -20,7 +20,7 @@ module VagrantBindfs
         @bindfs_version = UNSET_VALUE
         @install_bindfs_from_source = false
 
-        @binded_folders = {}
+        @bound_folders = {}
         @default_options = Bindfs::OptionSet.new(nil,
                                                  'force-user' => 'vagrant',
                                                  'force-group' => 'vagrant',
@@ -50,14 +50,14 @@ module VagrantBindfs
         @force_empty_mountpoints = (value == true)
       end
 
-      def binded_folder=(*_any_variant)
-        raise VagrantBindfs::Vagrant::ConfigError, :binded_folders
+      def bound_folder=(*_any_variant)
+        raise VagrantBindfs::Vagrant::ConfigError, :bound_folders
       end
 
       def bind_folder(source, destination, options = {})
         hook = options.delete(:after) || :synced_folders
         folder = Bindfs::Folder.new(hook, source, destination, options)
-        @binded_folders[folder.id] = folder
+        @bound_folders[folder.id] = folder
       end
 
       def merge(other) # rubocop:disable Metrics/AbcSize
@@ -69,7 +69,7 @@ module VagrantBindfs
           result.install_bindfs_from_source = (install_bindfs_from_source || other.install_bindfs_from_source)
 
           result.default_options = default_options.merge(other.default_options)
-          result.binded_folders = binded_folders.merge(other.binded_folders)
+          result.bound_folders = bound_folders.merge(other.bound_folders)
 
           result.skip_validations = (skip_validations + other.skip_validations).uniq
           result.force_empty_mountpoints = (force_empty_mountpoints || other.force_empty_mountpoints)
@@ -83,7 +83,7 @@ module VagrantBindfs
       def validate(_machine)
         errors = _detected_errors
 
-        binded_folders.each_value do |folder|
+        bound_folders.each_value do |folder|
           validator = Bindfs::Validators::Config.new(folder)
           errors << validator.errors unless validator.valid?
         end

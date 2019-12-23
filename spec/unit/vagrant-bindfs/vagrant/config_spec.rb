@@ -62,8 +62,8 @@ describe VagrantBindfs::Vagrant::Config do
     end
   end
 
-  it 'has an option for binded folders set' do
-    expect(subject).to respond_to(:binded_folders)
+  it 'has an option for bound folders set' do
+    expect(subject).to respond_to(:bound_folders)
   end
 
   describe '#bind_folder' do
@@ -76,8 +76,8 @@ describe VagrantBindfs::Vagrant::Config do
       config.debug = false
       config.default_options = { create_as_user: true }
       config.skip_validations << :user
-      config.bind_folder '/bin', '/bin-binded'
-      config.bind_folder '/etc', '/etc-binded', user: 'dummy', create_as_user: false
+      config.bind_folder '/bin', '/bin-bound'
+      config.bind_folder '/etc', '/etc-bound', user: 'dummy', create_as_user: false
 
       config
     end
@@ -88,8 +88,8 @@ describe VagrantBindfs::Vagrant::Config do
       config.debug = true
       config.default_options = { create_as_mounter: true }
       config.skip_validations << :group
-      config.bind_folder '/etc', '/etc-binded', group: 'dummy', create_as_user: true
-      config.bind_folder '/usr/bin', '/usr-bin-binded'
+      config.bind_folder '/etc', '/etc-bound', group: 'dummy', create_as_user: true
+      config.bind_folder '/usr/bin', '/usr-bin-bound'
 
       config
     end
@@ -106,8 +106,8 @@ describe VagrantBindfs::Vagrant::Config do
       expect(subject.default_options['create-as-mounter']).to be true
     end
 
-    it 'should merge binded folders set' do
-      expect(subject.binded_folders.collect { |(_, f)| f.destination }).to include('/etc-binded', '/usr-bin-binded', '/bin-binded')
+    it 'should merge bound folders set' do
+      expect(subject.bound_folders.collect { |(_, f)| f.destination }).to include('/etc-bound', '/usr-bin-bound', '/bin-bound')
     end
 
     it 'should merge skip_validations set' do
@@ -134,8 +134,8 @@ describe VagrantBindfs::Vagrant::Config do
       expect(subject.default_options.keys).to contain_exactly('force-user', 'force-group', 'perms')
     end
 
-    it 'defaults to empty binded folders set' do
-      expect(subject.binded_folders).to eq({})
+    it 'defaults to empty bound folders set' do
+      expect(subject.bound_folders).to eq({})
     end
 
     it 'defaults to empty skip_validations set' do

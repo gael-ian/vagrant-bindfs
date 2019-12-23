@@ -13,11 +13,11 @@ module VagrantBindfs
             machine.config.bindfs
           end
 
-          def binded_folders(hook = nil)
-            @binded_folders ||= begin
-              config.binded_folders.each_with_object({}) do |(id, folder), binded|
-                binded[id] = folder if hook.nil? || folder.hook == hook
-                binded
+          def bound_folders(hook = nil)
+            @bound_folders ||= begin
+              config.bound_folders.each_with_object({}) do |(id, folder), bound|
+                bound[id] = folder if hook.nil? || folder.hook == hook
+                bound
               end
             end
           end

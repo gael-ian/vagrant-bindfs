@@ -2,7 +2,7 @@
 
 describe VagrantBindfs::Bindfs::Folder do
   subject do
-    described_class.new(:synced_folders, '/etc', '/etc-binded',
+    described_class.new(:synced_folders, '/etc', '/etc-bound',
                         force_user: 'vagrant', force_group: 'vagrant', uid_offset: 50)
   end
 

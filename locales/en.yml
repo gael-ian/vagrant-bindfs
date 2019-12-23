@@ -42,7 +42,7 @@ en:
     errors:
       package_manager_missing: "No package manager found on the virtual machine. You may use an unsupported flavour of Linux."
       config:
-        binded_folders: "config.bindfs.binded_folders= must no be called. Use config.bindfs.bind_folders instead."
+        bound_folders: "config.bindfs.bound_folders= must no be called. Use config.bindfs.bind_folders instead."
         conflicting_options: "Another option has already been set for the canonical name '%{name}'"
 
       bindfs:

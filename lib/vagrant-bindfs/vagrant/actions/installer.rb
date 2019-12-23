@@ -23,7 +23,7 @@ module VagrantBindfs
         protected
 
         def apply!(_env)
-          return if binded_folders.empty?
+          return if bound_folders.empty?
 
           ensure_guest_is_ready_to_bind!
         end

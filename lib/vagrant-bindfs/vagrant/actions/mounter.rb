@@ -19,7 +19,7 @@ module VagrantBindfs
 
         def call(env)
           app.call(env)
-          return if binded_folders(hook).empty?
+          return if bound_folders(hook).empty?
 
           bind_folders!
         end
@@ -28,7 +28,7 @@ module VagrantBindfs
 
         def bind_folders!
           info I18n.t('vagrant-bindfs.actions.mounter.start', hook: hook)
-          binded_folders(hook).each_value do |folder|
+          bound_folders(hook).each_value do |folder|
             bind_folder!(folder)
           end
         end

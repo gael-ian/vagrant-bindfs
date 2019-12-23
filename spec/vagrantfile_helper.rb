@@ -2,11 +2,11 @@
 
 def tests_setup(machine, options = {}) # rubocop:disable Metrics/MethodLength
   machine.bindfs.bind_folder '/etc',
-                             '/etc-binded-after-synced-folder',
+                             '/etc-bound-after-synced-folder',
                              options.merge(owner: 'root')
 
   machine.bindfs.bind_folder '/etc',
-                             '/etc-binded-after-provisioning',
+                             '/etc-bound-after-provisioning',
                              options.merge(owner: 'root', after: :provision)
 
   machine.vm.provision :shell do |p|
