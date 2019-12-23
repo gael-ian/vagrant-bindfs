@@ -1,12 +1,12 @@
 # vagrant-bindfs
 
-A Vagrant plugin to automate [bindfs](http://bindfs.org/) mount in the VM. This allow you to change owner, group and permissions on files and, for example, work around NFS share permissions issues.
+A Vagrant plugin to automate [bindfs](http://bindfs.org/) mounts in the VM. This allow you to change owner, group and permissions on files and, for example, work around NFS share permissions issues.
 
 
 ## Some Background: Why `vagrant-bindfs`
 
 The default vagrant provider is [virtualbox](https://www.virtualbox.org/).
-It's free, and it works well, but it has some [performance problems](http://snippets.aktagon.com/snippets/609-Slow-IO-performance-with-Vagrant-and-VirtualBox-).
+It's free and works well but has some [performance problems](http://snippets.aktagon.com/snippets/609-Slow-IO-performance-with-Vagrant-and-VirtualBox-).
 
 People often recommend switching to [vagrant's VMWare-fusion provider](http://www.vagrantup.com/vmware).
 This reportedly has better performance, but shares with symlinks [won't work](http://communities.vmware.com/thread/428199?start=0&tstart=0).
@@ -97,22 +97,22 @@ Check [lib/vagrant-bindfs/bindfs/option_definitions.json](https://github.com/gae
 
 Both long arguments and shorthand are supported.
 If you set both, shorthand will prevail.
-Long arguments can be written indifferently with underscore ('force_user') or dash ('force-user') and as strings (:'force-user') or symbols (:force_user).
+Long arguments can be written indifferently with underscore ('force_user') or dash ('force-user') and as strings ('force-user') or symbols (:force_user or :'force-user').
 
 Option arguments values can be anything that can be casted to a string _via_ `to_s`.
 The plugin will try to detect flag arguments values as true or false from common notations.  
 
-vagrant-bindfs detects installed version of bindfs, translate option names when needed and ignore an option if it is not supported.
+vagrant-bindfs detects installed version of bindfs, translates option names when needed and ignores an option if it is not supported.
 As we may have missed something, it will warn you when a binding command fail.
 
-On Debian (this includes Ubuntu), SUSE, Fedora, CentOS (5-6), Gentoo and OS X guest systems, vagrant-bindfs will try to install bindfs automatically if it is not installed.
+On Debian (and Ubuntu), SUSE, Fedora, CentOS, Gentoo and OS X guest systems, vagrant-bindfs will try to install bindfs automatically if it is not installed.
 On other system, you'll get warned.
 
 OS X guests may need some specific options. See [bindfs README](https://github.com/mpartel/bindfs#os-x-note) for details.
 
 ## Configuration
 
-This plugin supports the following configuration options
+This plugin supports the following configuration options:
 
 ### `debug`
 
@@ -140,7 +140,7 @@ end
 By default, `vagrant-bindfs` will check if the user and the group set for a bound folder exists on the virtual machine.
 If either one, the other or both of them are missing, it will warn you and not execute any bindfs command for this folder.
 
-To skip these validations, you can add `:user`and/or `:group` to the `config.bindfs.skip_validations` array.
+To skip these validations, you can add `:user` and/or `:group` to the `config.bindfs.skip_validations` array.
 
 
 ```ruby
@@ -212,7 +212,7 @@ We could also use some more specs…
 
 ### How to Test Changes
 
-If you've made changes to this plugin, you can easily test it locally in vagrant.
+If you've made changes to this plugin, you can easily test it locally in Vagrant.
 
 Edit `Vagrantfile` and uncomment one or more of the selected test boxes.
 Then, from the root of the repo, do:
@@ -222,3 +222,5 @@ Then, from the root of the repo, do:
 
 This will spin up one or more VM and try to bindfs-mount some shares in it.
 Feel free to modify the included `Vagrantfile` or test helpers (in `test/test_helpers.rb`) to add additional boxes and test cases.
+If you add a new test machine, please ensure that it will stay available and regularly updated for future tests.
+We recommend to use [officialy supported boxes](https://goo.gl/LbkPVF). 
