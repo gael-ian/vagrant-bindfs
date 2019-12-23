@@ -38,15 +38,15 @@ vagrant plugin install vagrant-bindfs
 
 ## Usage
 
-In your `Vagrantfile`, use `config.bindfs.bind_folder` to configure folders that will be binded on VM startup.
+In your `Vagrantfile`, use `config.bindfs.bind_folder` to configure folders that will be bound on VM startup.
 The format is:
 
 ```ruby
 config.bindfs.bind_folder "/path/to/source", "/path/to/destination", options
 ```
 
-By default, all folders are binded after folders syncing between host and guest machines.
-You can pass a special `:after` option to the bind_folder method to choose when a folder should be binded.
+By default, all folders are bound after folders syncing between host and guest machines.
+You can pass a special `:after` option to the bind_folder method to choose when a folder should be bound.
 Supported values are :
 
 * `:synced_folders` (default)
@@ -137,7 +137,7 @@ end
 
 ### `skip_validations`
 
-By default, `vagrant-bindfs` will check if the user and the group set for a binded folder exist on the virtual machine.
+By default, `vagrant-bindfs` will check if the user and the group set for a bound folder exists on the virtual machine.
 If either one, the other or both of them are missing, it will warn you and not execute any bindfs command for this folder.
 
 To skip these validations, you can add `:user`and/or `:group` to the `config.bindfs.skip_validations` array.
