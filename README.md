@@ -92,8 +92,8 @@ Remember that Vagrant use `/vagrant` on guest side to automatically share your p
 ### bindfs support
 
 The `bind_folder` config accept any option you can pass to bindfs.
-vagrant-bindfs is compatible with bindfs from version 1.9 to 1.13.4.
-Check [lib/vagrant-bindfs/command.rb](https://github.com/gael-ian/vagrant-bindfs/blob/master/lib/vagrant-bindfs/command.rb#L66) for a complete list of supported options and default values and read the [bindfs man page](http://bindfs.org/docs/bindfs.1.html) for full documentation.
+vagrant-bindfs is compatible with bindfs from version 1.9 to 1.14.2.
+Check [lib/vagrant-bindfs/bindfs/option_definitions.json](https://github.com/gael-ian/vagrant-bindfs/blob/master/lib/vagrant-bindfs/bindfs/option_definitions.json) for a complete list of supported options and default values and read the [bindfs man page](http://bindfs.org/docs/bindfs.1.html) for full documentation.
 
 Both long arguments and shorthand are supported.
 If you set both, shorthand will prevail.

@@ -2,7 +2,7 @@
 
 module VagrantBindfs
   module Bindfs
-    SOURCE_VERSION = '1.14.0'
+    SOURCE_VERSION = '1.14.2'
     SOURCE_URLS = [
       'https://bindfs.org/downloads/%<basename>s.tar.gz',
       'https://bindfs.dy.fi/downloads/%<basename>s.tar.gz'
