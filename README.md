@@ -186,7 +186,7 @@ Mount poitns will then be destroyed (with `rm -rf`) prior to mount, unless you a
 ```ruby
 Vagrant.configure("2") do |config|
   
-  config.bindfs.force_empty_mountpoint = true
+  config.bindfs.force_empty_mountpoints = true
   
   # This exemple assume two directories exist in your VM:
   # - `a/non/empty/mount/point/and/its/content`
