@@ -34,7 +34,7 @@ module VagrantBindfs
         end
 
         def synced_folders_hook
-          if ::Vagrant::Action::Builtin.const_defined? :NFS
+          if ::Vagrant::Action::Builtin.const_defined?(:NFS, false)
             ::Vagrant::Action::Builtin::NFS
           else
             ::Vagrant::Action::Builtin::SyncedFolders
