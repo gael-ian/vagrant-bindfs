@@ -3,6 +3,12 @@
 module VagrantBindfs
   module Vagrant
     class Config < ::Vagrant.plugin('2', :config)
+      DEFAULT_OPTIONS = {
+        'force-user' => 'vagrant',
+        'force-group' => 'vagrant',
+        'perms' => 'u=rwX:g=rD:o=rD'
+      }.freeze
+
       attr_reader :debug
 
       attr_accessor :bindfs_version
@@ -21,10 +27,7 @@ module VagrantBindfs
         @install_bindfs_from_source = false
 
         @bound_folders = {}
-        @default_options = Bindfs::OptionSet.new(nil,
-                                                 'force-user' => 'vagrant',
-                                                 'force-group' => 'vagrant',
-                                                 'perms' => 'u=rwX:g=rD:o=rD')
+        @default_options = UNSET_VALUE
 
         @skip_validations = []
         @force_empty_mountpoints = false
@@ -62,22 +65,20 @@ module VagrantBindfs
 
       def merge(other) # rubocop:disable Metrics/AbcSize
         super.tap do |result|
-          result.debug = (debug || other.debug)
-
-          result_bindfs_version = [bindfs_version, other.bindfs_version].reject { |v| v == UNSET_VALUE }.min
-          result.bindfs_version = result_bindfs_version unless result_bindfs_version.nil?
-          result.install_bindfs_from_source = (install_bindfs_from_source || other.install_bindfs_from_source)
-
-          result.default_options = default_options.merge(other.default_options)
+          %i[debug force_empty_mountpoints install_bindfs_from_source].each do |boolean|
+            result.send("#{boolean}=", (send(boolean) || other.send(boolean)))
+          end
           result.bound_folders = bound_folders.merge(other.bound_folders)
-
           result.skip_validations = (skip_validations + other.skip_validations).uniq
-          result.force_empty_mountpoints = (force_empty_mountpoints || other.force_empty_mountpoints)
+
+          result.bindfs_version = merge_bindfs_version(other) unless merge_bindfs_version(other) == UNSET_VALUE
+          result.default_options = merge_default_options(other) unless merge_default_options(other) == UNSET_VALUE
         end
       end
 
       def finalize!
         @bindfs_version = :latest if @bindfs_version == UNSET_VALUE
+        self.default_options = DEFAULT_OPTIONS if default_options == UNSET_VALUE
       end
 
       def validate(_machine)
@@ -89,6 +90,22 @@ module VagrantBindfs
         end
 
         { 'vagrant-bindfs' => errors.flatten }
+      end
+
+      protected
+
+      def merge_bindfs_version(other)
+        return other.bindfs_version if bindfs_version == UNSET_VALUE
+        return bindfs_version if other.bindfs_version == UNSET_VALUE
+
+        [bindfs_version, other.bindfs_version].reject { |v| v == UNSET_VALUE }.min
+      end
+
+      def merge_default_options(other)
+        return other.default_options if default_options == UNSET_VALUE
+        return default_options if other.default_options == UNSET_VALUE
+
+        default_options.merge(other.default_options)
       end
     end
   end

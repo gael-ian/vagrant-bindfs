@@ -45,8 +45,8 @@ describe VagrantBindfs::Vagrant::Config do
   end
 
   describe '#default_options' do
-    it 'should be an instance of VagrantBindfs::Command::OptionSet' do
-      expect(subject.default_options).to be_a(VagrantBindfs::Bindfs::OptionSet)
+    it 'should not carry a default set' do
+      expect(subject.default_options).not_to be_a(VagrantBindfs::Bindfs::OptionSet)
     end
   end
 
@@ -70,48 +70,80 @@ describe VagrantBindfs::Vagrant::Config do
   end
 
   describe '#merge' do
-    let(:first) do
-      config = described_class.new
+    describe 'with full config objects' do
+      let(:first) do
+        config = described_class.new
 
-      config.debug = false
-      config.default_options = { create_as_user: true }
-      config.skip_validations << :user
-      config.bind_folder '/bin', '/bin-bound'
-      config.bind_folder '/etc', '/etc-bound', user: 'dummy', create_as_user: false
+        config.debug = false
+        config.default_options = { perms: 'u=rwX', create_as_user: true }
+        config.skip_validations << :user
+        config.bind_folder '/bin', '/bin-bound'
+        config.bind_folder '/etc', '/etc-bound', user: 'dummy', create_as_user: false
 
-      config
+        config
+      end
+
+      let(:second) do
+        config = described_class.new
+
+        config.debug = true
+        config.default_options = { perms: 'g=rwX', create_as_mounter: true }
+        config.skip_validations << :group
+        config.bind_folder '/etc', '/etc-bound', group: 'dummy', create_as_user: true
+        config.bind_folder '/usr/bin', '/usr-bin-bound'
+
+        config
+      end
+
+      subject { first.merge(second) }
+
+      it 'should pick the most verbose value for debug options' do
+        expect(subject.debug).to be(true)
+      end
+
+      it 'should merge default bindfs options' do
+        expect(subject.default_options.keys).to contain_exactly('perms', 'create-as-user', 'create-as-mounter')
+        expect(subject.default_options['perms']).to be second.default_options['perms']
+        expect(subject.default_options['create-as-user']).to be true
+        expect(subject.default_options['create-as-mounter']).to be true
+      end
+
+      it 'should merge bound folders set' do
+        expect(subject.bound_folders.collect { |(_, f)| f.destination }).to include('/etc-bound', '/usr-bin-bound', '/bin-bound')
+      end
+
+      it 'should merge skip_validations set' do
+        expect(subject.skip_validations).to contain_exactly(:user, :group)
+      end
     end
 
-    let(:second) do
-      config = described_class.new
+    describe 'with partially unset config objects' do
+      let(:first) do
+        config = described_class.new
+        config.bind_folder '/bin', '/bin-bound'
+        config
+      end
 
-      config.debug = true
-      config.default_options = { create_as_mounter: true }
-      config.skip_validations << :group
-      config.bind_folder '/etc', '/etc-bound', group: 'dummy', create_as_user: true
-      config.bind_folder '/usr/bin', '/usr-bin-bound'
+      let(:second) do
+        config = described_class.new
+        config.default_options = { perms: 'g=rwX' }
+        config
+      end
 
-      config
-    end
+      it 'should merge default bindfs options' do
+        merged = first.merge(second)
+        expect(merged.default_options.keys).to contain_exactly('perms')
+        expect(merged.default_options['perms']).to be second.default_options['perms']
 
-    subject { first.merge(second) }
+        merged = second.merge(first)
+        expect(merged.default_options.keys).to contain_exactly('perms')
+        expect(merged.default_options['perms']).to be second.default_options['perms']
+      end
 
-    it 'should pick the most verbose value for debug options' do
-      expect(subject.debug).to be(true)
-    end
-
-    it 'should merge default bindfs options' do
-      expect(subject.default_options.keys).to contain_exactly('create-as-user', 'create-as-mounter')
-      expect(subject.default_options['create-as-user']).to be true
-      expect(subject.default_options['create-as-mounter']).to be true
-    end
-
-    it 'should merge bound folders set' do
-      expect(subject.bound_folders.collect { |(_, f)| f.destination }).to include('/etc-bound', '/usr-bin-bound', '/bin-bound')
-    end
-
-    it 'should merge skip_validations set' do
-      expect(subject.skip_validations).to contain_exactly(:user, :group)
+      it 'should not merge default bindfs options if unset' do
+        merged = first.merge(first)
+        expect(merged.default_options).not_to be_a(VagrantBindfs::Bindfs::OptionSet)
+      end
     end
   end
 
