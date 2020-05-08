@@ -4,6 +4,7 @@ require:
 
 AllCops:
   DisplayCopNames: true
+  NewCops: enable
 
 Layout/LineLength:
   Max: 150
@@ -16,4 +17,9 @@ Style/Documentation:
   Enabled: No
 
 Naming/FileName:
+  Enabled: No
+
+# Rubocop does not interpolate version specifiers
+# and report ~>2.4 as not compatible with 2.6.5...
+Gemspec/RequiredRubyVersion:
   Enabled: No

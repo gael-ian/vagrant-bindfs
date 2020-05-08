@@ -38,7 +38,7 @@ module VagrantBindfs
         end
 
         def validate_options!
-          folder.options.invalid_options.keys.each do |option_name|
+          folder.options.invalid_options.each_key do |option_name|
             @errors << I18n.t(option_name.tr('-', '_'), scope: 'vagrant-bindfs.deprecations')
           end
         end
