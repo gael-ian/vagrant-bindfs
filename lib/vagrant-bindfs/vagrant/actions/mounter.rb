@@ -4,9 +4,9 @@ module VagrantBindfs
   module Vagrant
     module Actions
       class Mounter
-        attr_reader :app
-        attr_reader :env
-        attr_reader :hook
+        attr_reader :app,
+                    :env,
+                    :hook
 
         include Concerns::Machine
         include Concerns::Log
@@ -61,7 +61,7 @@ module VagrantBindfs
 
         def empty_mountpoint?(folder)
           return false unless config.force_empty_mountpoints
-          return false if folder.options.key?('o') && !folder.options['o'].match(/nonempty/).nil?
+          return false if folder.options.key?('o') && folder.options['o'].include?('nonempty')
 
           true
         end

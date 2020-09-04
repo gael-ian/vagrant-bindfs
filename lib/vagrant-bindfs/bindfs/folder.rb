@@ -5,11 +5,10 @@ require 'digest/sha1'
 module VagrantBindfs
   module Bindfs
     class Folder
-      attr_reader :source
-      attr_reader :destination
-      attr_reader :options
-
-      attr_reader :hook
+      attr_reader :source,
+                  :destination,
+                  :options,
+                  :hook
 
       def initialize(hook, source, destination, options = {})
         @hook = hook

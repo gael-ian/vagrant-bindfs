@@ -9,18 +9,16 @@ module VagrantBindfs
         'perms' => 'u=rwX:g=rD:o=rD'
       }.freeze
 
-      attr_reader :debug
+      attr_reader :debug,
+                  :install_bindfs_from_source,
+                  :default_options,
+                  :force_empty_mountpoints
 
-      attr_accessor :bindfs_version
-      attr_reader :install_bindfs_from_source
+      attr_accessor :bindfs_version,
+                    :bound_folders,
+                    :skip_validations
 
-      attr_reader :default_options
-      attr_accessor :bound_folders
-
-      attr_accessor :skip_validations
-      attr_reader :force_empty_mountpoints
-
-      def initialize
+      def initialize # rubocop:disable Lint/MissingSuper
         @debug = false
 
         @bindfs_version = UNSET_VALUE

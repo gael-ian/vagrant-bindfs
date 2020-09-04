@@ -6,8 +6,8 @@ module VagrantBindfs
   module Bindfs
     module Validators
       class Config
-        attr_reader :folder
-        attr_reader :errors
+        attr_reader :folder,
+                    :errors
 
         extend ::Forwardable
         def_delegators :@folder, :source, :destination, :options

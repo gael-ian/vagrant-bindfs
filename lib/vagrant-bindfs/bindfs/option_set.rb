@@ -5,11 +5,10 @@ require 'forwardable'
 module VagrantBindfs
   module Bindfs
     class OptionSet
-      attr_reader :version
-
-      attr_reader :options
-      attr_reader :invalid_options
-      attr_reader :unsupported_options
+      attr_reader :version,
+                  :options,
+                  :invalid_options,
+                  :unsupported_options
 
       include ::Enumerable
       extend ::Forwardable
@@ -101,7 +100,7 @@ module VagrantBindfs
         return true if [true, 'true', 'True', 'yes', 'Yes', 'y', 'Y', 'on', 'On', 1].include?(value)
         return false if [false, 'false', 'False', 'no', 'No', 'n', 'N', 'off', 'Off', 0].include?(value)
 
-        !!value # rubocop:disable Style/DoubleNegation
+        !!value
       end
 
       class << self

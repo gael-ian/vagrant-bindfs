@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name = 'vagrant-bindfs'
   s.version = VagrantBindfs::VERSION
   s.summary = 'A Vagrant plugin to automate bindfs mount in the VM'
-  s.description = <<-DESC.gsub(/[\s]+/, ' ')
+  s.description = <<-DESC.gsub(/\s+/, ' ')
     A Vagrant plugin to automate bindfs mount in the VM.
     This allow you to change owner, group and permissions on files and, for example,
     work around NFS share permissions issues.

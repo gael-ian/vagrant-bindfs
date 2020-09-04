@@ -4,8 +4,8 @@ module VagrantBindfs
   module Vagrant
     module Actions
       class Installer
-        attr_reader :app
-        attr_reader :env
+        attr_reader :app,
+                    :env
 
         include Concerns::Machine
         include Concerns::Log
