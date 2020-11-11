@@ -19,7 +19,7 @@ group :development do
 
   # Development dependencies
   gem 'rake'
-  gem 'rspec', '~> 3.9.0'
+  gem 'rspec', '~> 3.10.0'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
 end
