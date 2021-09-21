@@ -1,37 +1,47 @@
 # frozen_string_literal: true
 
 describe VagrantBindfs::Bindfs::Folder do
-  subject do
+  subject(:folder) do
     described_class.new(:synced_folders, '/etc', '/etc-bound',
                         force_user: 'vagrant', force_group: 'vagrant', uid_offset: 50)
   end
 
-  it 'should store binding arguments' do
-    expect(subject).to respond_to(:source)
-    expect(subject).to respond_to(:destination)
-    expect(subject).to respond_to(:options)
+  it 'stores source' do
+    expect(folder).to respond_to(:source)
   end
 
-  it 'should relate to a binding hook' do
-    expect(subject).to respond_to(:hook)
+  it 'stores destination' do
+    expect(folder).to respond_to(:destination)
   end
 
-  it 'should merge additional options' do
-    subject.merge!(force_user: 'another-user', mirror_only: 'joe,bob')
-    expect(subject.options.keys).to contain_exactly('force-user', 'force-group', 'mirror-only', 'uid-offset')
-    expect(subject.options['force-user']).to eq('another-user')
+  it 'stores arguments' do
+    expect(folder).to respond_to(:options)
   end
 
-  it 'should merge additional options without loss' do
-    subject.reverse_merge!(force_user: 'another-user', mirror_only: 'joe,bob')
-    expect(subject.options.keys).to contain_exactly('force-user', 'force-group', 'mirror-only', 'uid-offset')
-    expect(subject.options['force-user']).to eq('vagrant')
+  it 'relates to a binding hook' do
+    expect(folder).to respond_to(:hook)
   end
 
-  it 'should be losslessly convertible to another bindfs version' do
-    subject.to_version!('1.13.1')
-    expect(subject.options.keys).to contain_exactly('force-user', 'force-group')
-    subject.to_version!('1.13.3')
-    expect(subject.options.keys).to contain_exactly('force-user', 'force-group', 'uid-offset')
+  it 'merges additional options' do
+    folder.merge!(force_user: 'another-user', mirror_only: 'joe,bob')
+    expect(folder.options.keys).to contain_exactly('force-user', 'force-group', 'mirror-only', 'uid-offset')
+    expect(folder.options['force-user']).to eq('another-user')
+  end
+
+  it 'merges additional options without loss' do
+    folder.reverse_merge!(force_user: 'another-user', mirror_only: 'joe,bob')
+    expect(folder.options.keys).to contain_exactly('force-user', 'force-group', 'mirror-only', 'uid-offset')
+    expect(folder.options['force-user']).to eq('vagrant')
+  end
+
+  it 'is convertible to another bindfs version' do
+    folder.to_version!('1.13.1')
+    expect(folder.options.keys).to contain_exactly('force-user', 'force-group')
+  end
+
+  it 'is losslessly convertible to another bindfs version' do
+    folder.to_version!('1.13.1')
+    folder.to_version!('1.13.3')
+    expect(folder.options.keys).to contain_exactly('force-user', 'force-group', 'uid-offset')
   end
 end

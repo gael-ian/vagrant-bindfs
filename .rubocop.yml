@@ -15,6 +15,12 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*_spec.rb'
 
+RSpec/FilePath:
+  Enabled: No
+
+RSpec/MultipleExpectations:
+  Max: 2
+
 Style/Documentation:
   Enabled: No
 

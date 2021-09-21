@@ -14,11 +14,9 @@ module VagrantBindfs
           end
 
           def bound_folders(hook = nil)
-            @bound_folders ||= begin
-              config.bound_folders.each_with_object({}) do |(id, folder), bound|
-                bound[id] = folder if hook.nil? || folder.hook == hook
-                bound
-              end
+            @bound_folders ||= config.bound_folders.each_with_object({}) do |(id, folder), bound|
+              bound[id] = folder if hook.nil? || folder.hook == hook
+              bound
             end
           end
 

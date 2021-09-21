@@ -12,7 +12,7 @@ module VagrantBindfs
 
       include ::Enumerable
       extend ::Forwardable
-      def_delegators :@options, :each, :[], :keys, :key?
+      def_delegators :@options, :each, :[], :keys, :key?, :to_h
 
       def initialize(version = nil, options = {})
         @version = version

@@ -1,76 +1,74 @@
 # frozen_string_literal: true
 
 describe VagrantBindfs::Vagrant::Config do
-  subject { described_class.new }
+  subject(:config) { described_class.new }
 
   it 'has an option to enable/disable debugging' do
-    expect(subject).to respond_to(:debug)
-    expect(subject).to respond_to(:debug=)
+    expect(config).to respond_to(:debug)
+    expect(config).to respond_to(:debug=)
   end
 
   describe '#debug' do
-    it 'should force the debug option to a boolean' do
-      subject.debug = 'true'
-      expect(subject.debug).to be false
+    it 'forces the debug option to a boolean' do
+      config.debug = 'true'
+      expect(config.debug).to be false
     end
   end
 
   it 'has an option to enable/disable installation of bindfs from sources' do
-    expect(subject).to respond_to(:install_bindfs_from_source)
-    expect(subject).to respond_to(:install_bindfs_from_source=)
+    expect(config).to respond_to(:install_bindfs_from_source)
+    expect(config).to respond_to(:install_bindfs_from_source=)
   end
 
   describe '#install_bindfs_from_source' do
-    it 'should force the option to a boolean' do
-      subject.install_bindfs_from_source = 'true'
-      expect(subject.install_bindfs_from_source).to be false
+    it 'forces the option to a boolean' do
+      config.install_bindfs_from_source = 'true'
+      expect(config.install_bindfs_from_source).to be false
     end
   end
 
   it 'has an option for bindfs version when installed from sources' do
-    expect(subject).to respond_to(:bindfs_version)
-    expect(subject).to respond_to(:bindfs_version=)
+    expect(config).to respond_to(:bindfs_version)
+    expect(config).to respond_to(:bindfs_version=)
   end
 
   describe '#bindfs_version=' do
-    it 'should convert given version to a Gem::Version instance' do
-      subject.source_version = '1.0.0'
-      expect(subject.bindfs_version).to eq(Gem::Version.new('1.0.0'))
+    it 'converts given version to a Gem::Version instance' do
+      config.source_version = '1.0.0'
+      expect(config.bindfs_version).to eq(Gem::Version.new('1.0.0'))
     end
   end
 
   it 'has an option for default bindfs options' do
-    expect(subject).to respond_to(:default_options)
-    expect(subject).to respond_to(:default_options=)
+    expect(config).to respond_to(:default_options)
+    expect(config).to respond_to(:default_options=)
   end
 
   describe '#default_options' do
-    it 'should not carry a default set' do
-      expect(subject.default_options).not_to be_a(VagrantBindfs::Bindfs::OptionSet)
+    it 'does not carry a default set' do
+      expect(config.default_options).not_to be_a(VagrantBindfs::Bindfs::OptionSet)
     end
   end
 
   describe '#default_options=' do
-    it 'should convert options to an instance of VagrantBindfs::Command::OptionSet' do
-      subject.default_options = {
-        group: 'dummy',
-        user: 'dummy'
-      }
+    it 'converts options to an instance of VagrantBindfs::Command::OptionSet' do
+      config.default_options = { group: 'dummy', user: 'dummy' }
 
-      expect(subject.default_options).to be_a(VagrantBindfs::Bindfs::OptionSet)
-      expect(subject.default_options.keys).to contain_exactly('force-group', 'force-user')
+      expect(config.default_options).to be_a(VagrantBindfs::Bindfs::OptionSet)
+      expect(config.default_options.keys).to contain_exactly('force-group', 'force-user')
     end
   end
 
   it 'has an option for bound folders set' do
-    expect(subject).to respond_to(:bound_folders)
+    expect(config).to respond_to(:bound_folders)
   end
 
-  describe '#bind_folder' do
-  end
+  it '#bind_folder'
 
   describe '#merge' do
     describe 'with full config objects' do
+      subject(:config) { first.merge(second) }
+
       let(:first) do
         config = described_class.new
 
@@ -95,25 +93,23 @@ describe VagrantBindfs::Vagrant::Config do
         config
       end
 
-      subject { first.merge(second) }
-
-      it 'should pick the most verbose value for debug options' do
-        expect(subject.debug).to be(true)
+      it 'picks the most verbose value for debug options' do
+        expect(config.debug).to be(true)
       end
 
-      it 'should merge default bindfs options' do
-        expect(subject.default_options.keys).to contain_exactly('perms', 'create-as-user', 'create-as-mounter')
-        expect(subject.default_options['perms']).to be second.default_options['perms']
-        expect(subject.default_options['create-as-user']).to be true
-        expect(subject.default_options['create-as-mounter']).to be true
+      it 'merges default bindfs options' do
+        expect(config.default_options.keys).to contain_exactly('perms', 'create-as-user', 'create-as-mounter')
+        expect(config.default_options.to_h).to eq('perms' => second.default_options['perms'],
+                                                  'create-as-user' => true,
+                                                  'create-as-mounter' => true)
       end
 
-      it 'should merge bound folders set' do
-        expect(subject.bound_folders.collect { |(_, f)| f.destination }).to include('/etc-bound', '/usr-bin-bound', '/bin-bound')
+      it 'merges bound folders set' do
+        expect(config.bound_folders.collect { |(_, f)| f.destination }).to include('/etc-bound', '/usr-bin-bound', '/bin-bound')
       end
 
-      it 'should merge skip_validations set' do
-        expect(subject.skip_validations).to contain_exactly(:user, :group)
+      it 'merges skip_validations set' do
+        expect(config.skip_validations).to contain_exactly(:user, :group)
       end
     end
 
@@ -130,57 +126,58 @@ describe VagrantBindfs::Vagrant::Config do
         config
       end
 
-      it 'should merge default bindfs options' do
+      it 'merges default bindfs options' do
         merged = first.merge(second)
         expect(merged.default_options.keys).to contain_exactly('perms')
         expect(merged.default_options['perms']).to be second.default_options['perms']
+      end
 
+      it 'works the other way round' do
         merged = second.merge(first)
         expect(merged.default_options.keys).to contain_exactly('perms')
         expect(merged.default_options['perms']).to be second.default_options['perms']
       end
 
-      it 'should not merge default bindfs options if unset' do
+      it 'does not merge default bindfs options if unset' do
         merged = first.merge(first)
         expect(merged.default_options).not_to be_a(VagrantBindfs::Bindfs::OptionSet)
       end
     end
   end
 
-  it 'should respond to #finalize!' do
-    expect(subject).to respond_to(:finalize!)
+  it 'responds to #finalize!' do
+    expect(config).to respond_to(:finalize!)
   end
 
   context 'when finalized' do
-    before { subject.finalize! }
+    before { config.finalize! }
 
     it 'defaults to disable debug' do
-      expect(subject.debug).to eq(false)
+      expect(config.debug).to eq(false)
     end
 
     it 'defaults to install bindfs from sources of the latest supported version' do
-      expect(subject.bindfs_version).to eq(:latest)
+      expect(config.bindfs_version).to eq(:latest)
     end
 
     it 'defaults to basics bindfs options' do
-      expect(subject.default_options.keys).to contain_exactly('force-user', 'force-group', 'perms')
+      expect(config.default_options.keys).to contain_exactly('force-user', 'force-group', 'perms')
     end
 
     it 'defaults to empty bound folders set' do
-      expect(subject.bound_folders).to eq({})
+      expect(config.bound_folders).to eq({})
     end
 
     it 'defaults to empty skip_validations set' do
-      expect(subject.skip_validations).to eq([])
+      expect(config.skip_validations).to eq([])
     end
   end
 
-  it 'should respond to #validate' do
-    expect(subject).to respond_to(:validate)
+  it 'responds to #validate' do
+    expect(config).to respond_to(:validate)
   end
 
   describe '#validate' do
-    it 'should return a hash of errors' do
-    end
+    it 'returns a hash of errors'
   end
 end

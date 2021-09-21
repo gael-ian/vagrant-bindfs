@@ -27,7 +27,7 @@ module VagrantBindfs
                 # Ensure equery is installed
                 comm.sudo('emerge app-portage/gentoolkit')
                 comm.sudo("equery -q list -po -F '$fullversion' #{bindfs_package_name} || true") do |_, output|
-                  output.strip.gsub(/\s+/, ' ').split(' ').each do |package_version|
+                  output.strip.gsub(/\s+/, ' ').split.each do |package_version|
                     return package_version unless package_version.match(/^#{version}/).nil?
                   end
                 end

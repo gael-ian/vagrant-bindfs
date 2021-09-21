@@ -25,12 +25,10 @@ module VagrantBindfs
 
       class << self
         def hooks
-          @hooks ||= begin
-            {
-              synced_folders: synced_folders_hook,
-              provision: ::Vagrant::Action::Builtin::Provision
-            }
-          end
+          @hooks ||= {
+            synced_folders: synced_folders_hook,
+            provision: ::Vagrant::Action::Builtin::Provision
+          }
         end
 
         def synced_folders_hook
