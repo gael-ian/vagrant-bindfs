@@ -4,7 +4,7 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module Ubuntu
-        module Fuse
+        module Fuse # :nodoc:
           class << self
             # Ubuntu 6.10 and after automatically load fuse.
             # Just check if it is installed

@@ -1,33 +1,11 @@
----
 require:
   - rubocop-performance
   - rubocop-rake
   - rubocop-rspec
 
 AllCops:
-  DisplayCopNames: true
+  TargetRubyVersion: 2.7
   NewCops: enable
 
-Layout/LineLength:
-  Max: 150
-
-Metrics/BlockLength:
-  Exclude:
-    - 'spec/**/*_spec.rb'
-
-RSpec/FilePath:
-  Enabled: No
-
-RSpec/MultipleExpectations:
-  Max: 2
-
-Style/Documentation:
-  Enabled: No
-
 Naming/FileName:
-  Enabled: No
-
-# Rubocop does not interpolate version specifiers
-# and report ~>2.4 as not compatible with 2.6.5...
-Gemspec/RequiredRubyVersion:
   Enabled: No

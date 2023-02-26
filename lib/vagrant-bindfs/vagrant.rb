@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module VagrantBindfs
-  module Vagrant
+  module Vagrant # :nodoc:
     autoload :Plugin, 'vagrant-bindfs/vagrant/plugin'
     autoload :Config, 'vagrant-bindfs/vagrant/config'
     autoload :Capabilities, 'vagrant-bindfs/vagrant/capabilities'

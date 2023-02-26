@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module VagrantBindfs
-  module Bindfs
+  module Bindfs # :nodoc:
     SOURCE_VERSION = '1.17.2'
     SOURCE_URLS = [
       'https://bindfs.org/downloads/%<basename>s.tar.gz',

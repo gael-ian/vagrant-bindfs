@@ -2,7 +2,7 @@
 
 module VagrantBindfs
   module Vagrant
-    class Config < ::Vagrant.plugin('2', :config)
+    class Config < ::Vagrant.plugin('2', :config) # :nodoc:
       DEFAULT_OPTIONS = {
         'force-user' => 'vagrant',
         'force-group' => 'vagrant',

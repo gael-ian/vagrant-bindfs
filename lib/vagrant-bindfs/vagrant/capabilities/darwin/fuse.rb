@@ -4,7 +4,7 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module Darwin
-        module Fuse
+        module Fuse # :nodoc:
           class << self
             def bindfs_fuse_installed(machine)
               machine.communicate.test('test -d /Library/Frameworks/OSXFUSE.framework/')

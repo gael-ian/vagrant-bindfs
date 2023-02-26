@@ -2,7 +2,7 @@
 
 module VagrantBindfs
   module Bindfs
-    class Command
+    class Command # :nodoc:
       attr_reader :folder
 
       def initialize(folder)

@@ -4,7 +4,7 @@ require 'digest/sha1'
 
 module VagrantBindfs
   module Bindfs
-    class Folder
+    class Folder # :nodoc:
       attr_reader :source,
                   :destination,
                   :options,

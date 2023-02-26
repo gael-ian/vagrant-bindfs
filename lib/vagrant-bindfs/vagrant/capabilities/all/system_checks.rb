@@ -4,7 +4,7 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module All
-        module SystemChecks
+        module SystemChecks # :nodoc:
           class << self
             def bindfs_exists_directory(machine, directory)
               machine.communicate.test("test -d #{directory.shellescape}")

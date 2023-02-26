@@ -4,7 +4,7 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module All
-        module PackageManager
+        module PackageManager # :nodoc:
           class << self
             def bindfs_package_manager_installed(machine)
               package_manager_name = machine.guest.capability(:bindfs_package_manager_name)

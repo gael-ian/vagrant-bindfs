@@ -4,7 +4,7 @@ module VagrantBindfs
   module Vagrant
     module Actions
       module Concerns
-        module Machine
+        module Machine # :nodoc:
           def machine
             env[:machine]
           end

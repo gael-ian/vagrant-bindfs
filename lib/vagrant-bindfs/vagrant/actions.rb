@@ -2,7 +2,7 @@
 
 module VagrantBindfs
   module Vagrant
-    module Actions
+    module Actions # :nodoc:
       autoload :Installer, 'vagrant-bindfs/vagrant/actions/installer'
       autoload :Mounter, 'vagrant-bindfs/vagrant/actions/mounter'
 

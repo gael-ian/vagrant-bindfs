@@ -25,12 +25,20 @@ describe VagrantBindfs::Bindfs::Folder do
   it 'merges additional options' do
     folder.merge!(force_user: 'another-user', mirror_only: 'joe,bob')
     expect(folder.options.keys).to contain_exactly('force-user', 'force-group', 'mirror-only', 'uid-offset')
+  end
+
+  it 'merges values for additional options' do
+    folder.merge!(force_user: 'another-user', mirror_only: 'joe,bob')
     expect(folder.options['force-user']).to eq('another-user')
   end
 
   it 'merges additional options without loss' do
     folder.reverse_merge!(force_user: 'another-user', mirror_only: 'joe,bob')
     expect(folder.options.keys).to contain_exactly('force-user', 'force-group', 'mirror-only', 'uid-offset')
+  end
+
+  it 'merges values for additional options without loss' do
+    folder.reverse_merge!(force_user: 'another-user', mirror_only: 'joe,bob')
     expect(folder.options['force-user']).to eq('vagrant')
   end
 

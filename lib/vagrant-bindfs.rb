@@ -6,7 +6,7 @@ rescue LoadError
   raise 'The Vagrant bindfs plugin must be run within Vagrant'
 end
 
-module VagrantBindfs
+module VagrantBindfs # :nodoc:
   autoload :Vagrant, 'vagrant-bindfs/vagrant'
   autoload :Bindfs, 'vagrant-bindfs/bindfs'
 end

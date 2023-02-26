@@ -4,7 +4,7 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module Darwin
-        module Bindfs
+        module Bindfs # :nodoc:
           class << self
             # Homebrew only use its own github repositories
             def bindfs_bindfs_search(_machine)

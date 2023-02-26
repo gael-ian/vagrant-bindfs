@@ -4,7 +4,7 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module Gentoo
-        module Bindfs
+        module Bindfs # :nodoc:
           class << self
             def bindfs_bindfs_search(machine)
               machine.guest.capability(:bindfs_package_manager_update)

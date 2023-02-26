@@ -17,8 +17,12 @@ describe VagrantBindfs::Bindfs::Command do
 
     before { folder.to_version!('1.13.3') }
 
+    let(:expected) do
+      'bindfs --force-user=vagrant --force-group=vagrant --chown-deny -o debug,allow_others -r /etc /etc-bound'
+    end
+
     it 'builds bindfs command as expected' do
-      expect(command.to_s).to eq('bindfs --force-user=vagrant --force-group=vagrant --chown-deny -o debug,allow_others -r /etc /etc-bound')
+      expect(command.to_s).to eq(expected)
     end
   end
 
@@ -27,8 +31,12 @@ describe VagrantBindfs::Bindfs::Command do
 
     before { folder.to_version!('1.11') }
 
+    let(:expected) do
+      'bindfs --user=vagrant --group=vagrant --chown-deny -o debug,allow_others -r /etc /etc-bound'
+    end
+
     it 'builds bindfs command as expected' do
-      expect(command.to_s).to eq('bindfs --user=vagrant --group=vagrant --chown-deny -o debug,allow_others -r /etc /etc-bound')
+      expect(command.to_s).to eq(expected)
     end
   end
 end

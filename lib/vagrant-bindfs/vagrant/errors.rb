@@ -2,12 +2,12 @@
 
 module VagrantBindfs
   module Vagrant
-    class Error < ::Vagrant::Errors::VagrantError
+    class Error < ::Vagrant::Errors::VagrantError # :nodoc:
       error_namespace('vagrant-bindfs.errors')
     end
 
-    class ConfigError < Error
-      error_namespace('vagrant-bindfs.errors.config')
+    class ConfigError < Error # :nodoc:
+      error_namespace('vagrant_bindfs.errors.config')
     end
   end
 end

@@ -3,7 +3,7 @@
 module VagrantBindfs
   module Vagrant
     module Capabilities
-      module Ubuntu
+      module Ubuntu # :nodoc:
         autoload :Fuse, 'vagrant-bindfs/vagrant/capabilities/ubuntu/fuse'
       end
     end

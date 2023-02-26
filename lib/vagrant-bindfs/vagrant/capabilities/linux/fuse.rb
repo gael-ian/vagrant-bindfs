@@ -4,7 +4,7 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module Linux
-        module Fuse
+        module Fuse # :nodoc:
           class << self
             def bindfs_fuse_installed(machine)
               machine.communicate.test('test -f /etc/fuse.conf')
