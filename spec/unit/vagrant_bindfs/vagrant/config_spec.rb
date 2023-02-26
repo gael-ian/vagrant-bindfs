@@ -97,9 +97,9 @@ describe VagrantBindfs::Vagrant::Config do
       end
 
       it 'merges default bindfs options' do
-        expect(config.default_options.to_h).to contain_exactly('perms' => second.default_options['perms'],
-                                                               'create-as-user' => true,
-                                                               'create-as-mounter' => true)
+        expect(config.default_options.to_h).to match('perms' => second.default_options['perms'],
+                                                     'create-as-user' => true,
+                                                     'create-as-mounter' => true)
       end
 
       it 'merges bound folders set' do
@@ -128,12 +128,12 @@ describe VagrantBindfs::Vagrant::Config do
 
       it 'merges default bindfs options' do
         merged = first.merge(second)
-        expect(merged.default_options.keys).to contain_exactly('perms' => second.default_options['perms'])
+        expect(merged.default_options.to_h).to match('perms' => second.default_options['perms'])
       end
 
       it 'works the other way round' do
         merged = second.merge(first)
-        expect(merged.default_options.keys).to contain_exactly('perms' => second.default_options['perms'])
+        expect(merged.default_options.to_h).to match('perms' => second.default_options['perms'])
       end
 
       it 'does not merge default bindfs options if unset' do
