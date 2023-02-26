@@ -2,7 +2,6 @@
 
 A Vagrant plugin to automate [bindfs](http://bindfs.org/) mounts in the VM. This allow you to change owner, group and permissions on files and, for example, work around NFS share permissions issues.
 
-
 ## Some Background: Why `vagrant-bindfs`
 
 The default vagrant provider is [virtualbox](https://www.virtualbox.org/).
@@ -25,7 +24,6 @@ Simply:
 
 _Note that `map_uid` and `map_gid` NFS options can be used to set the identity used to read/write files on the host side._
 
-
 ## Installation
 
 vagrant-bindfs is distributed as a Ruby gem. 
@@ -34,7 +32,6 @@ You can install it as any other Vagrant plugin with:
 ```bash
 vagrant plugin install vagrant-bindfs
 ```
-
 
 ## Usage
 
