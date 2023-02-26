@@ -4,7 +4,6 @@
 # Bundler
 /.bundle
 /vendor/bundle
-Gemfile.lock
 
 # Rubygems
 *.gem
