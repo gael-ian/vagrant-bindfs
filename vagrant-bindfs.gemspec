@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
     'rubygems_mfa_required' => 'true',
 
     'bug_tracker_uri' => 'https://github.com/gael-ian/vagrant-bindfs/issues',
-    'changelog_uri' => 'https://github.com/gael-ian/vagrant-bindfs/blob/master/CHANGELOG.md',
+    'changelog_uri' => 'https://github.com/gael-ian/vagrant-bindfs/blob/main/CHANGELOG.md',
     'homepage_uri' => 'https://github.com/gael-ian/vagrant-bindfs',
     'source_code_uri' => 'https://github.com/gael-ian/vagrant-bindfs',
     'funding_uri' => 'https://opencollective.com/notus-sh'
