@@ -4,7 +4,7 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module Darwin
-        module SystemChecks
+        module SystemChecks # :nodoc:
           class << self
             def bindfs_exists_user(machine, user)
               (

@@ -2,7 +2,7 @@
 
 module VagrantBindfs
   module Bindfs
-    module Validators
+    module Validators # :nodoc:
       autoload :Config, 'vagrant-bindfs/bindfs/validators/config'
       autoload :Runtime, 'vagrant-bindfs/bindfs/validators/runtime'
     end

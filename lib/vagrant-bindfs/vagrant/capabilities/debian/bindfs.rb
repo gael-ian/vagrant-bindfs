@@ -4,7 +4,7 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module Debian
-        module Bindfs
+        module Bindfs # :nodoc:
           class << self
             def bindfs_bindfs_search(machine)
               machine.guest.capability(:bindfs_package_manager_update)
@@ -16,18 +16,22 @@ module VagrantBindfs
               machine.communicate.sudo('apt-get install -y bindfs')
             end
 
+            # rubocop:disable Layout/LineLength
             def bindfs_bindfs_search_version(machine, version)
               machine.guest.capability(:bindfs_package_manager_update)
               machine.communicate.tap do |comm|
                 # Ensure aptitude is installed as Ubuntu removed it
                 comm.sudo('apt-get install aptitude')
-                comm.sudo("aptitude versions bindfs | sed -n '/p/,${p}' | sed 's/\s\+/ /g' | cut -d' ' -f2") do |_, output|
+                comm.sudo("aptitude versions bindfs | sed -n '/p/,${p}' | sed 's/\s+/ /g' | cut -d' ' -f2") do |_, output|
                   package_version = output.strip
-                  return "bindfs-#{package_version}" if !package_version.empty? && !package_version.match(/^#{version}/).nil?
+                  next false if package_version.empty? || package_version.match(/^#{version}/).nil?
+
+                  "bindfs-#{package_version}"
                 end
               end
               false
             end
+            # rubocop:enable Layout/LineLength
 
             def bindfs_bindfs_install_version(machine, version)
               machine.guest.capability(:bindfs_package_manager_update)

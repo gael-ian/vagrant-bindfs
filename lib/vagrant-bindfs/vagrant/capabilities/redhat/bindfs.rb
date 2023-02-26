@@ -4,11 +4,11 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module RedHat
-        module Bindfs
+        module Bindfs # :nodoc:
           class << self
             def bindfs_bindfs_search(machine)
               machine.guest.capability(:bindfs_package_manager_update)
-              machine.communicate.test("[[ $(yum search bindfs 2>/dev/null | egrep -i '^bindfs\.' | wc -l) != 0 ]]")
+              machine.communicate.test("[[ $(yum search bindfs 2>/dev/null | egrep -i '^bindfs.' | wc -l) != 0 ]]")
             end
 
             def bindfs_bindfs_install(machine)

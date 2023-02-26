@@ -3,7 +3,7 @@
 module VagrantBindfs
   module Vagrant
     module Actions
-      class Mounter
+      class Mounter # :nodoc:
         attr_reader :app,
                     :env,
                     :hook
@@ -87,7 +87,10 @@ module VagrantBindfs
           )
 
           command = VagrantBindfs::Bindfs::Command.new(folder)
-          comm.sudo(command.to_s(bindfs_full_path), error_class: VagrantBindfs::Vagrant::Error, error_key: 'bindfs.mount_failed')
+          comm.sudo(command.to_s(bindfs_full_path),
+                    error_class: VagrantBindfs::Vagrant::Error,
+                    error_key: 'bindfs.mount_failed')
+
           debug(command.to_s(bindfs_full_path))
         end
 

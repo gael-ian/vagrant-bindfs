@@ -4,7 +4,7 @@ module VagrantBindfs
   module Vagrant
     module Actions
       module Concerns
-        module Log
+        module Log # :nodoc:
           def logger
             env[:ui]
           end

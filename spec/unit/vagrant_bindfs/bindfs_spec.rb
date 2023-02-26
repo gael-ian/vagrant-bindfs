@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable RSpec/MultipleExpectations
 describe VagrantBindfs::Bindfs do
   subject(:bindfs) { described_class }
 
@@ -29,3 +30,4 @@ describe VagrantBindfs::Bindfs do
     end
   end
 end
+# rubocop:enable RSpec/MultipleExpectations

@@ -3,7 +3,7 @@
 module VagrantBindfs
   module Vagrant
     module Actions
-      class Installer
+      class Installer # :nodoc:
         attr_reader :app,
                     :env
 
@@ -91,9 +91,14 @@ module VagrantBindfs
         end
 
         def install_bindfs_from_source!
-          version = (config.bindfs_version == :latest ? VagrantBindfs::Bindfs::SOURCE_VERSION : config.bindfs_version.to_s)
           guest.capability(:bindfs_bindfs_install_compilation_requirements)
-          guest.capability(:bindfs_bindfs_install_from_source, version)
+          guest.capability(:bindfs_bindfs_install_from_source, source_version)
+        end
+
+        def source_version
+          return VagrantBindfs::Bindfs::SOURCE_VERSION if config.bindfs_version == :latest
+
+          config.bindfs_version.to_s
         end
 
         def install_from_source?

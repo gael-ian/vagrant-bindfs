@@ -4,7 +4,7 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module Suse
-        module Bindfs
+        module Bindfs # :nodoc:
           class << self
             def bindfs_bindfs_search(machine)
               machine.guest.capability(:bindfs_package_manager_update)
@@ -16,6 +16,7 @@ module VagrantBindfs
               machine.communicate.sudo('zypper -n install bindfs')
             end
 
+            # rubocop:disable Layout/LineLength
             def bindfs_bindfs_search_version(machine, version)
               machine.guest.capability(:bindfs_package_manager_update)
               machine.communicate.tap do |comm|
@@ -26,6 +27,7 @@ module VagrantBindfs
               end
               false
             end
+            # rubocop:enable Layout/LineLength
 
             def bindfs_bindfs_install_version(machine, version)
               machine.guest.capability(:bindfs_package_manager_update)

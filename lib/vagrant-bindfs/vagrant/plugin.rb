@@ -2,7 +2,7 @@
 
 module VagrantBindfs
   module Vagrant
-    class Plugin < ::Vagrant.plugin('2')
+    class Plugin < ::Vagrant.plugin('2') # :nodoc:
       name 'bindfs'
       description <<-DESC
       A Vagrant plugin to automate bindfs mount in the VM. This allow you to change owner, group and permissions on files and, for example, work around NFS share permissions issues.

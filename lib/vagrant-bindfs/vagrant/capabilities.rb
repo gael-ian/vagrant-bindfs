@@ -2,7 +2,7 @@
 
 module VagrantBindfs
   module Vagrant
-    module Capabilities
+    module Capabilities # :nodoc:
       autoload :All, 'vagrant-bindfs/vagrant/capabilities/all'
 
       autoload :Darwin, 'vagrant-bindfs/vagrant/capabilities/darwin'

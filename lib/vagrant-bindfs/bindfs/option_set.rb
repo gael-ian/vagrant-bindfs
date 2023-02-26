@@ -4,7 +4,7 @@ require 'forwardable'
 
 module VagrantBindfs
   module Bindfs
-    class OptionSet
+    class OptionSet # :nodoc:
       attr_reader :version,
                   :options,
                   :invalid_options,

@@ -65,7 +65,7 @@ describe VagrantBindfs::Bindfs::OptionSet do
                                           :'create-as-user' => nil)
 
     expect(option_set['force-user']).to eq('vagrant')
-    expect(option_set['force-group']).to eq(nil)
+    expect(option_set['force-group']).to be_nil
 
     expect(option_set['uid-offset']).to eq('50')
     expect(option_set['create-as-user']).to be false
@@ -85,7 +85,7 @@ describe VagrantBindfs::Bindfs::OptionSet do
 
     expect(first_set.keys).to contain_exactly('force-user', 'force-group', 'mirror-only', 'perms')
     expect(first_set['force-group']).to eq('other-group')
-    expect(first_set['perms']).to be nil
+    expect(first_set['perms']).to be_nil
   end
 
   it 'is losslessly convertible to another version of bindfs' do

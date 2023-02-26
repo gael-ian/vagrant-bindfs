@@ -4,7 +4,7 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module Gentoo
-        module PackageManager
+        module PackageManager # :nodoc:
           class << self
             def bindfs_package_manager_name(_machine)
               'emerge'

@@ -4,8 +4,7 @@ describe VagrantBindfs::Vagrant::Config do
   subject(:config) { described_class.new }
 
   it 'has an option to enable/disable debugging' do
-    expect(config).to respond_to(:debug)
-    expect(config).to respond_to(:debug=)
+    expect(config).to respond_to(:debug).and(respond_to(:debug=))
   end
 
   describe '#debug' do
@@ -16,8 +15,7 @@ describe VagrantBindfs::Vagrant::Config do
   end
 
   it 'has an option to enable/disable installation of bindfs from sources' do
-    expect(config).to respond_to(:install_bindfs_from_source)
-    expect(config).to respond_to(:install_bindfs_from_source=)
+    expect(config).to respond_to(:install_bindfs_from_source).and(respond_to(:install_bindfs_from_source=))
   end
 
   describe '#install_bindfs_from_source' do
@@ -28,8 +26,7 @@ describe VagrantBindfs::Vagrant::Config do
   end
 
   it 'has an option for bindfs version when installed from sources' do
-    expect(config).to respond_to(:bindfs_version)
-    expect(config).to respond_to(:bindfs_version=)
+    expect(config).to respond_to(:bindfs_version).and(respond_to(:bindfs_version=))
   end
 
   describe '#bindfs_version=' do
@@ -40,8 +37,7 @@ describe VagrantBindfs::Vagrant::Config do
   end
 
   it 'has an option for default bindfs options' do
-    expect(config).to respond_to(:default_options)
-    expect(config).to respond_to(:default_options=)
+    expect(config).to respond_to(:default_options).and(respond_to(:default_options=))
   end
 
   describe '#default_options' do
@@ -53,8 +49,11 @@ describe VagrantBindfs::Vagrant::Config do
   describe '#default_options=' do
     it 'converts options to an instance of VagrantBindfs::Command::OptionSet' do
       config.default_options = { group: 'dummy', user: 'dummy' }
-
       expect(config.default_options).to be_a(VagrantBindfs::Bindfs::OptionSet)
+    end
+
+    it 'normalizes options names' do
+      config.default_options = { group: 'dummy', user: 'dummy' }
       expect(config.default_options.keys).to contain_exactly('force-group', 'force-user')
     end
   end
@@ -98,14 +97,15 @@ describe VagrantBindfs::Vagrant::Config do
       end
 
       it 'merges default bindfs options' do
-        expect(config.default_options.keys).to contain_exactly('perms', 'create-as-user', 'create-as-mounter')
-        expect(config.default_options.to_h).to eq('perms' => second.default_options['perms'],
-                                                  'create-as-user' => true,
-                                                  'create-as-mounter' => true)
+        expect(config.default_options.to_h).to match('perms' => second.default_options['perms'],
+                                                     'create-as-user' => true,
+                                                     'create-as-mounter' => true)
       end
 
       it 'merges bound folders set' do
-        expect(config.bound_folders.collect { |(_, f)| f.destination }).to include('/etc-bound', '/usr-bin-bound', '/bin-bound')
+        expect(config.bound_folders.collect { |(_, f)| f.destination }).to include('/etc-bound',
+                                                                                   '/usr-bin-bound',
+                                                                                   '/bin-bound')
       end
 
       it 'merges skip_validations set' do
@@ -128,14 +128,12 @@ describe VagrantBindfs::Vagrant::Config do
 
       it 'merges default bindfs options' do
         merged = first.merge(second)
-        expect(merged.default_options.keys).to contain_exactly('perms')
-        expect(merged.default_options['perms']).to be second.default_options['perms']
+        expect(merged.default_options.to_h).to match('perms' => second.default_options['perms'])
       end
 
       it 'works the other way round' do
         merged = second.merge(first)
-        expect(merged.default_options.keys).to contain_exactly('perms')
-        expect(merged.default_options['perms']).to be second.default_options['perms']
+        expect(merged.default_options.to_h).to match('perms' => second.default_options['perms'])
       end
 
       it 'does not merge default bindfs options if unset' do
@@ -153,7 +151,7 @@ describe VagrantBindfs::Vagrant::Config do
     before { config.finalize! }
 
     it 'defaults to disable debug' do
-      expect(config.debug).to eq(false)
+      expect(config.debug).to be(false)
     end
 
     it 'defaults to install bindfs from sources of the latest supported version' do

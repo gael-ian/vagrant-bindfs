@@ -4,7 +4,7 @@ module VagrantBindfs
   module Vagrant
     module Capabilities
       module All
-        module Bindfs
+        module Bindfs # :nodoc:
           class << self
             def bindfs_bindfs_full_path(machine)
               machine.communicate.execute('bash -c "type -P bindfs || true"') do |_, output|
@@ -21,7 +21,7 @@ module VagrantBindfs
 
             def bindfs_bindfs_version(machine)
               bindfs_full_path = machine.guest.capability(:bindfs_bindfs_full_path)
-              [%(sudo #{bindfs_full_path} --version | cut -d" " -f2), %(sudo -i #{bindfs_full_path} --version | cut -d" " -f2)].each do |command|
+              bindfs_bindfs_version_detection_commands(bindfs_full_path).each do |command|
                 machine.communicate.execute(command) do |_, output|
                   version = output.strip
                   return Gem::Version.new(version) if !version.empty? && Gem::Version.correct?(version)
@@ -58,6 +58,15 @@ module VagrantBindfs
               make                        && \
               sudo make install
             SHELL
+
+            protected
+
+            def bindfs_bindfs_version_detection_commands(bindfs_full_path)
+              [
+                %(sudo #{bindfs_full_path} --version | cut -d" " -f2),
+                %(sudo -i #{bindfs_full_path} --version | cut -d" " -f2)
+              ]
+            end
           end
         end
       end

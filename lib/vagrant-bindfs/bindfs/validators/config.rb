@@ -5,7 +5,7 @@ require 'forwardable'
 module VagrantBindfs
   module Bindfs
     module Validators
-      class Config
+      class Config # :nodoc:
         attr_reader :folder,
                     :errors
 
@@ -28,23 +28,31 @@ module VagrantBindfs
         protected
 
         def validate_source!
-          @errors << I18n.t('vagrant-bindfs.validations.source_path_required') if source.empty?
-          @errors << I18n.t('vagrant-bindfs.validations.path_must_be_absolute', path: source) if relative_path?(source)
+          @errors << invalid('source_path_required') if source.empty?
+          @errors << invalid('path_must_be_absolute', path: source) if relative_path?(source)
         end
 
         def validate_destination!
-          @errors << I18n.t('vagrant-bindfs.validations.destination_path_required') if destination.empty?
-          @errors << I18n.t('vagrant-bindfs.validations.path_must_be_absolute', path: destination) if relative_path?(destination)
+          @errors << invalid('destination_path_required') if destination.empty?
+          @errors << invalid('path_must_be_absolute', path: destination) if relative_path?(destination)
         end
 
         def validate_options!
           folder.options.invalid_options.each_key do |option_name|
-            @errors << I18n.t(option_name.tr('-', '_'), scope: 'vagrant-bindfs.deprecations')
+            @errors << deprecation(option_name.tr('-', '_'))
           end
         end
 
         def relative_path?(path)
           Pathname.new(path).relative?
+        end
+
+        def invalid(key, **options)
+          I18n.t(key, **options.merge(scope: 'vagrant-bindfs.validations'))
+        end
+
+        def deprecation(key)
+          I18n.t(key, scope: 'vagrant-bindfs.deprecations')
         end
       end
     end
