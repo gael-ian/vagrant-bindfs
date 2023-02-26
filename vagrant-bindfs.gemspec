@@ -28,6 +28,6 @@ Gem::Specification.new do |s|
   s.files = Dir['{lib,locales}/**/*'] + ['README.md', 'Rakefile', 'MIT-LICENSE']
   s.test_files = Dir['{specs}/**/*'] + ['Vagrantfile']
 
-  s.required_ruby_version = '~> 2.4'
+  s.required_ruby_version = ">= 2.7", "< 3.2"
   s.required_rubygems_version = '>= 1.3.6'
 end
