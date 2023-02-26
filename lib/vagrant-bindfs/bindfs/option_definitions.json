@@ -9,6 +9,8 @@
   "map":                      { "long": ["map"],                         "short": [],    "type": "option", "since": "1.10"    },
   "map-passwd":               { "long": ["map-passwd"],                  "short": [],    "type": "option", "since": "1.14.6"  },
   "map-group":                { "long": ["map-group"],                   "short": [],    "type": "option", "since": "1.14.6"  },
+  "map-passwd-rev":           { "long": ["map-passwd-rev"],              "short": [],    "type": "option", "since": "1.16.1"  },
+  "map-group-rev":            { "long": ["map-group-rev"],               "short": [],    "type": "option", "since": "1.16.1"  },
   "uid-offset":               { "long": ["uid-offset"],                  "short": [],    "type": "option", "since": "1.13.2"  },
   "gid-offset":               { "long": ["gid-offset"],                  "short": [],    "type": "option", "since": "1.13.2"  },
 

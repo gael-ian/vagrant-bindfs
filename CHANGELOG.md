@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 * Drop support for Ruby < 2.7
 
+### Added
+
+* Update bindfs support to 1.17.2
+
 ### Changed
 
 * Introduce Github Actions to automate unit tests (#97)
