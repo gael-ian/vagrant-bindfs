@@ -1,5 +1,7 @@
 # vagrant-bindfs
 
+[![Unit tests](https://github.com/gael-ian/vagrant-bindfs/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/gael-ian/vagrant-bindfs/actions/workflows/unit-tests.yml)
+
 A Vagrant plugin to automate [bindfs](http://bindfs.org/) mounts in the VM. This allow you to change owner, group and permissions on files and, for example, work around NFS share permissions issues.
 
 ## Some Background: Why `vagrant-bindfs`
