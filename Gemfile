@@ -10,8 +10,13 @@ source 'https://rubygems.org'
 # the :development group below instead of in `.gemspec` file.
 #
 # gemspec
+group :plugins do
+  # `vagrant-bindfs` (and other plugins that it may depends on) must be in this
+  # :plugins group to be correcty loaded in development.
+  gem 'vagrant-bindfs', path: '.'
+end
 
-group :development do
+group :development, :test do
   # We depend on Vagrant for development, but we don't add it as a
   # gem dependency because we expect to be installed within the
   # Vagrant environment itself using `vagrant plugin`.
@@ -24,11 +29,4 @@ group :development do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rake', require: false
   gem 'rubocop-rspec', require: false
-end
-
-group :plugins do
-  # `vagrant-bindfs` (and other plugins that it may depends on) must be
-  # included in this :plugins group to get loaded at the correct position
-  # while developing.
-  gem 'vagrant-bindfs', path: '.'
 end
