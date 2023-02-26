@@ -1,0 +1,23 @@
+name: Unit tests
+on:
+  push:
+    branches: [main, next]
+  pull_request:
+    branches:  [main, next]
+jobs:
+  # Ruby unit tests
+  rspec:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby: [2.7, 3.0, 3.1]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Run tests
+        run: bundle exec rspec
