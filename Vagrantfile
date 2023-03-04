@@ -14,10 +14,6 @@ test_machines = {
   # The `vagrant` user group does not exist in this box.
   # suse:   { box: "bento/opensuse-leap-15",      args: { group: 'users' } },
 
-  # **This box require the Oracle VM VirtualBox Extension Pack for Virtualbox.**
-  # The `vagrant` user group does not exist in this box.
-  # osx:    { box: "jhcook/osx-elcapitan-10.11",  args: { group: 'staff' } },
-
   # When you add a new test machine, please ensure that it will stay
   # available and regularly updated for future tests. We recommend to
   # use officially supported boxes, as stated in the Vagrant documentation.
