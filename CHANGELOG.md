@@ -8,7 +8,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Breaking changes
 
+* Update Fuse integration on Mac OS X to use MacFuse (#101)
+* Update Fuse integration on all Linux distributions to use Fuse 3, widely available (#101) 
 * Drop support for Ruby < 2.7
+
+### Fixed
+
+* `gentoolkit` installation on Gentoo guests (#101)
 
 ### Added
 
