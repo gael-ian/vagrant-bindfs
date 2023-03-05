@@ -38,7 +38,7 @@ module VagrantBindfs
             def bindfs_bindfs_install_compilation_requirements(machine)
               machine.guest.capability(:bindfs_package_manager_update)
               machine.communicate.tap do |comm|
-                comm.sudo('zypper -n install make automake gcc gcc-c++ kernel-devel wget tar fuse-devel')
+                comm.sudo('zypper -n install make automake gcc gcc-c++ kernel-devel wget tar fuse3-devel')
               end
             end
           end

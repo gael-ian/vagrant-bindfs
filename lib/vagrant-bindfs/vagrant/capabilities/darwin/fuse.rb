@@ -7,12 +7,12 @@ module VagrantBindfs
         module Fuse # :nodoc:
           class << self
             def bindfs_fuse_installed(machine)
-              machine.communicate.test('test -d /Library/Frameworks/OSXFUSE.framework/')
+              machine.communicate.test('test -d /Library/Frameworks/macFUSE.framework/')
             end
 
             def bindfs_fuse_install(machine)
               machine.guest.capability(:bindfs_package_manager_update)
-              machine.communicate.execute('brew tap caskroom/cask && brew cask install osxfuse')
+              machine.communicate.execute('brew install --cask macfuse')
             end
 
             # OSXFuse is automatically loaded.

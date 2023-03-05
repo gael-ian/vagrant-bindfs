@@ -5,23 +5,19 @@
 
 # Uncomment machines you want to test
 test_machines = {
-  # debian: { box: "bento/debian-10"      },
-  # ubuntu: { box: "bento/ubuntu-18.04"   },
-  # fedora: { box: "bento/fedora-latest"  },
-  # redhat: { box: "bento/centos-8"       },
+  # debian: { box: "bento/debian-11"        },
+  # ubuntu: { box: "bento/ubuntu-22.04"     },
+  # fedora: { box: "bento/fedora-latest"    },
+  # redhat: { box: "bento/centos-stream-9"  },
   # gentoo: { box: "generic/gentoo"       },
 
   # The `vagrant` user group does not exist in this box.
   # suse:   { box: "bento/opensuse-leap-15",      args: { group: 'users' } },
 
-  # **This box require the Oracle VM VirtualBox Extension Pack for Virtualbox.**
-  # The `vagrant` user group does not exist in this box.
-  # osx:    { box: "jhcook/osx-elcapitan-10.11",  args: { group: 'staff' } },
-
   # When you add a new test machine, please ensure that it will stay
   # available and regularly updated for future tests. We recommend to
-  # use officialy supported boxes, as stated in the Vagrant
-  # documentation. See https://goo.gl/LbkPVF
+  # use officially supported boxes, as stated in the Vagrant documentation.
+  # See https://goo.gl/LbkPVF
 }
 
 require File.expand_path('spec/vagrantfile_helper', __dir__)

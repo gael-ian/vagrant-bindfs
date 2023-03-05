@@ -8,7 +8,7 @@ module VagrantBindfs
           class << self
             def bindfs_fuse_install(machine)
               machine.guest.capability(:bindfs_package_manager_update)
-              machine.communicate.sudo('apt-get install -y fuse')
+              machine.communicate.sudo('apt-get install -y fuse3')
             end
           end
         end

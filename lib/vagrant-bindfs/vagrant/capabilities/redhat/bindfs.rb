@@ -35,7 +35,7 @@ module VagrantBindfs
             end
 
             def bindfs_bindfs_install_compilation_requirements(machine)
-              machine.communicate.sudo('yum -y install make automake gcc gcc-c++ kernel-devel wget tar fuse-devel')
+              machine.communicate.sudo('yum -y install make automake gcc gcc-c++ kernel-devel wget tar fuse3-devel')
             end
           end
         end

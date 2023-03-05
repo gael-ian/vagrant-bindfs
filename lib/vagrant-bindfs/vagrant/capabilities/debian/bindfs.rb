@@ -41,7 +41,7 @@ module VagrantBindfs
 
             def bindfs_bindfs_install_compilation_requirements(machine)
               machine.guest.capability(:bindfs_package_manager_update)
-              machine.communicate.sudo('apt-get install -y build-essential pkg-config wget tar libfuse-dev')
+              machine.communicate.sudo('apt-get install -y build-essential pkg-config wget tar libfuse3-dev')
             end
           end
         end

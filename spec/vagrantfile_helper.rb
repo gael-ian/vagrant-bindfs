@@ -23,5 +23,5 @@ def tests_setup(machine, options = {}) # rubocop:disable Metrics/MethodLength
 
   machine.bindfs.bind_folder '/etc',
                              '/home/vagrant/mountpoint-nonempty',
-                             options.merge(owner: 'root', o: 'nonempty', after: :provision)
+                             options.merge(owner: 'root', after: :provision)
 end
