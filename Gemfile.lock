@@ -33,7 +33,7 @@ GIT
 PATH
   remote: .
   specs:
-    vagrant-bindfs (1.1.9)
+    vagrant-bindfs (1.2.0)
 
 GEM
   remote: https://rubygems.org/
