@@ -64,7 +64,7 @@ module VagrantBindfs
             end
 
             def ensure_equery_is_installed(communicator)
-              return if communicator.test("equery --help")
+              return if communicator.test('equery --help')
 
               # Let the whole system falls back on distribution defaults for supported Python versions.
               communicator.sudo("sed -i '/^PYTHON_TARGETS=.*$/d' /etc/portage/make.conf")
