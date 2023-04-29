@@ -145,7 +145,7 @@ GEM
     rubyntlm (0.6.3)
     rubyzip (2.3.2)
     stream (0.5.5)
-    time (0.2.1)
+    time (0.2.2)
       date
     timeout (0.3.2)
     unicode-display_width (2.4.2)
