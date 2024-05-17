@@ -101,7 +101,8 @@ GEM
     rb-kqueue (0.2.8)
       ffi (>= 0.5.0)
     regexp_parser (2.7.0)
-    rexml (3.2.5)
+    rexml (3.2.8)
+      strscan (>= 3.0.9)
     rgl (0.5.10)
       pairing_heap (>= 0.3.0)
       rexml (~> 3.2, >= 3.2.4)
@@ -145,6 +146,7 @@ GEM
     rubyntlm (0.6.3)
     rubyzip (2.3.2)
     stream (0.5.5)
+    strscan (3.1.0)
     time (0.2.2)
       date
     timeout (0.3.2)
