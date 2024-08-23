@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## Version 1.3.0 (2024-08-23)
+
 ### Breaking changes
 
 * Drop support for Ruby < 3.0 (#108)
