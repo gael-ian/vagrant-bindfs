@@ -7,17 +7,13 @@ module VagrantBindfs
         module SystemChecks # :nodoc:
           class << self
             def bindfs_exists_user(machine, user)
-              (
-                user.nil? || \
+              user.nil? ||
                 machine.communicate.test("getent passwd #{user.shellescape}")
-              )
             end
 
             def bindfs_exists_group(machine, group)
-              (
-                group.nil? || \
+              group.nil? ||
                 machine.communicate.test("getent group #{group.shellescape}")
-              )
             end
           end
         end
