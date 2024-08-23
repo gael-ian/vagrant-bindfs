@@ -15,7 +15,7 @@ module VagrantBindfs
       include Capabilities
 
       %w[up reload].each do |action|
-        action_hook(:bindfs, "machine_action_#{action}".to_sym) do |hook|
+        action_hook(:bindfs, :"machine_action_#{action}") do |hook|
           hooks.each do |(name, middleware)|
             hook.before(middleware, Actions::Mounter, name)
           end

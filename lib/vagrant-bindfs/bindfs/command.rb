@@ -23,7 +23,7 @@ module VagrantBindfs
       end
 
       def format_argument(name, value)
-        send("format_#{argument_type(name)}", name, value)
+        send(:"format_#{argument_type(name)}", name, value)
       end
 
       def format_flag(name, value)

@@ -20,11 +20,11 @@ group :development, :test do
   # We depend on Vagrant for development, but we don't add it as a
   # gem dependency because we expect to be installed within the
   # Vagrant environment itself using `vagrant plugin`.
-  gem 'vagrant', git: 'https://github.com/hashicorp/vagrant.git', tag: 'v2.3.4'
+  gem 'vagrant', git: 'https://github.com/hashicorp/vagrant.git' # , tag: 'v2.4.1'
 
   # Development dependencies
   gem 'rake'
-  gem 'rspec', '~> 3.12.0'
+  gem 'rspec', '~> 3.13.0'
 
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
