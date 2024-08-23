@@ -8,7 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Breaking changes
 
-* Drop support for Ruby < 3.0
+* Drop support for Ruby < 3.0 (#108)
+
+### Added
+
+* Update bindfs support to 1.17.7 (#108)
 
 ## Version 1.2.0 (2023-03-07)
 
