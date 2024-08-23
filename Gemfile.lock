@@ -115,19 +115,19 @@ GEM
       pairing_heap (>= 0.3.0)
       rexml (~> 3.2, >= 3.2.4)
       stream (~> 0.5.3)
-    rspec (3.12.0)
-      rspec-core (~> 3.12.0)
-      rspec-expectations (~> 3.12.0)
-      rspec-mocks (~> 3.12.0)
-    rspec-core (3.12.3)
-      rspec-support (~> 3.12.0)
-    rspec-expectations (3.12.4)
+    rspec (3.13.0)
+      rspec-core (~> 3.13.0)
+      rspec-expectations (~> 3.13.0)
+      rspec-mocks (~> 3.13.0)
+    rspec-core (3.13.0)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.2)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.12.0)
-    rspec-mocks (3.12.7)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.1)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.12.0)
-    rspec-support (3.12.2)
+      rspec-support (~> 3.13.0)
+    rspec-support (3.13.1)
     rubocop (1.65.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -188,7 +188,7 @@ PLATFORMS
 
 DEPENDENCIES
   rake
-  rspec (~> 3.12.0)
+  rspec (~> 3.13.0)
   rubocop
   rubocop-performance
   rubocop-rake
