@@ -27,7 +27,7 @@ module VagrantBindfs
         protected
 
         def bind_folders!
-          info I18n.t('vagrant-bindfs.actions.mounter.start', hook:)
+          info I18n.t('vagrant-bindfs.actions.mounter.start', hook: hook)
           bound_folders(hook).each_value do |folder|
             bind_folder!(folder)
           end
