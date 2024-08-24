@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## Version 1.3.1 (2024-08-24)
+
 ## Fixed
 
 * Rollback uses of Ruby 3.1+ syntaxic sugar for compatibility with Ruby 3.0 (#111)
