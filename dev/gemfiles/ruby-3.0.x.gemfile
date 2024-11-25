@@ -1,0 +1,18 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+
+group :plugins do
+  # `vagrant-bindfs` (and other plugins that it may depends on) must be in this
+  # :plugins group to be correcty loaded in development.
+  gem 'vagrant-bindfs', path: '.'
+end
+
+group :development, :test do
+  gem 'vagrant', git: 'https://github.com/hashicorp/vagrant.git'
+  gem 'multi_xml', '~> 0.6.0'
+
+  # Development dependencies
+  gem 'rake'
+  gem 'rspec', '~> 3.13.0'
+end
