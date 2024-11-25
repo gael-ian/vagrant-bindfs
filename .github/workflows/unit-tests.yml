@@ -14,6 +14,8 @@ jobs:
         include:
           - ruby: "3.0"
             gemfile: dev/gemfiles/ruby-3.0.x.gemfile
+    env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
