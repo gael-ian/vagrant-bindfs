@@ -48,7 +48,7 @@ module VagrantBindfs
         end
 
         def invalid(key, **options)
-          I18n.t(key, **options.merge(scope: 'vagrant-bindfs.validations'))
+          I18n.t(key, **options, scope: 'vagrant-bindfs.validations')
         end
 
         def deprecation(key)
