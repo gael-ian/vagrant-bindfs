@@ -64,7 +64,7 @@ module VagrantBindfs
       def merge(other) # rubocop:disable Metrics/AbcSize
         super.tap do |result|
           %i[debug force_empty_mountpoints install_bindfs_from_source].each do |boolean|
-            result.send(:"#{boolean}=", (send(boolean) || other.send(boolean)))
+            result.send(:"#{boolean}=", send(boolean) || other.send(boolean))
           end
           result.bound_folders = bound_folders.merge(other.bound_folders)
           result.skip_validations = (skip_validations + other.skip_validations).uniq

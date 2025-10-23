@@ -10,6 +10,7 @@ module VagrantBindfs
                     :errors
 
         extend ::Forwardable
+
         def_delegators :@folder, :source, :destination, :options
 
         def initialize(folder)
