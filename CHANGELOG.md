@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+
+* Configure dependabot to auto-update Github Actions (#116)
+
 ## Version 1.3.1 (2024-08-24)
 
 ## Fixed
