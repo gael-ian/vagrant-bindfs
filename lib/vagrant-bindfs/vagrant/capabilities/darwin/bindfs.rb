@@ -7,9 +7,11 @@ module VagrantBindfs
         module Bindfs # :nodoc:
           class << self
             # Homebrew only use its own github repositories
+            # rubocop:disable Naming/PredicateMethod
             def bindfs_bindfs_search(_machine)
               true
             end
+            # rubocop:enable Naming/PredicateMethod
 
             def bindfs_bindfs_install(machine)
               machine.guest.capability(:bindfs_package_manager_update)
@@ -18,9 +20,11 @@ module VagrantBindfs
 
             # Homebrew does not provide any method to install
             # an older version of a formula
+            # rubocop:disable Naming/PredicateMethod
             def bindfs_bindfs_search_version(_machine, _version)
               false
             end
+            # rubocop:enable Naming/PredicateMethod
 
             def bindfs_bindfs_install_version(machine)
               # Pass

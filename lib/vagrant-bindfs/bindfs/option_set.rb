@@ -12,6 +12,7 @@ module VagrantBindfs
 
       include ::Enumerable
       extend ::Forwardable
+
       def_delegators :@options, :each, :[], :keys, :key?, :to_h
 
       def initialize(version = nil, options = {})
@@ -96,12 +97,14 @@ module VagrantBindfs
         (value.respond_to?(:to_s) ? value.to_s : value)
       end
 
+      # rubocop:disable Naming/PredicateMethod
       def cast_value_as_flag(value)
         return true if [true, 'true', 'True', 'yes', 'Yes', 'y', 'Y', 'on', 'On', 1].include?(value)
         return false if [false, 'false', 'False', 'no', 'No', 'n', 'N', 'off', 'Off', 0].include?(value)
 
         !!value
       end
+      # rubocop:enable Naming/PredicateMethod
 
       class << self
         def bindfs_options
@@ -110,21 +113,21 @@ module VagrantBindfs
 
         def supported_options(version)
           bindfs_options.each_with_object({}) do |(name, definition), supported|
-            supported[name] = definition if version.nil? || !version_lower_than(version, definition['since'])
+            supported[name] = definition if version.nil? || !version_lower_than?(version, definition['since'])
             supported
           end
         end
 
         def compatible_name_for_version(option_name, version)
-          return 'user' if option_name == 'force-user' && version_lower_than(version, '1.12')
-          return 'group' if option_name == 'force-group' && version_lower_than(version, '1.12')
+          return 'user' if option_name == 'force-user' && version_lower_than?(version, '1.12')
+          return 'group' if option_name == 'force-group' && version_lower_than?(version, '1.12')
 
           option_name
         end
 
         protected
 
-        def version_lower_than(version, target)
+        def version_lower_than?(version, target)
           Gem::Version.new(version) < Gem::Version.new(target)
         end
       end

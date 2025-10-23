@@ -36,7 +36,7 @@ Vagrant.configure('2') do |config|
   test_machines.each do |distro, options|
     config.vm.define "vagrant-bindfs-test-#{distro}" do |machine|
       machine.vm.box = options[:box]
-      tests_setup(machine, (options[:args] || {}))
+      tests_setup(machine, options[:args] || {})
     end
   end
 end

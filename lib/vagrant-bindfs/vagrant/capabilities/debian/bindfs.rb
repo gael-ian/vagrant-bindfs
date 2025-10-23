@@ -16,7 +16,7 @@ module VagrantBindfs
               machine.communicate.sudo('apt-get install -y bindfs')
             end
 
-            # rubocop:disable Layout/LineLength
+            # rubocop:disable Layout/LineLength, Naming/PredicateMethod
             def bindfs_bindfs_search_version(machine, version)
               machine.guest.capability(:bindfs_package_manager_update)
               machine.communicate.tap do |comm|
@@ -31,7 +31,7 @@ module VagrantBindfs
               end
               false
             end
-            # rubocop:enable Layout/LineLength
+            # rubocop:enable Layout/LineLength, Naming/PredicateMethod
 
             def bindfs_bindfs_install_version(machine, version)
               machine.guest.capability(:bindfs_package_manager_update)
