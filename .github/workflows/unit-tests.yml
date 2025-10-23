@@ -1,4 +1,6 @@
 name: Unit tests
+permissions:
+  contents: read
 on:
   push:
     branches: [main, next]
